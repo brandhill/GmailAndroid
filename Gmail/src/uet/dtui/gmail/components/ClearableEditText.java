@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.EditText;
 
 public class ClearableEditText extends EditText {
 	private Drawable btnClear;
-	private Rect rectBtnClear;
+	private static final String TAG = "Clearable Edit Text";
+	private boolean clearable = false;
 
 	public ClearableEditText(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -26,7 +28,12 @@ public class ClearableEditText extends EditText {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_UP && btnClear != null) {
-			
+			final int actionX = (int) event.getX();
+			final int actionY = (int) event.getY();
+			if (actionX > this.getWidth() - btnClear.getIntrinsicWidth() - 10) {
+				this.setText("");
+				event.setAction(MotionEvent.ACTION_CANCEL);
+			}
 		}
 		return super.onTouchEvent(event);
 	}
@@ -36,8 +43,16 @@ public class ClearableEditText extends EditText {
 			int right, int bottom) {
 		if (right != 0) {
 			btnClear = getResources().getDrawable(right);
+			btnClear.setBounds(0, 0, btnClear.getIntrinsicWidth(), btnClear.getIntrinsicHeight());
 		}
 		super.setCompoundDrawablesWithIntrinsicBounds(left, top, right, bottom);
 	}
 
+	public void setClearable(boolean bool) {
+		clearable = bool;
+	}
+	
+	public boolean getClearable() {
+		return clearable;
+	}
 }

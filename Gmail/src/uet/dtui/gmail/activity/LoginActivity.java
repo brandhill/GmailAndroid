@@ -1,6 +1,7 @@
 package uet.dtui.gmail.activity;
 
 import uet.dtui.gmail.R;
+import uet.dtui.gmail.components.ClearableEditText;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity{
-	private EditText tfEmailAddr;
+	private ClearableEditText tfEmailAddr;
 	private EditText tfPassword;
 	private Button btnLogin;
 	private Button btnCreateAccount;
@@ -30,7 +31,7 @@ public class LoginActivity extends Activity{
 		
 	}
 	private void findView() {
-		tfEmailAddr = (EditText) findViewById(R.id.tfEmailAddr);
+		tfEmailAddr =  (ClearableEditText) findViewById(R.id.tfEmailAddr);
 		tfPassword = (EditText) findViewById(R.id.tfPassword);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnForgotPw = (Button) findViewById(R.id.btnForgot);
@@ -48,11 +49,14 @@ public class LoginActivity extends Activity{
 			}
 			
 			public void afterTextChanged(Editable s) {
-				if (tfEmailAddr.getText().toString().equals(""))
+				if (tfEmailAddr.getText().toString().equals("") && !tfEmailAddr.getClearable()) {
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+					tfEmailAddr.setClearable(false);
+				}
 				else {
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_clear, 0);
 					btnLogin.setEnabled(true);
+					tfEmailAddr.setClearable(true);
 				}
 
 				
@@ -68,17 +72,9 @@ public class LoginActivity extends Activity{
 				} else {
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 					if (tfEmailAddr.getText().toString().length() != 0) {
-						String username = tfEmailAddr.getText().toString();
-						if (username.indexOf(GMAIL) == -1) {
-							Toast.makeText(getApplicationContext(), "Khong co", 0).show();
-							tfEmailAddr.setText(username + GMAIL);
-						} else {
-							Toast.makeText(getApplicationContext(), "Co", 0).show();
-						}
+						String username = tfEmailAddr.getText().toString();}
 					}
 				}
-				
-			}
 		});
 		
 	}
