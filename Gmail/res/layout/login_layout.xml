@@ -28,7 +28,7 @@
             android:contentDescription="@string/contentDesciption"
             android:src="@drawable/login_title" />
 
-        <EditText
+        <uet.dtui.gmail.components.ClearableEditText
             android:id="@+id/tfEmailAddr"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,6 @@
             android:layout_marginRight="28dp"
             android:layout_marginTop="23dp"
             android:background="@drawable/tf_user_name"
-            android:drawableRight="@drawable/btn_clear"
             android:hint="@string/hintEmail"
             android:imeOptions="actionNext"
             android:maxLines="1"
