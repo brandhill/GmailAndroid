@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_login"
+    android:orientation="vertical" >
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="42.5dp"
+        android:contentDescription="@string/contentDesciption"
+        android:src="@drawable/logo_login"/>
+    <EditText 
+        android:id="@+id/tfEmailAddr"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72.5dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:background="@drawable/tf_user_name"
+        android:textColor="#413f3f"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        android:paddingLeft="50dp"
+        android:drawableRight="@drawable/btn_clear"
+        android:hint="@string/hintEmail"/>
+    <EditText 
+        android:id="@+id/tfPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17.5dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:background="@drawable/tf_pass_word"
+        android:textColor="#413f3f"
+        android:maxLines="1"
+        android:paddingLeft="50dp"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        android:hint="@string/hintPassword"/>
+    <Button 
+        android:id="@+id/btnForgot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="110dp"
+        android:layout_marginRight="100dp"
+        android:background="@drawable/btn_forgot_passwrod"/>
+    
+    <Button 
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.5dp"
+        android:layout_marginLeft="26.5dp"
+        android:layout_marginRight="26.5dp"
+        android:background="@drawable/btn_login"/>
+    
+    <Button 
+        android:id="@+id/btnCreateAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="26.5dp"
+        android:layout_marginRight="24.5dp"
+        android:background="@drawable/btn_createaccount"/>
+
+</LinearLayout>
