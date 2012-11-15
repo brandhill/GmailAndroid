@@ -4,66 +4,86 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_login"
     android:orientation="vertical" >
-    <ImageView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="42.5dp"
-        android:contentDescription="@string/contentDesciption"
-        android:src="@drawable/logo_login"/>
-    <EditText 
-        android:id="@+id/tfEmailAddr"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72.5dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        android:background="@drawable/tf_user_name"
-        android:textColor="#413f3f"
-        android:maxLines="1"
-        android:imeOptions="actionNext"
-        android:paddingLeft="50dp"
-        android:drawableRight="@drawable/btn_clear"
-        android:hint="@string/hintEmail"/>
-    <EditText 
-        android:id="@+id/tfPassword"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17.5dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        android:background="@drawable/tf_pass_word"
-        android:textColor="#413f3f"
-        android:maxLines="1"
-        android:paddingLeft="50dp"
-        android:inputType="textPassword"
-        android:imeOptions="actionDone"
-        android:hint="@string/hintPassword"/>
-    <Button 
-        android:id="@+id/btnForgot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginRight="100dp"
-        android:background="@drawable/btn_forgot_passwrod"/>
-    
-    <Button 
-        android:id="@+id/btnLogin"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10.5dp"
-        android:layout_marginLeft="26.5dp"
-        android:layout_marginRight="26.5dp"
-        android:background="@drawable/btn_login"/>
-    
-    <Button 
-        android:id="@+id/btnCreateAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginLeft="26.5dp"
-        android:layout_marginRight="24.5dp"
-        android:background="@drawable/btn_createaccount"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="26dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_login_form"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@string/contentDesciption"
+            android:src="@drawable/logo_login" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="104dp"
+            android:layout_marginTop="22.6dp"
+            android:contentDescription="@string/contentDesciption"
+            android:src="@drawable/login_title" />
+
+        <EditText
+            android:id="@+id/tfEmailAddr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="23dp"
+            android:background="@drawable/tf_user_name"
+            android:drawableRight="@drawable/btn_clear"
+            android:hint="@string/hintEmail"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:paddingLeft="50dp"
+            android:textColor="#413f3f" />
+
+        <EditText
+            android:id="@+id/tfPassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="17.5dp"
+            android:background="@drawable/tf_pass_word"
+            android:hint="@string/hintPassword"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingLeft="50dp"
+            android:textColor="#413f3f" />
+
+        <Button
+            android:id="@+id/btnForgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_forgot_passwrod" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26.5dp"
+            android:layout_marginRight="26.5dp"
+            android:layout_marginTop="10.5dp"
+            android:background="@drawable/btn_login" />
+
+        <Button
+            android:id="@+id/btnCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="26.5dp"
+            android:layout_marginRight="24.5dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_createaccount" />
+    </LinearLayout>
 
 </LinearLayout>
