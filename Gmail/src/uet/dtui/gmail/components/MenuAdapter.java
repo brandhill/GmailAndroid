@@ -66,22 +66,20 @@ public class MenuAdapter extends BaseAdapter{
 	@Override
 	public boolean isEnabled(int position) {
 		if (getItem(position) instanceof ItemMenuAccount || getItem(position) instanceof ItemMenuFolder) {
-			Log.d("IS ENABLED", position + "TRUE");
 			return true;
 		} 
-		Log.d("IS ENABLED", position + "FALSE");
 		return false;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View row = convertView;
+		View row = null;
 		Object item = getItem(position);
 		CategoryViewHolder categoryHolder;
 		AccountViewHolder accountHolder;
 		FolderViewHolder folderHolder;
 		
 		if (item instanceof ItemMenuCategory) {
-			if (row == null) {
+			//if (convertView == null) {
 				row = activity.getLayoutInflater().inflate(R.layout.menu_item_category, parent, false);
 				
 				categoryHolder = new CategoryViewHolder();
@@ -95,9 +93,9 @@ public class MenuAdapter extends BaseAdapter{
 				} else {
 					categoryHolder.btnAddCount.setVisibility(View.GONE);
 				}
-			}
+			//}
 		} else if (item instanceof ItemMenuAccount) {
-			if (row == null) {
+			//if (convertView == null) {
 				row = activity.getLayoutInflater().inflate(R.layout.menu_item_account, parent, false);
 				
 				accountHolder = new AccountViewHolder();
@@ -105,6 +103,7 @@ public class MenuAdapter extends BaseAdapter{
 				accountHolder.displayName = (TextView) row.findViewById(R.id.account_display);
 				
 				ItemMenuAccount itemAccount = (ItemMenuAccount) item;
+				Log.d("Account Name", itemAccount.account.email);
 				if (((ItemMenuAccount) item).account.email.equals(activity.currentAccount)) {
 					accountHolder.iconAcc.setImageDrawable(drawbleResource.getDrawable(R.drawable.item_account_online));
 					accountHolder.displayName.setTextColor(Color.WHITE);
@@ -114,9 +113,9 @@ public class MenuAdapter extends BaseAdapter{
 				}
 				accountHolder.displayName.setTypeface(AllerFont.get(activity, AllerFont.ALLER_REGULAR));
 				accountHolder.displayName.setText(itemAccount.account.displayName);
-			}
+			//}
 		} else if (item instanceof ItemMenuFolder) {
-			if (row == null) {
+			//if (convertView == null) {
 				row = activity.getLayoutInflater().inflate(R.layout.menu_item_folder, parent, false);
 				
 				folderHolder = new FolderViewHolder();
@@ -146,11 +145,13 @@ public class MenuAdapter extends BaseAdapter{
 				
 				folderHolder.iconFolder.setImageDrawable(drawbleResource.getDrawable(itemFolder.image));
 				folderHolder.nameFolder.setImageDrawable(drawbleResource.getDrawable(itemFolder.imageName));
-			}
+			//}
 		}
-		row.setTag(R.id.mdActiveViewPosition, position);
-		if (position == activity.mActivePosition) {
-			activity.menuDrawer.setActiveView(row, position);
+		if (row != null) {
+			row.setTag(R.id.mdActiveViewPosition, position);
+			if (position == activity.mActivePosition) {
+				activity.menuDrawer.setActiveView(row, position);
+			}
 		}
 		return row;
 	}

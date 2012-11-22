@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class BaseActivityWithMenu extends Activity implements OnClickListener{
 	
@@ -85,14 +86,14 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener{
 
 
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(getApplicationContext(), "Add Account", 0).show();
 	}
 	
 	private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
+			//Item clicked is item account
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter.getItem(position);
 				currentAccount = tmp.account.email;
@@ -104,7 +105,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener{
 				dataChanged = true;
 	            menuDrawer.setActiveView(view, position);
 			}
-			mAdapter.notifyDataSetChanged();
+			mAdapter.notifyDataSetInvalidated();
             menuDrawer.closeMenu();
 		}
 	};
