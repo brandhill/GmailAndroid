@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="248dp"
-    android:layout_height="34dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/bg_folder_active">
 
     <ImageView
@@ -9,8 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="11dp"
+        android:layout_margin = "11dp"
         android:src="@drawable/icon_inbox_folder" />
 
     <ImageView
@@ -23,29 +24,29 @@
         android:src="@drawable/text_inbox_folder" />
 
     <TextView
-        android:id="@+id/total"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/icon_folder"
-        android:layout_marginRight="19dp"
-        android:text="42"
-        android:textSize="11.5dp"
-        android:gravity="center"
-        android:background="@drawable/rect_rounded_corner"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
         android:id="@+id/unread"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/icon_folder"
         android:layout_alignLeft="@+id/icon_folder"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="11dp"
         android:layout_marginLeft="12dp"
         android:background="@drawable/oval_unread"
         android:gravity="center"
         android:text="4"
         android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="17dp"
+        android:background="@drawable/rect_rounded_corner"
+        android:gravity="center"
+        android:text="42"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="11.5dp" />
 
 </RelativeLayout>

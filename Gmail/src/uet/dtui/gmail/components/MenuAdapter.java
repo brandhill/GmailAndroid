@@ -2,17 +2,14 @@ package uet.dtui.gmail.components;
 
 import java.util.List;
 
+import uet.dtui.gmail.R;
 import uet.dtui.gmail.activity.BaseActivityWithMenu;
 import uet.dtui.gmail.model.ItemMenuAccount;
 import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
-
-import uet.dtui.gmail.R;
-import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,12 +20,13 @@ import android.widget.TextView;
 public class MenuAdapter extends BaseAdapter{
 	private List<Object> mItems;
 	private BaseActivityWithMenu activity;
-	private final int ITEM_ACCOUNT = 0;
-	private final int ITEM_CATEGORY = 1;
-	private final int ITEM_FOLDER = 2;
+	public static final int ITEM_ACCOUNT = 0;
+	public static final int ITEM_CATEGORY = 1;
+	public static final int ITEM_FOLDER = 2;
 	private Resources drawbleResource;
 	
 	public MenuAdapter(List<Object> items, BaseActivityWithMenu activity) {
+		super();
 		this.mItems = items;
 		this.activity = activity;
 		this.drawbleResource = activity.getResources();
@@ -67,8 +65,11 @@ public class MenuAdapter extends BaseAdapter{
 
 	@Override
 	public boolean isEnabled(int position) {
-		if (getItem(position) instanceof ItemMenuAccount || getItem(position) instanceof ItemMenuFolder)
+		if (getItem(position) instanceof ItemMenuAccount || getItem(position) instanceof ItemMenuFolder) {
+			Log.d("IS ENABLED", position + "TRUE");
 			return true;
+		} 
+		Log.d("IS ENABLED", position + "FALSE");
 		return false;
 	}
 
@@ -90,9 +91,9 @@ public class MenuAdapter extends BaseAdapter{
 				categoryHolder.title.setImageDrawable(drawbleResource.getDrawable(itemCategory.imageName));
 				
 				if (((ItemMenuCategory)item).name.equals(BaseActivityWithMenu.ACCOUNT_CATEGORY)) {
-					categoryHolder.btnAddCount.setVisibility(View.GONE);
-				} else {
 					categoryHolder.btnAddCount.setOnClickListener(activity);
+				} else {
+					categoryHolder.btnAddCount.setVisibility(View.GONE);
 				}
 			}
 		} else if (item instanceof ItemMenuAccount) {
@@ -111,6 +112,8 @@ public class MenuAdapter extends BaseAdapter{
 					accountHolder.iconAcc.setImageDrawable(drawbleResource.getDrawable(R.drawable.image_account));
 					accountHolder.displayName.setTextColor(Color.parseColor("#8c8888"));
 				}
+				accountHolder.displayName.setTypeface(AllerFont.get(activity, AllerFont.ALLER_REGULAR));
+				accountHolder.displayName.setText(itemAccount.account.displayName);
 			}
 		} else if (item instanceof ItemMenuFolder) {
 			if (row == null) {
@@ -123,21 +126,33 @@ public class MenuAdapter extends BaseAdapter{
 				folderHolder.total = (TextView) row.findViewById(R.id.total);
 				
 				ItemMenuFolder itemFolder = (ItemMenuFolder) item;
+				//Check unread
 				if (itemFolder.folder.numberEmailUnread == 0)
 					folderHolder.unread.setVisibility(View.GONE);
 				else
 					folderHolder.unread.setText(itemFolder.folder.numberEmailUnread);
 				
+				//Check total email
 				if (itemFolder.folder.numberEmail == 0)
 					folderHolder.total.setVisibility(View.GONE);
 				else
 					folderHolder.total.setText(itemFolder.folder.numberEmail);
 				
+				//Check current folder opening
+				if (itemFolder.folder.name.equals(activity.currentFolder))
+					row.setBackgroundDrawable(drawbleResource.getDrawable(R.drawable.bg_folder_active));
+				else
+					row.setBackgroundColor(Color.parseColor("#272e34"));
+				
 				folderHolder.iconFolder.setImageDrawable(drawbleResource.getDrawable(itemFolder.image));
 				folderHolder.nameFolder.setImageDrawable(drawbleResource.getDrawable(itemFolder.imageName));
 			}
 		}
-		return null;
+		row.setTag(R.id.mdActiveViewPosition, position);
+		if (position == activity.mActivePosition) {
+			activity.menuDrawer.setActiveView(row, position);
+		}
+		return row;
 	}
 	
 	private class CategoryViewHolder {

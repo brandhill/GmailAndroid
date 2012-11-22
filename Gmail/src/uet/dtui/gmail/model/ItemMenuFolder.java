@@ -6,8 +6,9 @@ public class ItemMenuFolder {
 	public int imageName;
 	public FolderEmail folder;
 	
-	public ItemMenuFolder(int image, FolderEmail folder) {
+	public ItemMenuFolder(int image, int nameFolder, FolderEmail folderEmail) {
 		this.image = image;
-		this.folder = folder;
+		this.imageName = nameFolder;
+		this.folder = folderEmail;
 	}
 }

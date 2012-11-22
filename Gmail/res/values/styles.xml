@@ -1,4 +1,6 @@
 <resources>
+    <style name="MenuDrawer" />
+    <style name="MenuDrawer.Widget" />
     <style name="MenuDrawerStyle" parent="Widget.MenuDrawer">
         <item name="mdArrowDrawable">@drawable/menu_arrow</item>
         <item name="mdMenuWidth">250dp</item>

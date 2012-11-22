@@ -16,6 +16,8 @@ public class Account {
 		displayName = name;
 		this.email = email;
 		this.password = pass;
+		stateActivite = true;
+		stateOnline = true;
 	}
 	
 	public Account(String email, String pass) {
@@ -23,5 +25,7 @@ public class Account {
 		displayName = email;
 		this.email = email;
 		this.password = pass;
+		stateActivite = true;
+		stateOnline = true;
 	}
 }

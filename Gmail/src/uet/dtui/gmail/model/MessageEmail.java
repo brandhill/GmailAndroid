@@ -2,8 +2,6 @@ package uet.dtui.gmail.model;
 
 import java.util.Date;
 
-import javax.mail.Folder;
-
 public class MessageEmail {
 	public long id;
 	public long idFolder;
