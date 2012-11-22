@@ -1,49 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="248dp"
     android:layout_height="match_parent"
-    android:background="#010910"
-    android:orientation="vertical" >
+    android:background="#010910" >
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" >
+    </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="bottom"
+        android:background="#060c12" >
 
         <ImageView
+            android:id="@+id/icon_refresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6.5dp"
-            android:layout_marginLeft="11dp"
-            android:layout_marginTop="6.5dp"
-            android:src="@drawable/category_menu_accounts" />
+            android:layout_marginBottom="12.5dp"
+            android:layout_marginLeft="8.8dp"
+            android:layout_marginTop="12.5dp"
+            android:src="@drawable/icon_refresh" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
-            android:layout_marginLeft="76dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginTop="9dp"
-            android:background="@drawable/btn_add_account" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:background="#060c12"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textview_updated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.7dp"
+                android:layout_marginTop="8.8dp"
+                android:text="Updated"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/last_updated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.7dp"
+                android:layout_marginTop="1.5dp"
+                android:text="12 : 00 AM 16/11/2012"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="15dp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_accounts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="#010910"
-        android:dividerHeight="1dp" >
-    </ListView>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="6.5dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="6.5dp"
-        android:src="@drawable/category_menu_categories" />
-
-</LinearLayout>
+</FrameLayout>
