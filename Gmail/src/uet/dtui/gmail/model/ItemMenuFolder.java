@@ -1,12 +1,12 @@
 package uet.dtui.gmail.model;
 
-import javax.mail.Folder;
 
 public class ItemMenuFolder {
 	public int image;
-	public Folder folder;
+	public int imageName;
+	public FolderEmail folder;
 	
-	public ItemMenuFolder(int image, Folder folder) {
+	public ItemMenuFolder(int image, FolderEmail folder) {
 		this.image = image;
 		this.folder = folder;
 	}

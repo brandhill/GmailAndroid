@@ -1,6 +1,9 @@
 package uet.dtui.gmail.model;
 
 public class ItemMenuAccount {
-	public int image;
 	public Account account;
+	
+	public ItemMenuAccount(Account acc) {
+		this.account = acc;
+	}
 }

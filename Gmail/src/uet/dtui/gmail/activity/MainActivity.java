@@ -30,6 +30,7 @@ public class MainActivity extends Activity {
 	private String password = "kienhien90";
 	private String provider = "imap";
 	private boolean textIsHtml = false;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
