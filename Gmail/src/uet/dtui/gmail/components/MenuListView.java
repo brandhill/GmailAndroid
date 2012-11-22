@@ -6,7 +6,6 @@ import android.widget.ListView;
 /*ListView with custom onScrollChangedListener*/
 
 public class MenuListView extends ListView {
-	
 
     public interface OnScrollChangedListener {
 

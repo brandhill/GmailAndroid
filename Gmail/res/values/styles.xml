@@ -1,5 +1,7 @@
 <resources>
-
-    <style name="AppTheme" parent="android:Theme.Light" />
+    <style name="MenuDrawerStyle" parent="Widget.MenuDrawer">
+        <item name="mdArrowDrawable">@drawable/menu_arrow</item>
+        <item name="mdMenuWidth">250dp</item>
+    </style>
 
 </resources>

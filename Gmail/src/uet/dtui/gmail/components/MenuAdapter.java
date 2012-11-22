@@ -86,12 +86,12 @@ public class MenuAdapter extends BaseAdapter{
 				categoryHolder = new CategoryViewHolder();
 				categoryHolder.title = (ImageView) row.findViewById(R.id.category_image);
 				categoryHolder.btnAddCount = (Button) row.findViewById(R.id.category_btn_add);
+				ItemMenuCategory itemCategory = (ItemMenuCategory) item;
+				categoryHolder.title.setImageDrawable(drawbleResource.getDrawable(itemCategory.imageName));
 				
 				if (((ItemMenuCategory)item).name.equals(BaseActivityWithMenu.ACCOUNT_CATEGORY)) {
-					categoryHolder.title.setImageDrawable(activity.getResources().getDrawable(R.drawable.category_menu_categories));
 					categoryHolder.btnAddCount.setVisibility(View.GONE);
 				} else {
-					categoryHolder.title.setImageDrawable(activity.getResources().getDrawable(R.drawable.category_menu_accounts));
 					categoryHolder.btnAddCount.setOnClickListener(activity);
 				}
 			}
