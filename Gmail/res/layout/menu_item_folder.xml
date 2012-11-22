@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="248dp"
+    android:layout_height="34dp"
+    android:background="@drawable/bg_folder_active">
+
+    <ImageView
+        android:id="@+id/icon_folder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="11dp"
+        android:src="@drawable/icon_inbox_folder" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/icon_folder"
+        android:src="@drawable/text_inbox_folder" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/icon_folder"
+        android:layout_marginRight="19dp"
+        android:text="4"
+        android:textSize="11.5dp"
+        android:gravity="center"
+        android:background="@drawable/rect_rounded_corner"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/unread"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/icon_folder"
+        android:layout_alignLeft="@+id/icon_folder"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="12dp"
+        android:background="@drawable/oval_unread"
+        android:gravity="center"
+        android:text="4"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>

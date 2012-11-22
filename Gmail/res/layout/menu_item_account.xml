@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="248dp"
+    android:layout_height="34dp"
+    android:background="#272e34"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="6.5dp"
+        android:src="@drawable/image_account" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6.5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:text="kienvtqhi@gmail.com"
+        android:textColor="#817e7f"
+        android:textSize="15dp" />
+
+</LinearLayout>
