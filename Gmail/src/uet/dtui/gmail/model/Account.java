@@ -2,6 +2,7 @@ package uet.dtui.gmail.model;
 
 
 public class Account {
+	public long id;
 	public String displayName;
 	public String email;
 	public String password;
@@ -11,12 +12,14 @@ public class Account {
 	public Boolean stateOnline;
 	
 	public Account(String email, String name, String pass) {
+		id = System.currentTimeMillis();
 		displayName = name;
 		this.email = email;
 		this.password = pass;
 	}
 	
 	public Account(String email, String pass) {
+		id = System.currentTimeMillis();
 		displayName = email;
 		this.email = email;
 		this.password = pass;

@@ -5,15 +5,17 @@ import java.util.Date;
 import javax.mail.Folder;
 
 public class MessageEmail {
-	public Folder folder;
+	public long id;
+	public long idFolder;
 	public String subject;
 	public String from;
 	public String to;
 	public Date date;
 	public String content;
 	
-	public MessageEmail(Folder folder, String subject, String from, String to, Date date, String content) {
-		this.folder = folder;
+	public MessageEmail(long folder, String subject, String from, String to, Date date, String content) {
+		id = System.currentTimeMillis();
+		this.idFolder = folder;
 		this.subject = subject;
 		this.from = from;
 		this.to = to;
