@@ -3,7 +3,7 @@ package uet.dtui.gmail.activity;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.ClearableEditText;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity{
+public class LoginActivity extends Activity implements View.OnClickListener{
 	private ClearableEditText tfEmailAddr;
 	private EditText tfPassword;
 	private Button btnLogin;
@@ -28,7 +28,9 @@ public class LoginActivity extends Activity{
 		setContentView(R.layout.login_layout);
 		
 		findView();
-		
+		btnLogin.setOnClickListener(this);
+		btnCreateAccount.setOnClickListener(this);
+		btnForgotPw.setOnClickListener(this);
 	}
 	private void findView() {
 		tfEmailAddr =  (ClearableEditText) findViewById(R.id.tfEmailAddr);
@@ -77,6 +79,21 @@ public class LoginActivity extends Activity{
 				}
 		});
 		
+	}
+	public void onClick(View v) {
+		if (v == btnLogin) {
+			if (tfPassword.getText().toString().equals(""))
+				Toast.makeText(getApplicationContext(), "Password is empty", 0).show();
+			else {
+				Intent goToInbox = new Intent(this, BaseActivityWithMenu.class);
+				startActivity(goToInbox);
+				this.finish();
+			}
+		} else if (v == btnCreateAccount) {
+			Toast.makeText(getApplicationContext(), "Create An Account", 0).show();
+		} else if (v == btnForgotPw) {
+			Toast.makeText(getApplicationContext(), "Reset Password Account", 0).show();
+		}
 	}
 	
 }
