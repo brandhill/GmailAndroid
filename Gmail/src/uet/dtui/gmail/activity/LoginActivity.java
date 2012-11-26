@@ -2,15 +2,22 @@ package uet.dtui.gmail.activity;
 
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.ClearableEditText;
+import uet.dtui.gmail.components.Utils;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity implements View.OnClickListener{
@@ -90,8 +97,16 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 				this.finish();
 			}
 		} else if (v == btnCreateAccount) {
-			Toast.makeText(getApplicationContext(), "Create An Account", 0).show();
-		} else if (v == btnForgotPw) {
+			TextView tv = Utils.createTextView(getApplicationContext(), tfEmailAddr.getText().toString());
+			BitmapDrawable bd = (BitmapDrawable) Utils.convertViewtoDrawable(tv);
+			bd.setBounds(0, 0, bd.getIntrinsicWidth(),bd.getIntrinsicHeight());
+			String email = tfEmailAddr.getText().toString();
+			final SpannableStringBuilder sb = new SpannableStringBuilder();
+			sb.append(email + ",");
+			sb.setSpan(new ImageSpan(bd), sb.length()-(email.length() + 1), sb.length() -1 ,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			tfEmailAddr.setMovementMethod(LinkMovementMethod.getInstance());
+			tfEmailAddr.setText(sb);
+;		} else if (v == btnForgotPw) {
 			Toast.makeText(getApplicationContext(), "Reset Password Account", 0).show();
 		}
 	}
