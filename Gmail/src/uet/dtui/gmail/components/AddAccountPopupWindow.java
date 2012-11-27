@@ -2,12 +2,14 @@ package uet.dtui.gmail.components;
 
 import uet.dtui.gmail.R;
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 public class AddAccountPopupWindow extends PopupWindow implements
 		OnClickListener {
@@ -27,6 +29,9 @@ public class AddAccountPopupWindow extends PopupWindow implements
 		findViews();
 		// show pop-up
 		this.setAnimationStyle(R.style.AnimationPopup);
+//		this.setFocusable(true);
+		this.setOutsideTouchable(true);
+		this.setBackgroundDrawable(new BitmapDrawable());
 		this.showAtLocation(activity.findViewById(R.id.main), Gravity.CENTER,
 				0, 0);
 	}
@@ -41,8 +46,12 @@ public class AddAccountPopupWindow extends PopupWindow implements
 	}
 
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-
+		if (v == btnClose) {
+			this.dismiss();
+		} else if (v == btnSave){
+			Toast.makeText(activity, "Save Account", 0).show();
+			this.dismiss();
+		}
 	}
 
 }

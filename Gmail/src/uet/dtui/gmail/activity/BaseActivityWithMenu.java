@@ -27,8 +27,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class BaseActivityWithMenu extends Activity implements OnClickListener{
-	
+public class BaseActivityWithMenu extends Activity implements OnClickListener {
+
 	public static final String ACCOUNT_CATEGORY = "accounts";
 	public static final String CATEGORIES_CATEGORY = "categoreis";
 	public MenuDrawerManager menuDrawer;
@@ -39,93 +39,104 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener{
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
 	private static final String TAG = "Base Activity";
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		menuDrawer = new MenuDrawerManager(this, MenuDrawer.MENU_DRAG_WINDOW);
 		menuDrawer.setContentView(R.layout.activity_main);
 		menuDrawer.setMenuView(R.layout.menu_drawer);
-		
+
 		listView = (ListView) findViewById(R.id.list_menu);
-		
-		//TestData
+
+		// TestData
 		mDatas = new ArrayList<Object>();
-		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,R.drawable.category_menu_accounts));
+		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
+				R.drawable.category_menu_accounts));
 		Account acc = new Account("kienvtqhi@gmail.com", "");
 		mDatas.add(new ItemMenuAccount(acc));
 		Account acc2 = new Account("john@gmail.com", "");
 		FolderEmail folder = new FolderEmail("InBox", 123);
 		mDatas.add(new ItemMenuAccount(acc2));
-		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY, R.drawable.category_menu_categories));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_inbox_folder, R.drawable.text_inbox_folder,folder));
+		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
+				R.drawable.category_menu_categories));
+		mDatas.add(new ItemMenuFolder(R.drawable.icon_inbox_folder,
+				R.drawable.text_inbox_folder, folder));
 		FolderEmail folder2 = new FolderEmail("InBox2", 123);
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_star_folder, R.drawable.text_important_folder,folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_sent_folder, R.drawable.text_sent_folder,folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_draft_folder, R.drawable.text_draft_folder,folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_delete_folder, R.drawable.text_delete_folder,folder2));
-		
+		mDatas.add(new ItemMenuFolder(R.drawable.icon_star_folder,
+				R.drawable.text_important_folder, folder2));
+		mDatas.add(new ItemMenuFolder(R.drawable.icon_sent_folder,
+				R.drawable.text_sent_folder, folder2));
+		mDatas.add(new ItemMenuFolder(R.drawable.icon_draft_folder,
+				R.drawable.text_draft_folder, folder2));
+		mDatas.add(new ItemMenuFolder(R.drawable.icon_delete_folder,
+				R.drawable.text_delete_folder, folder2));
+
 		Log.d(TAG, mDatas.size() + "");
 		mAdapter = new MenuAdapter(mDatas, this);
 		listView.setAdapter(mAdapter);
-		//Set listener for onScroll
+		// Set listener for onScroll
 		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-			
+
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 				menuDrawer.getMenuDrawer().invalidate();
 			}
 		});
-		
-		//Set item click listener for listview
+
+		// Set item click listener for listview
 		listView.setOnItemClickListener(mItemClickListener);
 	}
-
-
 
 	public void onClick(View v) {
 		if (v.getId() == R.id.category_btn_add) {
 			Display display = getWindowManager().getDefaultDisplay();
-			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			new AddAccountPopupWindow(this, inflater.inflate(R.layout.popup_window, null, false), display.getWidth(), display.getHeight());
+			LayoutInflater inflater = (LayoutInflater) this
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			new AddAccountPopupWindow(this, inflater.inflate(
+					R.layout.popup_window, null, false), display.getWidth(),
+					display.getHeight());
 		}
-			Toast.makeText(getApplicationContext(), "Add Account", 0).show();
 	}
-	
+
 	private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
 
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
-			//Item clicked is item account
+			// Item clicked is item account
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
-				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter.getItem(position);
+				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter
+						.getItem(position);
 				currentAccount = tmp.account.email;
-			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER)  {
-				ItemMenuFolder fold = (ItemMenuFolder) mAdapter.getItem(position);
+			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER) {
+				ItemMenuFolder fold = (ItemMenuFolder) mAdapter
+						.getItem(position);
 				currentFolder = fold.folder.name;
 				mActivePosition = position;
-	            menuDrawer.setActiveView(view, position);
+				menuDrawer.setActiveView(view, position);
 			}
 			mAdapter.notifyDataSetInvalidated();
-            menuDrawer.closeMenu();
+			menuDrawer.closeMenu();
 		}
 	};
-	
+
 	@Override
-    public void onBackPressed() {
-        final int drawerState = menuDrawer.getDrawerState();
-        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
-        	menuDrawer.closeMenu();
-            return;
-        }
-        super.onBackPressed();
-    }
-	
+	public void onBackPressed() {
+		final int drawerState = menuDrawer.getDrawerState();
+		Log.d("Popup window", "IS NULL");
+		if (drawerState == MenuDrawer.STATE_OPEN
+				|| drawerState == MenuDrawer.STATE_OPENING) {
+			menuDrawer.closeMenu();
+			return;
+		}
+		super.onBackPressed();
+	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.KEYCODE_MENU) {

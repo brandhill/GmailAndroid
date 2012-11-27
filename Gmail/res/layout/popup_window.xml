@@ -54,11 +54,9 @@
         android:ems="10"
         android:gravity="left|center_vertical"
         android:hint="Password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:padding="1dp"
         android:textSize="17dp" >
-
-        <requestFocus />
     </EditText>
 
     <Button
