@@ -6,6 +6,7 @@ import java.util.List;
 import net.simonvt.widget.MenuDrawer;
 import net.simonvt.widget.MenuDrawerManager;
 import uet.dtui.gmail.R;
+import uet.dtui.gmail.components.AddAccountPopupWindow;
 import uet.dtui.gmail.components.MenuAdapter;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.FolderEmail;
@@ -13,9 +14,12 @@ import uet.dtui.gmail.model.ItemMenuAccount;
 import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
@@ -35,7 +39,6 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener{
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
 	private static final String TAG = "Base Activity";
-	private Boolean dataChanged = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +89,12 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener{
 
 
 	public void onClick(View v) {
-		Toast.makeText(getApplicationContext(), "Add Account", 0).show();
+		if (v.getId() == R.id.category_btn_add) {
+			Display display = getWindowManager().getDefaultDisplay();
+			LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			new AddAccountPopupWindow(this, inflater.inflate(R.layout.popup_window, null, false), display.getWidth(), display.getHeight());
+		}
+			Toast.makeText(getApplicationContext(), "Add Account", 0).show();
 	}
 	
 	private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
@@ -97,12 +105,10 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener{
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter.getItem(position);
 				currentAccount = tmp.account.email;
-				dataChanged = true;
 			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER)  {
 				ItemMenuFolder fold = (ItemMenuFolder) mAdapter.getItem(position);
 				currentFolder = fold.folder.name;
 				mActivePosition = position;
-				dataChanged = true;
 	            menuDrawer.setActiveView(view, position);
 			}
 			mAdapter.notifyDataSetInvalidated();
