@@ -4,7 +4,7 @@
     <item android:drawable="@android:color/transparent"
           android:state_checked="false"/>
     
-    <item android:drawable="@drawable/unread" 
+    <item android:drawable="@drawable/icon_unread" 
           android:state_checked="true"/>
 
 </selector>
