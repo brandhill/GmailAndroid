@@ -92,7 +92,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 			if (tfPassword.getText().toString().equals(""))
 				Toast.makeText(getApplicationContext(), "Password is empty", 0).show();
 			else {
-				Intent goToInbox = new Intent(this, BaseActivityWithMenu.class);
+				Intent goToInbox = new Intent(this, MailListActivity.class);
 				startActivity(goToInbox);
 				this.finish();
 			}

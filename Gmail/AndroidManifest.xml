@@ -21,6 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="uet.dtui.gmail.activity.MailListActivity" >
+        </activity>
         <activity android:name="uet.dtui.gmail.activity.BaseActivityWithMenu"></activity>
     </application>
 
