@@ -80,10 +80,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_clear, 0);
 				} else {
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-					if (tfEmailAddr.getText().toString().length() != 0) {
-						String username = tfEmailAddr.getText().toString();}
-					}
 				}
+			}
 		});
 		
 	}

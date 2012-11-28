@@ -5,7 +5,13 @@
         <item name="mdArrowDrawable">@drawable/menu_arrow</item>
         <item name="mdMenuWidth">250dp</item>
     </style>
+	
 	<style name="Animations" />
+    
+    <style name="AnimationPopup">
+	    <item name="@android:windowEnterAnimation">@anim/fade_in</item>
+	    <item name="@android:windowExitAnimation">@anim/fade_out</item>
+	</style>
 
 	<!-- PopDownMenu -->
 	<style name="Animations.PopDownMenu" />

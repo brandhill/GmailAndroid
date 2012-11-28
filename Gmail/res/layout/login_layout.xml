@@ -25,11 +25,12 @@
             android:layout_marginLeft="28dp"
             android:layout_marginRight="28dp"
             android:layout_marginTop="23dp"
-            android:background="@drawable/tf_user_name"
+            android:background="@drawable/bg_textfiled_account"
             android:hint="@string/hintEmail"
             android:imeOptions="actionNext"
             android:maxLines="1"
-            android:paddingLeft="50dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
             android:textColor="#413f3f" />
 
         <EditText
@@ -38,13 +39,13 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_marginRight="28dp"
-            android:layout_marginTop="17.5dp"
-            android:background="@drawable/tf_pass_word"
+            android:background="@drawable/bg_textfile_pass"
             android:hint="@string/hintPassword"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:paddingLeft="50dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="20dp"
             android:textColor="#413f3f" />
         <Button
             android:id="@+id/btnLogin"

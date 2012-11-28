@@ -8,7 +8,7 @@
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/bg_popup_add_account" />
 
@@ -54,15 +54,13 @@
         android:ems="10"
         android:gravity="left|center_vertical"
         android:hint="Password"
-        android:inputType="text"
+        android:inputType="textPassword"
         android:padding="1dp"
         android:textSize="17dp" >
-
-        <requestFocus />
     </EditText>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btn_save_acc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
