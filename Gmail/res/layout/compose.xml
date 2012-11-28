@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF" >
+
+        <ImageView
+            android:id="@+id/textCompose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/text_actionbar_compose" />
+
+        <Button
+            android:id="@+id/btnMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:background="@drawable/btn_menu" />
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="6dp"
+            android:background="@drawable/btn_send_email" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#3f3e3e" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/tfFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cfcdcd"
+            android:drawableLeft="@drawable/label_from"
+            android:drawablePadding="6dp"
+            android:padding="6dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3f3e3e" />
+        <EditText
+            android:id="@+id/tfTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cfcdcd"
+            android:drawableLeft="@drawable/label_to"
+            android:drawablePadding="6dp"
+            android:padding="6dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3f3e3e" />
+        <EditText
+            android:id="@+id/tfSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#cfcdcd"
+            android:drawableLeft="@drawable/label_subject"
+            android:drawablePadding="6dp"
+            android:padding="6dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#3f3e3e" />
+        <EditText
+            android:id="@+id/tfContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Content"
+            android:gravity="left|top"
+            android:background="#FFFFFF"
+            android:padding="6dp" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name="uet.dtui.gmail.activity.BaseActivityWithMenu"></activity>
+        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail"></activity>
     </application>
 
 </manifest>
