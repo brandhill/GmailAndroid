@@ -108,7 +108,7 @@ public class MailListActivity extends BaseActivityWithMenu {
 								.getFrom().toString(), messages[i]
 								.getRecipients(null).toString(), messages[i]
 								.getSentDate(), messages[i].getContent()
-								.toString()));
+								.toString(), ""));
 			}
 			inbox.close(false);
 			store.close();
@@ -116,12 +116,12 @@ public class MailListActivity extends BaseActivityWithMenu {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(1991, 11, 03), "content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content"));
-		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject ", "from from from from from from from from from ", "to", new Date(1991, 11, 03), "content content content content content content content content content content content content "));
-		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(2012, 11, 27), "content content content content content content content content content content content content "));
-		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(2012, 11, 06), "content content content content content content content content content content content content "));
-		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(1991, 11, 27), "content content content content content content content content content content content content "));
-		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(2012, 11, 03), "content content content content content content content content content content content content "));
+		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(1991, 11, 03), "content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content", ""));
+		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject ", "from from from from from from from from from ", "to", new Date(1991, 11, 03), "content content content content content content content content content content content content ", ""));
+		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(2012, 11, 27), "content content content content content content content content content content content content ", ""));
+		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(2012, 11, 06), "content content content content content content content content content content content content ", ""));
+		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(1991, 11, 27), "content content content content content content content content content content content content ", ""));
+		mail_list.add(new MessageEmail(1, "subject subject subject subject subject subject subject subject", "from from from from from from from from from ", "to", new Date(2012, 11, 03), "content content content content content content content content content content content content ", ""));
 		Log.d("Size of data", mail_list.size() + "");
 		
 		listview = (ListView) findViewById(R.id.mail_list);
