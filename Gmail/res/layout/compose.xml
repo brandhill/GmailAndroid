@@ -24,7 +24,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="6dp"
-            android:background="@drawable/btn_menu" />
+            android:background="@drawable/btn_backto_inbox_normal" />
 
         <Button
             android:id="@+id/btnSend"
