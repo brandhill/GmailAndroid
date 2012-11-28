@@ -43,6 +43,17 @@ public class AddAccountPopupWindow extends PopupWindow implements
 		btnSave.setOnClickListener(this);
 		tfPass = (EditText) contentView.findViewById(R.id.tf_password);
 		tfEmail = (ClearableEditText) contentView.findViewById(R.id.tf_account);
+		
+		tfEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus && tfEmail.getText().toString().length() != 0) {
+					tfEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_clear, 0);
+				} else {
+					tfEmail.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+				}
+			}
+		});
 	}
 
 	public void onClick(View v) {
