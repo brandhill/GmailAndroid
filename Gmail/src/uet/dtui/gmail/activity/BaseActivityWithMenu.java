@@ -21,6 +21,7 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -43,9 +44,8 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		menuDrawer = new MenuDrawerManager(this, MenuDrawer.MENU_DRAG_WINDOW);
-		menuDrawer.setContentView(R.layout.activity_main);
 		menuDrawer.setMenuView(R.layout.menu_drawer);
 
 		listView = (ListView) findViewById(R.id.list_menu);
@@ -127,13 +127,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		final int drawerState = menuDrawer.getDrawerState();
-		Log.d("Popup window", "IS NULL");
-		if (drawerState == MenuDrawer.STATE_OPEN
-				|| drawerState == MenuDrawer.STATE_OPENING) {
-			menuDrawer.closeMenu();
-			return;
-		}
+		closeMenu();
 		super.onBackPressed();
 	}
 
@@ -149,5 +143,15 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void closeMenu() {
+		final int drawerState = menuDrawer.getDrawerState();
+		Log.d("Popup window", "IS NULL");
+		if (drawerState == MenuDrawer.STATE_OPEN
+				|| drawerState == MenuDrawer.STATE_OPENING) {
+			menuDrawer.closeMenu();
+			return;
+		}
 	}
 }
