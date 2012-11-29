@@ -10,6 +10,9 @@ public class Account {
 	public String password;
 	public int isOwner;
 	
+	public Account() {
+		super();
+	}
 	public Account(String email, String name, String pass, int owner) {
 		id = System.currentTimeMillis();
 		displayName = name;

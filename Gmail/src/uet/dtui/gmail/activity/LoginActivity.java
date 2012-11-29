@@ -16,6 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -105,6 +106,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 				Toast.makeText(getApplicationContext(), "Password is empty", 0).show();
 			else {
 				if (Utils.checkConnect(tfEmailAddr.getText().toString(), tfPassword.getText().toString())) {
+					saveAccount(tfEmailAddr.getText().toString(), tfPassword.getText().toString());
 					Intent goToInbox = new Intent(this, BaseListEmailActivity.class);
 					startActivity(goToInbox);
 					this.finish();
@@ -136,10 +138,12 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 	}
 	
 	public void saveAccount(String user, String pass) {
+		Log.d("LOGIN SUCCESS", "SAVE ACCOUNT");
 		database = new EmailDatabase(getApplicationContext());
 		database.openDB();
 		long idAcc = System.currentTimeMillis();
 		database.addRowToTableAccount(idAcc, user, pass, user, Utils.TYPE_ACCOUNT_OWNER);
+		Log.d("COUNT ACC", database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER).size() + "");
 		database.closeDB();
 	}
 	

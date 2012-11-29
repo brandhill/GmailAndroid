@@ -40,6 +40,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
 	private static final String TAG = "Base Activity";
+	public int posArrow = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

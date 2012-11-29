@@ -1,11 +1,16 @@
 package uet.dtui.gmail.database;
  
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import uet.dtui.gmail.model.Account;
+import uet.dtui.gmail.model.MessageEmail;
  
 public class EmailDatabase{
 	// the Activity or Application that is creating an object from this class.
@@ -76,7 +81,7 @@ public class EmailDatabase{
 	public boolean addRowToTableAccount(long id, String rowStringEmailAddress, String rowStringPassword, String rowStringDisplayName, int rowStringIsOwn)
 	{
 		// check existing of id in the table.
-		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM ACCOUNT WHERE id=" + id + ";", null);
+		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM ACCOUNT WHERE email_address=\"" + rowStringEmailAddress + "\";", null);
 		mCount.moveToFirst();
 		int count= mCount.getInt(0);
 		mCount.close();
@@ -104,7 +109,45 @@ public class EmailDatabase{
 		
 		return true;
 	}
+	
+	public List<Account> getAccountWithOwner(int owner) {
+		List<Account> listAcc = new ArrayList<Account>();
+		String sql = "SELECT * FROM ACCOUNT WHERE is_own=" + owner;
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 Account acc = convertCursorToAccount(cursor);
+			 listAcc.add(acc);
+			 cursor.moveToNext();
+		 }
+		return listAcc;
+	}
+	
+	public List<Account> getAllAccount() {
+		List<Account> listAcc = new ArrayList<Account>();
+		String sql = "SELECT * FROM ACCOUNT";
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 Account acc = convertCursorToAccount(cursor);
+			 listAcc.add(acc);
+			 cursor.moveToNext();
+		 }
+		return listAcc;
+	}
  
+	private Account convertCursorToAccount(Cursor cursor) {
+		Account acc = new Account();
+		acc.id = cursor.getLong(0);
+		acc.email = cursor.getString(1);
+		acc.password = cursor.getString(2);
+		acc.displayName = cursor.getString(3);
+		acc.isOwner = cursor.getInt(4);
+		return acc;
+	}
+
 	/**********************************************************************
 	 * DELETING A ROW FROM THE DATABASE TABLE ACCOUNT
 	 * 
@@ -459,7 +502,7 @@ public class EmailDatabase{
 										TABLE_MESSAGE_ROW_SIX + " TEXT NOT NULL," +
 										TABLE_MESSAGE_ROW_SEVEN + " TEXT NOT NULL" +
 										");";
-
+			Log.d("EMAIL DATABSE", "CREATE TABLE");
 			// execute the query strings to the database.
 			db.execSQL(newTableAccountQueryString);
 			db.execSQL(newTableFolderQueryString);
