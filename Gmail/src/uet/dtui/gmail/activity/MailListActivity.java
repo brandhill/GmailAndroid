@@ -134,7 +134,7 @@ public class MailListActivity extends BaseActivityWithMenu {
 		btnMenu.setOnClickListener(this);
 		btnRefresh.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
-		btnSetting.setOnClickListener(this);
+	    btnSetting.setOnClickListener(this);
 	}
 
 	@Override
