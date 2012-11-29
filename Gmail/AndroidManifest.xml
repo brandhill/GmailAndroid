@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="uet.dtui.gmail.activity.MailListActivity" >
+            android:name="uet.dtui.gmail.activity.BaseListEmailActivity" >
         </activity>
         <activity
             android:name="uet.dtui.gmail.activity.SettingActivity" >

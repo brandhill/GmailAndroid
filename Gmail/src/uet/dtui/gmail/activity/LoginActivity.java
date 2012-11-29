@@ -1,6 +1,7 @@
 package uet.dtui.gmail.activity;
 
 import uet.dtui.gmail.R;
+import uet.dtui.gmail.components.AllerFont;
 import uet.dtui.gmail.components.ClearableEditText;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.database.EmailDatabase;
@@ -52,6 +53,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		btnCreateAccount = (Button) findViewById(R.id.btnCreateAccount);
 		btnSignUp = (Button) findViewById(R.id.btnSignup);
 		
+		tfEmailAddr.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
+		tfPassword.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
+		
 		if (tfEmailAddr.getText().toString().equals(""))
 			btnLogin.setEnabled(false);
 		//Add text change listener for edit text email address
@@ -87,6 +91,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_clear, 0);
 				} else {
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+					String email = tfEmailAddr.getText().toString();
+					if (email.indexOf("@gmail.com") == -1 && !email.equals(""))
+						tfEmailAddr.setText(email + "@gmail.com");
 				}
 			}
 		});
@@ -98,14 +105,15 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 				Toast.makeText(getApplicationContext(), "Password is empty", 0).show();
 			else {
 				if (Utils.checkConnect(tfEmailAddr.getText().toString(), tfPassword.getText().toString())) {
-					Intent goToInbox = new Intent(this, MailListActivity.class);
+					Intent goToInbox = new Intent(this, BaseListEmailActivity.class);
 					startActivity(goToInbox);
 					this.finish();
 				} else {
 					Toast.makeText(getApplicationContext(), "Email address or password is invalid", 1).show();
 				}
 							}
-		} else if (v == btnCreateAccount) {
+		} 
+/*		else if (v == btnCreateAccount) {
 			TextView tv = Utils.createTextView(getApplicationContext(), tfEmailAddr.getText().toString());
 			BitmapDrawable bd = (BitmapDrawable) Utils.convertViewtoDrawable(tv);
 			bd.setBounds(0, 0, bd.getIntrinsicWidth(),bd.getIntrinsicHeight());
@@ -115,7 +123,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 			sb.setSpan(new ImageSpan(bd), sb.length()-(email.length() + 1), sb.length() -1 ,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 			tfEmailAddr.setMovementMethod(LinkMovementMethod.getInstance());
 			tfEmailAddr.setText(sb);
-;		} else if (v == btnForgotPw) {
+;		} */
+		else if (v == btnForgotPw) {
 			Uri uriUrl = Uri.parse("https://www.google.com/accounts/recovery");
 			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);  
 			startActivity(launchBrowser);

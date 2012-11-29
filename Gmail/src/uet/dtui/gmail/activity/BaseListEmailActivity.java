@@ -32,7 +32,7 @@ import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
 import com.sun.mail.imap.IMAPFolder;
 
-public class MailListActivity extends BaseActivityWithMenu {
+public class BaseListEmailActivity extends BaseActivityWithMenu {
 
 	private ListView listview;
 	private EmailArrayAdapter adapter;
