@@ -17,12 +17,14 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="uet.dtui.gmail.activity.MailListActivity" >
+        </activity>
+        <activity
+            android:name="uet.dtui.gmail.activity.SettingActivity" >
         </activity>
         <activity android:name="uet.dtui.gmail.activity.BaseActivityWithMenu"></activity>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail"></activity>
