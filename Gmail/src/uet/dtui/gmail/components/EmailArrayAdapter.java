@@ -43,6 +43,13 @@ public class EmailArrayAdapter extends ArrayAdapter {
 		TextView subject = (TextView) row.findViewById(R.id.mail_item_subject);
 		TextView content = (TextView) row.findViewById(R.id.mail_item_content);
 		
+		if (pos == 0)
+			row.setBackgroundResource(R.drawable.bg_first_row_email);
+		else if (pos % 2 != 0)
+			row.setBackgroundResource(R.drawable.bg_row_email_graycolor);
+		else if (pos % 2 == 0)
+			row.setBackgroundResource(R.drawable.bg_row_email_white_color);
+		
 		MessageEmail mes_item = datalist.get(pos);
 		
 		from.setText(mes_item.from);

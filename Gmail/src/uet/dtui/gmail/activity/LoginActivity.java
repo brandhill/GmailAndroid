@@ -64,6 +64,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 				}
 				else {
 					tfEmailAddr.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_clear, 0);
+					tfEmailAddr.setCompoundDrawablePadding(10);
 					btnLogin.setEnabled(true);
 					tfEmailAddr.setClearable(true);
 				}

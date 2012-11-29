@@ -8,21 +8,22 @@
 
     <CheckBox
         android:id="@+id/mail_item_read"
-        android:button="@drawable/checkbox"
-        android:focusable="false"
-        android:layout_gravity="center"
-        android:gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="4dp"
+        android:button="@drawable/checkbox"
+        android:checked="true"
+        android:focusable="false" />
 
     <!-- first row that show sender and sent date -->
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginBottom="6dp"
         android:layout_marginRight="6dp"
         android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -33,55 +34,68 @@
             <TextView
                 android:id="@+id/mail_item_from"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" 
-                android:maxLength="10"
-                android:maxLines="1"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:ellipsize="end"
-                android:textSize="25dp"
                 android:gravity="left"
-                android:text="From Mr.Bean lksdjljalfkafjklasjsl"/>
-			
-            <!-- <ImageView 
+                android:maxLines="1"
+                android:maxWidth="150dp"
+                android:text="From Mr.Bean lksdjljalfkafjklasjsl"
+                android:textSize="22dp"
+                android:textStyle="bold" />
+
+            <ImageView
                 android:id="@+id/mail_item_attachment"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/attached_file"
-                android:visibility="invisible"
-                /> -->
-            
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/attached_file" />
+
             <TextView
                 android:id="@+id/mail_item_date"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:maxLines="1"
-                android:textSize="22dp"
                 android:gravity="right|center_vertical"
-                android:text="Nov 11,2012" />
-
+                android:maxLines="1"
+                android:text="Nov 11,2012"
+                android:textColor="#0f55bd"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <!-- second line shows subject and -->
 
-        <TextView
-            android:id="@+id/mail_item_subject"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="Subject Subject Subject Subject Subject  "/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/mail_item_subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:maxWidth="260dp"
+                android:text="Subject Subject Subject Subject Subject  "
+                android:textSize="15dp"
+                android:textStyle="bold" />
+            <CheckBox 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:gravity="right"
+                android:layout_gravity="right"
+                android:button="@drawable/checkbox_stared"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/mail_item_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:textSize="17dp"
             android:maxLines="2"
-            android:text="content content content content content content content content content content content content content content content content content content content content content" />
-
+            android:text="content content content content content content content content content content content content content content content content content content content content content"
+            android:textColor="#605d5d"
+            android:textSize="14dp" />
     </LinearLayout>
 
 </LinearLayout>
