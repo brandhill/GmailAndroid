@@ -7,6 +7,7 @@ import uet.dtui.gmail.database.EmailDatabase;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Spannable;
@@ -26,6 +27,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 	private EditText tfPassword;
 	private Button btnLogin;
 	private Button btnCreateAccount;
+	private Button btnSignUp;
 	private Button btnForgotPw;
 	private EmailDatabase database;
 
@@ -40,6 +42,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		btnLogin.setOnClickListener(this);
 		btnCreateAccount.setOnClickListener(this);
 		btnForgotPw.setOnClickListener(this);
+		btnSignUp.setOnClickListener(this);
 	}
 	private void findView() {
 		tfEmailAddr =  (ClearableEditText) findViewById(R.id.tfEmailAddr);
@@ -47,6 +50,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		btnLogin = (Button) findViewById(R.id.btnLogin);
 		btnForgotPw = (Button) findViewById(R.id.btnForgot);
 		btnCreateAccount = (Button) findViewById(R.id.btnCreateAccount);
+		btnSignUp = (Button) findViewById(R.id.btnSignup);
 		
 		if (tfEmailAddr.getText().toString().equals(""))
 			btnLogin.setEnabled(false);
@@ -112,7 +116,13 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 			tfEmailAddr.setMovementMethod(LinkMovementMethod.getInstance());
 			tfEmailAddr.setText(sb);
 ;		} else if (v == btnForgotPw) {
-			Toast.makeText(getApplicationContext(), "Reset Password Account", 0).show();
+			Uri uriUrl = Uri.parse("https://www.google.com/accounts/recovery");
+			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);  
+			startActivity(launchBrowser);
+		} else if (v == btnSignUp) {
+			Uri uriUrl = Uri.parse("https://accounts.google.com/SignUp");
+			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);  
+			startActivity(launchBrowser);
 		}
 	}
 	
