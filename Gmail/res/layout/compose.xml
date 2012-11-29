@@ -1,99 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF" >
-
-        <ImageView
-            android:id="@+id/textCompose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/text_actionbar_compose" />
-
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="6dp"
-            android:background="@drawable/btn_backto_inbox_normal" />
-
-        <Button
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="6dp"
-            android:background="@drawable/btn_send_email" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#3f3e3e" />
+    android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/tfFrom"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#cfcdcd"
-            android:drawableLeft="@drawable/label_from"
-            android:drawablePadding="6dp"
-            android:padding="6dp" />
+            android:background="#FFFFFF" >
+
+            <ImageView
+                android:id="@+id/textCompose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/text_actionbar_compose" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="6dp"
+                android:background="@drawable/btn_backto_inbox_normal" />
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="6dp"
+                android:background="@drawable/btn_send_email" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#3f3e3e" />
-        <EditText
-            android:id="@+id/tfTo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#cfcdcd"
-            android:drawableLeft="@drawable/label_to"
-            android:drawablePadding="6dp"
-            android:padding="6dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#3f3e3e" />
-        <EditText
-            android:id="@+id/tfSubject"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#cfcdcd"
-            android:drawableLeft="@drawable/label_subject"
-            android:drawablePadding="6dp"
-            android:padding="6dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#3f3e3e" />
-        <EditText
-            android:id="@+id/tfContent"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Content"
-            android:gravity="left|top"
-            android:background="#FFFFFF"
-            android:padding="6dp" />
-        
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/tfFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#cfcdcd"
+                android:drawableLeft="@drawable/label_from"
+                android:drawablePadding="6dp"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#3f3e3e" />
+
+            <EditText
+                android:id="@+id/tfTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#cfcdcd"
+                android:drawableLeft="@drawable/label_to"
+                android:drawablePadding="6dp"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#3f3e3e" />
+
+            <EditText
+                android:id="@+id/tfSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#cfcdcd"
+                android:drawableLeft="@drawable/label_subject"
+                android:drawablePadding="6dp"
+                android:padding="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#3f3e3e" />
+
+            <EditText
+                android:id="@+id/tfContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:gravity="left|top"
+                android:hint="Content"
+                android:layout_marginBottom="44dp"
+                android:padding="6dp" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#837e7e"
+        android:orientation="vertical" >
+        <TextView 
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#232121"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/btn_attached" />
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="6dp"
+                android:textColor="#000000"
+                android:text="1 file attached (test.docx)"
+                android:shadowColor="#ddFFFFFF"
+                android:shadowRadius="1"
+                android:textStyle="bold"
+                android:shadowDx="0"
+                android:shadowDy="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

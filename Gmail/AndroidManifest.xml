@@ -14,7 +14,8 @@
         android:theme="@style/SampleTheme" >
         <activity
             android:name="uet.dtui.gmail.activity.LoginActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

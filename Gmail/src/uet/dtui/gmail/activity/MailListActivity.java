@@ -46,7 +46,7 @@ public class MailListActivity extends BaseActivityWithMenu {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.layout_inbox);
+		menuDrawer.setContentView(R.layout.layout_inbox);
 
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
@@ -86,24 +86,24 @@ public class MailListActivity extends BaseActivityWithMenu {
 						new Date(2012, 11, 06),
 						"content content content content content content content content content content content content ",
 						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						new Date(1991, 11, 27),
-						"content content content content content content content content content content content content ",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						new Date(2012, 11, 03),
-						"content content content content content content content content content content content content ",
-						""));
+//		mail_list
+//				.add(new MessageEmail(
+//						1,
+//						"subject subject subject subject subject subject subject subject",
+//						"from from from from from from from from from ",
+//						"to",
+//						new Date(1991, 11, 27),
+//						"content content content content content content content content content content content content ",
+//						""));
+//		mail_list
+//				.add(new MessageEmail(
+//						1,
+//						"subject subject subject subject subject subject subject subject",
+//						"from from from from from from from from from ",
+//						"to",
+//						new Date(2012, 11, 03),
+//						"content content content content content content content content content content content content ",
+//						""));
 		Log.d("Size of data", mail_list.size() + "");
 
 		findViews();

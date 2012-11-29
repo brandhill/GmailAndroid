@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#cfcdcd" >
@@ -50,10 +51,14 @@
         <ListView 
             android:id="@+id/mail_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:cacheColorHint="@android:color/transparent"
             android:divider="#353535"
+            android:listSelector="@drawable/list_selector"
+            android:layout_marginBottom="55dp"
             android:dividerHeight="1dp"></ListView>
+        
+        
     </LinearLayout>
 
     <LinearLayout
@@ -79,7 +84,7 @@
             android:id="@+id/btnCompose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/btn_compose_normal" />
+            android:background="@drawable/btn_compose" />
         <Button
             android:id="@+id/btnSettings"
             android:layout_width="wrap_content"
