@@ -134,11 +134,15 @@ public class MailListActivity extends BaseActivityWithMenu {
 		btnMenu.setOnClickListener(this);
 		btnRefresh.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
-		btnSetting.setOnClickListener(this);
+	    btnSetting.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
+		if (v == btnSetting){
+			Intent settingIntent = new Intent(this, SettingActivity.class);
+			startActivity(settingIntent);
+		}
 		if (v == btnCompose) {
 			Intent intentCompose = new Intent(this, ComposeNewEmail.class);
 			startActivity(intentCompose);
