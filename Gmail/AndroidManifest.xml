@@ -15,7 +15,7 @@
         <activity
             android:name="uet.dtui.gmail.activity.LoginActivity"
             android:label="@string/title_activity_main" 
-            android:windowSoftInputMode="stateVisible|adjustPan">
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
