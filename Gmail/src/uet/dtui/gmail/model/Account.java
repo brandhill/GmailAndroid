@@ -1,31 +1,30 @@
 package uet.dtui.gmail.model;
 
+import uet.dtui.gmail.components.Utils;
+
 
 public class Account {
 	public long id;
 	public String displayName;
 	public String email;
 	public String password;
-	/*State activity is true when account available in database else otherwide*/
-	public Boolean stateActivite;
-	/*State online is true when account online else otherwide*/
-	public Boolean stateOnline;
+	public int isOwner;
 	
-	public Account(String email, String name, String pass) {
+	public Account(String email, String name, String pass, int owner) {
 		id = System.currentTimeMillis();
 		displayName = name;
 		this.email = email;
 		this.password = pass;
-		stateActivite = true;
-		stateOnline = true;
+		isOwner = owner;
 	}
-	
+	/**
+	 * Contructor for account is not owner
+	 * */
 	public Account(String email, String pass) {
 		id = System.currentTimeMillis();
 		displayName = email;
 		this.email = email;
 		this.password = pass;
-		stateActivite = true;
-		stateOnline = true;
+		isOwner = Utils.TYPE_ACCOUNT_NOT_ONWNER;
 	}
 }

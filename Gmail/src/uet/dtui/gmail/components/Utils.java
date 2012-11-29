@@ -18,6 +18,9 @@ import android.view.View.MeasureSpec;
 import android.widget.TextView;
 
 public class Utils {
+	
+	public static final int TYPE_ACCOUNT_OWNER = 0;
+	public static final int TYPE_ACCOUNT_NOT_ONWNER = 1;
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);
 		tv.setText(text);

@@ -3,6 +3,7 @@ package uet.dtui.gmail.activity;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.ClearableEditText;
 import uet.dtui.gmail.components.Utils;
+import uet.dtui.gmail.database.EmailDatabase;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,6 +27,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 	private Button btnLogin;
 	private Button btnCreateAccount;
 	private Button btnForgotPw;
+	private EmailDatabase database;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 ;		} else if (v == btnForgotPw) {
 			Toast.makeText(getApplicationContext(), "Reset Password Account", 0).show();
 		}
+	}
+	
+	public void saveAccount(String user, String pass) {
+		database = new EmailDatabase(getApplicationContext());
+		database.openDB();
+		long idAcc = System.currentTimeMillis();
+		database.addRowToTableAccount(idAcc, user, pass, user, Utils.TYPE_ACCOUNT_OWNER);
+		database.closeDB();
 	}
 	
 }
