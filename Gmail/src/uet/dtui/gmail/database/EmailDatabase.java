@@ -68,12 +68,12 @@ public class EmailDatabase{
 	 * ADDING A ROW TO THE DATABASE TABLE ACCOUNT
 	 *
 	 * @param id the value for the row's id column
-	 * @param rowStringOne the value for the row's first column
-	 * @param rowStringTwo the value for the row's second column 
-	 * @param rowStringThree the value for the row's third column 
-	 * @param rowStringFour the value for the row's forth column 
+	 * @param rowStringEmailAddress the value for the row's first column
+	 * @param rowStringPassword the value for the row's second column 
+	 * @param rowStringDisplayName the value for the row's third column 
+	 * @param rowStringIsOwn the value for the row's forth column 
 	 */
-	public boolean addRowToTableAccount(long id, String rowStringOne, String rowStringTwo, String rowStringThree, int rowStringFour)
+	public boolean addRowToTableAccount(long id, String rowStringEmailAddress, String rowStringPassword, String rowStringDisplayName, int rowStringIsOwn)
 	{
 		// check existing of id in the table.
 		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM ACCOUNT WHERE id=" + id + ";", null);
@@ -84,10 +84,10 @@ public class EmailDatabase{
 			// this is a key value pair holder used by android's SQLite functions
 			ContentValues values = new ContentValues();
 			values.put(TABLE_ACCOUNT_ROW_ID, id);
-			values.put(TABLE_ACCOUNT_ROW_ONE, rowStringOne);
-			values.put(TABLE_ACCOUNT_ROW_TWO, rowStringTwo);
-			values.put(TABLE_ACCOUNT_ROW_THREE, rowStringThree);
-			values.put(TABLE_ACCOUNT_ROW_FOUR, rowStringFour);
+			values.put(TABLE_ACCOUNT_ROW_ONE, rowStringEmailAddress);
+			values.put(TABLE_ACCOUNT_ROW_TWO, rowStringPassword);
+			values.put(TABLE_ACCOUNT_ROW_THREE, rowStringDisplayName);
+			values.put(TABLE_ACCOUNT_ROW_FOUR, rowStringIsOwn);
 	 
 			// ask the database object to insert the new data 
 			try{
@@ -139,12 +139,12 @@ public class EmailDatabase{
 	 * UPDATING A ROW IN THE DATABASE TABLE ACCOUNT
 	 *
 	 * @param rowID the SQLite database identifier for the row to update.
-	 * @param rowStringOne the new value for the row's first column
-	 * @param rowStringTwo the new value for the row's second column
-	 * @param rowStringThree the value for the row's third column 
-	 * @param rowStringFour the value for the row's forth column 
+	 * @param rowStringEmailAddress the value for the row's first column
+	 * @param rowStringPassword the value for the row's second column 
+	 * @param rowStringDisplayName the value for the row's third column 
+	 * @param rowStringIsOwn the value for the row's forth column 
 	 */ 
-	public boolean updateRowToTableAccount(long rowID, String rowStringOne, String rowStringTwo, String rowStringThree, int rowStringFour)
+	public boolean updateRowToTableAccount(long rowID, String rowStringEmailAddress, String rowStringPassword, String rowStringDisplayName, int rowStringIsOwn)
 	{
 		// check existing of rowID in the table.
 		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM ACCOUNT WHERE id=" + rowID + ";", null);
@@ -155,10 +155,10 @@ public class EmailDatabase{
 			// this is a key value pair holder used by android's SQLite functions
 			ContentValues values = new ContentValues();
 			values.put(TABLE_ACCOUNT_ROW_ID, rowID);
-			values.put(TABLE_ACCOUNT_ROW_ONE, rowStringOne);
-			values.put(TABLE_ACCOUNT_ROW_TWO, rowStringTwo);
-			values.put(TABLE_ACCOUNT_ROW_THREE, rowStringThree);
-			values.put(TABLE_ACCOUNT_ROW_FOUR, rowStringFour);
+			values.put(TABLE_ACCOUNT_ROW_ONE, rowStringEmailAddress);
+			values.put(TABLE_ACCOUNT_ROW_TWO, rowStringPassword);
+			values.put(TABLE_ACCOUNT_ROW_THREE, rowStringDisplayName);
+			values.put(TABLE_ACCOUNT_ROW_FOUR, rowStringIsOwn);
 			
 			// ask the database object to update the database row of given rowID
 			try {
@@ -183,12 +183,12 @@ public class EmailDatabase{
 	 * ADDING A ROW TO THE DATABASE TABLE FOLDER
 	 *
 	 * @param idFolder the value for the row's id column
-	 * @param rowStringOne the value for the row's first column
-	 * @param rowStringTwo the value for the row's second column 
-	 * @param rowStringThree the value for the row's third column 
-	 * @param rowStringFour the value for the row's forth column
+	 * @param rowStringIDAccount the value for the row's first column
+	 * @param rowStringNameFolder the value for the row's second column 
+	 * @param rowStringNumberUnread the value for the row's third column 
+	 * @param rowStringNumberTotalMail  the value for the row's forth column
 	 */
-	public boolean addRowToTableFolder(long idFolder, long rowStringOne, String rowStringTwo, int rowStringThree, int rowStringFour)
+	public boolean addRowToTableFolder(long idFolder, long rowStringIDAccount, String rowStringNameFolder, int rowStringNumberUnread, int rowStringNumberTotalMail)
 	{
 		// check existing of idFolder in the table.
 		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM FOLDER WHERE id_folder=" + idFolder + ";", null);
@@ -199,10 +199,10 @@ public class EmailDatabase{
 			// this is a key value pair holder used by android's SQLite functions
 			ContentValues values = new ContentValues();
 			values.put(TABLE_FOLDER_ROW_ID, idFolder);
-			values.put(TABLE_FOLDER_ROW_ONE, rowStringOne);
-			values.put(TABLE_FOLDER_ROW_TWO, rowStringTwo);
-			values.put(TABLE_FOLDER_ROW_THREE, rowStringThree);
-			values.put(TABLE_FOLDER_ROW_FOUR, rowStringFour);
+			values.put(TABLE_FOLDER_ROW_ONE, rowStringIDAccount);
+			values.put(TABLE_FOLDER_ROW_TWO, rowStringNameFolder);
+			values.put(TABLE_FOLDER_ROW_THREE, rowStringNumberUnread);
+			values.put(TABLE_FOLDER_ROW_FOUR, rowStringNumberTotalMail);
 	 
 			// ask the database object to insert the new data 
 			try{db.insert(TABLE_FOLDER_NAME, null, values);}
@@ -252,12 +252,12 @@ public class EmailDatabase{
 	 * UPDATING A ROW IN THE DATABASE TABLE FOLDER
 	 *
 	 * @param rowID the SQLite database identifier for the row to update.
-	 * @param rowStringOne the new value for the row's first column
-	 * @param rowStringTwo the new value for the row's second column
-	 * @param rowStringThree the value for the row's third column 
-	 * @param rowStringFour the value for the row's forth column 
+	 * @param rowStringIDAccount the value for the row's first column
+	 * @param rowStringNameFolder the value for the row's second column 
+	 * @param rowStringNumberUnread the value for the row's third column 
+	 * @param rowStringNumberTotalMail  the value for the row's forth column
 	 */ 
-	public boolean updateRowToTableFolder(long rowID, long rowStringOne, String rowStringTwo, int rowStringThree, int rowStringFour)
+	public boolean updateRowToTableFolder(long rowID, long rowStringIDAccount, String rowStringNameFolder, int rowStringNumberUnread, int rowStringNumberTotalMail)
 	{
 		// check existing of rowID in the table.
 		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM FOLDER WHERE id_folder=" + rowID + ";", null);
@@ -267,10 +267,10 @@ public class EmailDatabase{
 		if (count != 0) {
 			// this is a key value pair holder used by android's SQLite functions
 			ContentValues values = new ContentValues();
-			values.put(TABLE_FOLDER_ROW_ONE, rowStringOne);
-			values.put(TABLE_FOLDER_ROW_TWO, rowStringTwo);
-			values.put(TABLE_FOLDER_ROW_THREE, rowStringThree);
-			values.put(TABLE_FOLDER_ROW_FOUR, rowStringFour);
+			values.put(TABLE_FOLDER_ROW_ONE, rowStringIDAccount);
+			values.put(TABLE_FOLDER_ROW_TWO, rowStringNameFolder);
+			values.put(TABLE_FOLDER_ROW_THREE, rowStringNumberUnread);
+			values.put(TABLE_FOLDER_ROW_FOUR, rowStringNumberTotalMail);
 			
 			// ask the database object to update the database row of given rowID
 			try {
@@ -295,15 +295,15 @@ public class EmailDatabase{
 	 * ADDING A ROW TO THE DATABASE TABLE MESSAGE
 	 *
 	 * @param idMessage the value for the row's id column
-	 * @param rowStringOne the value for the row's first column
-	 * @param rowStringTwo the value for the row's second column 
-	 * @param rowStringThree the value for the row's third column 
-	 * @param rowStringFour the value for the row's forth column 
-	 * @param rowStringFive the value for the row's firth column 
-	 * @param rowStringFive the value for the row's sixth column 
-	 * @param rowStringFive the value for the row's seventh column
+	 * @param rowStringIDFolder the value for the row's first column
+	 * @param rowStringSubject the value for the row's second column 
+	 * @param rowStringFromAddress the value for the row's third column 
+	 * @param rowStringToAddress the value for the row's forth column 
+	 * @param rowStringContext the value for the row's firth column 
+	 * @param rowStringDate the value for the row's sixth column 
+	 * @param rowStringAttach the value for the row's seventh column
 	 */
-	public boolean addRowToTableMessage(long idMessage, long rowStringOne, String rowStringTwo, String rowStringThree, String rowStringFour, String rowStringFive, String rowStringSix, String rowStringSeven)
+	public boolean addRowToTableMessage(long idMessage, long rowStringIDFolder, String rowStringSubject, String rowStringFromAddress, String rowStringToAddress, String rowStringContext, String rowStringDate, String rowStringAttach)
 	{
 		// check existing of idMessage in the table.
 		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM MESSAGE WHERE id_message=" + idMessage + ";", null);
@@ -314,13 +314,13 @@ public class EmailDatabase{
 			// this is a key value pair holder used by android's SQLite functions
 			ContentValues values = new ContentValues();
 			values.put(TABLE_MESSAGE_ROW_ID, idMessage);
-			values.put(TABLE_MESSAGE_ROW_ONE, rowStringOne);
-			values.put(TABLE_MESSAGE_ROW_TWO, rowStringTwo);
-			values.put(TABLE_MESSAGE_ROW_THREE, rowStringThree);
-			values.put(TABLE_MESSAGE_ROW_FOUR, rowStringFour);
-			values.put(TABLE_MESSAGE_ROW_FIVE, rowStringFive);
-			values.put(TABLE_MESSAGE_ROW_SIX, rowStringSix);
-			values.put(TABLE_MESSAGE_ROW_SEVEN, rowStringSeven);
+			values.put(TABLE_MESSAGE_ROW_ONE, rowStringIDFolder);
+			values.put(TABLE_MESSAGE_ROW_TWO, rowStringSubject);
+			values.put(TABLE_MESSAGE_ROW_THREE, rowStringFromAddress);
+			values.put(TABLE_MESSAGE_ROW_FOUR, rowStringToAddress);
+			values.put(TABLE_MESSAGE_ROW_FIVE, rowStringContext);
+			values.put(TABLE_MESSAGE_ROW_SIX, rowStringDate);
+			values.put(TABLE_MESSAGE_ROW_SEVEN, rowStringAttach);
 	 
 			// ask the database object to insert the new data 
 			try{
@@ -372,15 +372,15 @@ public class EmailDatabase{
 	 * UPDATING A ROW IN THE DATABASE TABLE MESSAGE
 	 *
 	 * @param rowID the SQLite database identifier for the row to update.
-	 * @param rowStringOne the new value for the row's first column
-	 * @param rowStringTwo the new value for the row's second column
-	 * @param rowStringThree the value for the row's third column 
-	 * @param rowStringFour the value for the row's forth column 
-	 * @param rowStringFive the value for the row's firth column 
-	 * @param rowStringSix the value for the row's sixth column 
-	 * @param rowStringSeven the value for the row's seventh column
+	 * @param rowStringIDFolder the value for the row's first column
+	 * @param rowStringSubject the value for the row's second column 
+	 * @param rowStringFromAddress the value for the row's third column 
+	 * @param rowStringToAddress the value for the row's forth column 
+	 * @param rowStringContext the value for the row's firth column 
+	 * @param rowStringDate the value for the row's sixth column 
+	 * @param rowStringAttach the value for the row's seventh column
 	 */ 
-	public boolean updateRowToTableMessage(long rowID, long rowStringOne, String rowStringTwo, String rowStringThree, String rowStringFour, String rowStringFive, String rowStringSix, String rowStringSeven)
+	public boolean updateRowToTableMessage(long rowID, long rowStringIDFolder, String rowStringSubject, String rowStringFromAddress, String rowStringToAddress, String rowStringContext, String rowStringDate, String rowStringAttach)
 	{
 		// check existing of rowID in the table.
 		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM MESSAFE WHERE id_message=" + rowID + ";", null);
@@ -390,13 +390,13 @@ public class EmailDatabase{
 		if (count != 0) {
 			// this is a key value pair holder used by android's SQLite functions
 			ContentValues values = new ContentValues();
-			values.put(TABLE_MESSAGE_ROW_ONE, rowStringOne);
-			values.put(TABLE_MESSAGE_ROW_TWO, rowStringTwo);
-			values.put(TABLE_MESSAGE_ROW_THREE, rowStringThree);
-			values.put(TABLE_MESSAGE_ROW_FOUR, rowStringFour);
-			values.put(TABLE_MESSAGE_ROW_FIVE, rowStringFive);
-			values.put(TABLE_MESSAGE_ROW_SIX, rowStringSix);
-			values.put(TABLE_MESSAGE_ROW_SEVEN, rowStringSeven);
+			values.put(TABLE_MESSAGE_ROW_ONE, rowStringIDFolder);
+			values.put(TABLE_MESSAGE_ROW_TWO, rowStringSubject);
+			values.put(TABLE_MESSAGE_ROW_THREE, rowStringFromAddress);
+			values.put(TABLE_MESSAGE_ROW_FOUR, rowStringToAddress);
+			values.put(TABLE_MESSAGE_ROW_FIVE, rowStringContext);
+			values.put(TABLE_MESSAGE_ROW_SIX, rowStringDate);
+			values.put(TABLE_MESSAGE_ROW_SEVEN, rowStringAttach);
 			
 			// ask the database object to update the database row of given rowID
 			try {
