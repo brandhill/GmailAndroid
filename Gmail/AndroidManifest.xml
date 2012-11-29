@@ -22,12 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="uet.dtui.gmail.activity.BaseListEmailActivity" >
+            android:name="uet.dtui.gmail.activity.BaseListEmailActivity" 
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
-            android:name="uet.dtui.gmail.activity.SettingActivity" >
+            android:name="uet.dtui.gmail.activity.SettingActivity" 
+            android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" ></activity>
+        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" 
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

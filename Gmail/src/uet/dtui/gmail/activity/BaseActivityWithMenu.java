@@ -8,6 +8,7 @@ import net.simonvt.widget.MenuDrawerManager;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.AddAccountPopupWindow;
 import uet.dtui.gmail.components.MenuAdapter;
+import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.FolderEmail;
 import uet.dtui.gmail.model.ItemMenuAccount;
@@ -36,11 +37,12 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	public String currentAccount = "kienvtqhi@gmail.com";
 	public String currentFolder = "InBox";
 	private ListView listView;
-	public int mActivePosition = 1;
+	public int mActivePosition = -1;
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
 	private static final String TAG = "Base Activity";
 	public int posArrow = -1;
+	public EmailDatabase database;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 		// Set item click listener for listview
 		listView.setOnItemClickListener(mItemClickListener);
+		setFirstActiveView();
 	}
 
 	public void onClick(View v) {
@@ -154,5 +157,16 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			menuDrawer.closeMenu();
 			return;
 		}
+	}
+	
+	public void setFirstActiveView() {
+		Log.w("SET FIRST ACTIVE VIEW", "RUNNING");
+		for (int i=0 ;i<mDatas.size(); i++)
+			if (mAdapter.getItemViewType(i) == MenuAdapter.ITEM_FOLDER) {
+				Log.w("SET FIRST ACTIVE VIEW", "OK");
+				menuDrawer.setActiveView(listView.getChildAt(i));
+				menuDrawer.getMenuDrawer().invalidate();
+				break;
+			}
 	}
 }

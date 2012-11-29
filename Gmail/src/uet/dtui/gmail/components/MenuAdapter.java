@@ -9,7 +9,6 @@ import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -103,7 +102,6 @@ public class MenuAdapter extends BaseAdapter{
 				accountHolder.displayName = (TextView) row.findViewById(R.id.account_display);
 				
 				ItemMenuAccount itemAccount = (ItemMenuAccount) item;
-				Log.d("Account Name", itemAccount.account.email);
 				if (((ItemMenuAccount) item).account.email.equals(activity.currentAccount)) {
 					accountHolder.iconAcc.setImageDrawable(drawbleResource.getDrawable(R.drawable.item_account_online));
 					accountHolder.displayName.setTextColor(Color.WHITE);
