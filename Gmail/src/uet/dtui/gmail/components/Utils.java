@@ -1,21 +1,21 @@
 package uet.dtui.gmail.components;
 
+import java.util.Properties;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Store;
+
 import uet.dtui.gmail.R;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class Utils {
 	public static TextView createTextView(Context context, String text) {
@@ -43,5 +43,21 @@ public class Utils {
 		Bitmap viewBmp = cacheBmp.copy(Bitmap.Config.ARGB_8888, true);
 		view.destroyDrawingCache();
 		return new BitmapDrawable(viewBmp);
+	}
+
+	public static Boolean checkConnect(String user, String password) {
+		Store store;
+		Properties props = System.getProperties();
+		props.setProperty("mail.store.protocol", "imaps");
+		Session session = Session.getDefaultInstance(props, null);
+		try {
+			store = session.getStore("imaps");
+			store.connect("imap.gmail.com", user, password);
+			store.close();
+			return true;
+		} catch (MessagingException e) {
+			return false;
+		}
+
 	}
 }

@@ -13,7 +13,7 @@ public class EmailDatabase{
  
 	// a reference to the database used by this application/object
 	private SQLiteDatabase db;
- 
+	private CustomSQLiteOpenHelper helper;
 	// These constants are specific to the database. 
 	private final String DB_NAME = "email_db";
 	private final int DB_VERSION = 1;
@@ -48,10 +48,17 @@ public class EmailDatabase{
 	public EmailDatabase(Context context)
 	{
 		this.context = context;
- 
+	}
+	
+	public EmailDatabase openDB() {
 		// create or open the database
-		CustomSQLiteOpenHelper helper = new CustomSQLiteOpenHelper(context);
+		helper = new CustomSQLiteOpenHelper(context);
 		this.db = helper.getWritableDatabase();
+		return this;
+	}
+	
+	public void closeDB() {
+		helper.close();
 	}
  
 	/**********************************************************************

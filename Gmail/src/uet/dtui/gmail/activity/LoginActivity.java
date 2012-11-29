@@ -26,7 +26,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 	private Button btnLogin;
 	private Button btnCreateAccount;
 	private Button btnForgotPw;
-	private static final String GMAIL = "@gmail.com";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -91,10 +91,14 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 			if (tfPassword.getText().toString().equals(""))
 				Toast.makeText(getApplicationContext(), "Password is empty", 0).show();
 			else {
-				Intent goToInbox = new Intent(this, MailListActivity.class);
-				startActivity(goToInbox);
-				this.finish();
-			}
+				if (Utils.checkConnect(tfEmailAddr.getText().toString(), tfPassword.getText().toString())) {
+					Intent goToInbox = new Intent(this, MailListActivity.class);
+					startActivity(goToInbox);
+					this.finish();
+				} else {
+					Toast.makeText(getApplicationContext(), "Email address or password is invalid", 1).show();
+				}
+							}
 		} else if (v == btnCreateAccount) {
 			TextView tv = Utils.createTextView(getApplicationContext(), tfEmailAddr.getText().toString());
 			BitmapDrawable bd = (BitmapDrawable) Utils.convertViewtoDrawable(tv);
