@@ -16,7 +16,7 @@
         android:text="Settings"/>
     
     <ListView
-        android:id="@+id/setting"
+        android:id="@+id/settinglist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"

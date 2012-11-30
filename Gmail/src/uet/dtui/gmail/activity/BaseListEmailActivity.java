@@ -15,12 +15,14 @@ import net.simonvt.widget.MenuDrawer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -43,17 +45,28 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	private Button btnSetting;
 	private Button btnRefresh;
 	private Button btnDelete;
+	private View loadmore;
+	private ProgressBar progressBar;
+	private final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
 		
+		listview = (ListView) findViewById(R.id.mail_list);
+		
+		LayoutInflater inflater = getLayoutInflater();
+		loadmore = inflater.inflate(R.layout.loadmore_layout, null);
+		listview.addFooterView(loadmore);
+		progressBar = (ProgressBar) loadmore.findViewById(R.id.progressBar);
+		loadmore.setOnClickListener(this);
+		
 		Intent checkNewEmailService = new Intent(this,CheckNewEmailService.class);
 		startService(checkNewEmailService);
 		
 		// read mail and save to a list
-		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
+		
 		mail_list
 				.add(new MessageEmail(
 						1,
@@ -94,7 +107,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		Log.d("Size of data", mail_list.size() + "");
 
 		findViews();
-
+		
 		adapter = new EmailArrayAdapter(this, R.layout.mail_row, mail_list);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new OnItemClickListener() {
@@ -144,9 +157,20 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 				menuDrawer.openMenu();
 			}
 		}
+		if (v==loadmore){
+			loadMoreMessages();
+		}
 		super.onClick(v);
 	}
 	
-	
+	public void loadMoreMessages(){
+		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
+//		get more messages here
+		
+//		get 20 message from DB to messages[]
+		
+//		add to mail_list
+		
+	}
 
 }
