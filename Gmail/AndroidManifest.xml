@@ -13,22 +13,30 @@
         android:label="@string/app_name"
         android:theme="@style/SampleTheme" >
         <activity
-            android:name="uet.dtui.gmail.activity.LoginActivity"
+            android:name="uet.dtui.gmail.activity.SplashActivity"
             android:label="@string/title_activity_main" 
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="uet.dtui.gmail.activity.MailListActivity" >
+            android:name="uet.dtui.gmail.activity.LoginActivity" 
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name="uet.dtui.gmail.activity.SettingActivity" >
+            android:name="uet.dtui.gmail.activity.BaseListEmailActivity" 
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <service android:name="uet.dtui.gmail.activity.CheckNewEmailService"></service>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" ></activity>
+        <activity
+            android:name="uet.dtui.gmail.activity.SettingActivity" 
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" 
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>
