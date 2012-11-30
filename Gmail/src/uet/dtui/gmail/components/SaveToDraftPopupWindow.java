@@ -1,6 +1,7 @@
 package uet.dtui.gmail.components;
 
 import uet.dtui.gmail.R;
+import uet.dtui.gmail.activity.ComposeNewEmail;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
@@ -11,12 +12,13 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListener{
-	Activity activity;
+	ComposeNewEmail activity;
 	View contentView;
 	private Button btnClose;
 	private Button btnSave;
+	private Button btnDiscard;
 	
-	public SaveToDraftPopupWindow(Activity activity, View contentView,
+	public SaveToDraftPopupWindow(ComposeNewEmail activity, View contentView,
 			int width, int height) {
 		super(contentView, width, height, true);
 		this.activity = activity;
@@ -34,9 +36,10 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 	private void findViews() {
 		btnClose = (Button) contentView.findViewById(R.id.btnClose);
 		btnSave = (Button) contentView.findViewById(R.id.btnSave);
-		
+		btnDiscard = (Button) contentView.findViewById(R.id.btnDiscard);
 		btnClose.setOnClickListener(this);
 		btnSave.setOnClickListener(this);
+		btnDiscard.setOnClickListener(this);
 	}
 	public void onClick(View v) {
 		if (v == btnClose) {
@@ -44,6 +47,10 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 		} else if (v == btnSave){
 			Toast.makeText(activity, "Save Account", 0).show();
 			this.dismiss();
+			activity.finish();
+		} else if (v == btnDiscard) {
+			this.dismiss();
+			activity.finish();
 		}
 		
 	}
