@@ -11,27 +11,38 @@ public class MoveFolderAsyncTask extends AsyncTask<Void, Void, Void>{
 	private Folder src;
 	private Folder dest;
 	private Message[] message;
-	
-	public MoveFolderAsyncTask(Message[] message,Folder src, Folder dest){
-		this.dest = dest;
+	private int[] idMessageMove;
+	public MoveFolderAsyncTask(Folder src, Folder dest, int[] idMessageMove){
+		this.idMessageMove = idMessageMove;
 		this.src = src;
-		this.message = message;
+		this.dest = dest;
 	}
 	
 	@Override
 	protected Void doInBackground(Void... params) {
 		// TODO Auto-generated method stub
-		moveFolderStarred();
+		moveFolder();
 		publishProgress(null);
 		return null;
 	}
 	
-	private void moveFolderStarred(){
+	private void moveFolder(){
 		try {
+			GetMessagesMove(idMessageMove);
 			src.copyMessages(message, dest);
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private Message[] GetMessagesMove(int[] id){
+		try {
+			message = src.getMessages(id);
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return message;
 	}
 }

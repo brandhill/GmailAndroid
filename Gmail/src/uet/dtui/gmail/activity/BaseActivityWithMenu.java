@@ -15,6 +15,7 @@ import uet.dtui.gmail.model.FolderEmail;
 import uet.dtui.gmail.model.ItemMenuAccount;
 import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
+import android.R.bool;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -125,8 +126,8 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 	@Override
 	public void onBackPressed() {
-		closeMenu();
-		super.onBackPressed();
+		if (!closeMenu())
+			super.onBackPressed();
 	}
 
 	@Override
@@ -143,14 +144,15 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	public void closeMenu() {
+	public boolean closeMenu() {
 		final int drawerState = menuDrawer.getDrawerState();
 		Log.d("Popup window", "IS NULL");
 		if (drawerState == MenuDrawer.STATE_OPEN
 				|| drawerState == MenuDrawer.STATE_OPENING) {
 			menuDrawer.closeMenu();
-			return;
+			return true;
 		}
+		return false;
 	}
 
 	public void setFirstActiveView() {

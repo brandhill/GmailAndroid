@@ -27,11 +27,14 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import uet.dtui.gmail.apis.MailReaderAsyncTask;
 import uet.dtui.gmail.components.EmailArrayAdapter;
+import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.model.MessageEmail;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
+import uet.dtui.gmail.database.EmailDatabase;
 
 import com.sun.mail.imap.IMAPFolder;
 
@@ -45,10 +48,14 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	private Button btnSetting;
 	private Button btnRefresh;
 	private Button btnDelete;
+
 	private View loadmore;
 	private ProgressBar progressBar;
 	private final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 	
+	private MailReaderAsyncTask asyncReadEmail;
+	private EmailDatabase database;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,47 +70,13 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		loadmore.setOnClickListener(this);
 		
 		Intent checkNewEmailService = new Intent(this,CheckNewEmailService.class);
-		startService(checkNewEmailService);
+		//startService(checkNewEmailService);
 		
 		// read mail and save to a list
+		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
+		asyncReadEmail = new MailReaderAsyncTask(this, Utils.FOLDER_NAME_INBOX);
+		asyncReadEmail.execute(null);
 		
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject ",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content ",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content ",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content ",
-						""));
-
 		Log.d("Size of data", mail_list.size() + "");
 
 		findViews();
@@ -128,18 +101,18 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSetting = (Button) findViewById(R.id.btnSettings);
-		
+
 		btnCompose.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
 		btnMenu.setOnClickListener(this);
 		btnRefresh.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
-	    btnSetting.setOnClickListener(this);
+		btnSetting.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v == btnSetting){
+		if (v == btnSetting) {
 			Intent settingIntent = new Intent(this, SettingActivity.class);
 			startActivity(settingIntent);
 		}
@@ -157,12 +130,18 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 				menuDrawer.openMenu();
 			}
 		}
+
 		if (v==loadmore){
 			loadMoreMessages();
+		}
+		if (v == btnSearch) {
+			Intent searchIntent = new Intent(this, SearchActivity.class);
+			startActivity(searchIntent);
 		}
 		super.onClick(v);
 	}
 	
+
 	public void loadMoreMessages(){
 		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
 //		get more messages here
@@ -172,5 +151,11 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 //		add to mail_list
 		
 	}
+
+	public void getDataForList() {
+		
+	}
+
+
 
 }
