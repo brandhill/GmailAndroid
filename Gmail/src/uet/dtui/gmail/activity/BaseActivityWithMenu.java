@@ -15,6 +15,7 @@ import uet.dtui.gmail.model.FolderEmail;
 import uet.dtui.gmail.model.ItemMenuAccount;
 import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+@SuppressLint("NewApi")
 public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 	public static final String ACCOUNT_CATEGORY = "accounts";
@@ -45,10 +47,12 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	private static final String TAG = "Base Activity";
 	public int posArrow = -1;
 	public EmailDatabase database;
-	private int imageFolder[] = {R.drawable.icon_inbox_folder, R.drawable.icon_star_folder
-			,R.drawable.icon_sent_folder, R.drawable.icon_draft_folder, R.drawable.icon_delete_folder};
-	private int textFolder [] = {R.drawable.text_inbox_folder, R.drawable.text_important_folder
-			,R.drawable.text_sent_folder, R.drawable.text_draft_folder, R.drawable.text_delete_folder};
+	private int imageFolder[] = { R.drawable.icon_inbox_folder,
+			R.drawable.icon_star_folder, R.drawable.icon_sent_folder,
+			R.drawable.icon_draft_folder, R.drawable.icon_delete_folder };
+	private int textFolder[] = { R.drawable.text_inbox_folder,
+			R.drawable.text_important_folder, R.drawable.text_sent_folder,
+			R.drawable.text_draft_folder, R.drawable.text_delete_folder };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,37 +62,14 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		menuDrawer.setMenuView(R.layout.menu_drawer);
 
 		listView = (ListView) findViewById(R.id.list_menu);
+		
 		mDatas = new ArrayList<Object>();
 		listAcc = new ArrayList<Account>();
 		listFolder = new ArrayList<FolderEmail>();
-		
-		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
-				R.drawable.category_menu_accounts));
-		
-		//Get account owner
-		database = new EmailDatabase(getApplicationContext());
-		database.openDB();
-		
-		listAcc = database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER);
-		Account cur = new Account();;
-		for (int i=0; i<listAcc.size(); i++) {
-			cur = listAcc.get(0);
-			mDatas.add(new ItemMenuAccount(listAcc.get(i)));
-		}
-		
-		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
-				R.drawable.category_menu_categories));
-		//Get folder
-		listFolder = database.getAllFolderWithAcc(cur.id);
-		Log.d("SIZE OF LIST FOLDER", listFolder.size() + "");
-		for (int i=0; i<listFolder.size(); i++) {
-			mDatas.add(new ItemMenuFolder(imageFolder[i], textFolder[i],listFolder.get(i)));
-		}
-		database.closeDB();
-
-		Log.d(TAG, mDatas.size() + "");
 		mAdapter = new MenuAdapter(mDatas, this);
-		listView.setAdapter(mAdapter);
+
+		getDataForMenu();
+		
 		// Set listener for onScroll
 		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -157,7 +138,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	public void closeMenu() {
 		final int drawerState = menuDrawer.getDrawerState();
 		Log.d("Popup window", "IS NULL");
@@ -167,15 +148,47 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			return;
 		}
 	}
-	
+
 	public void setFirstActiveView() {
 		Log.w("SET FIRST ACTIVE VIEW", "RUNNING");
-		for (int i=0 ;i<mDatas.size(); i++)
+		for (int i = 0; i < mDatas.size(); i++)
 			if (mAdapter.getItemViewType(i) == MenuAdapter.ITEM_FOLDER) {
 				Log.w("SET FIRST ACTIVE VIEW", "OK");
 				menuDrawer.setActiveView(listView.getChildAt(i));
 				menuDrawer.getMenuDrawer().invalidate();
 				break;
 			}
+	}
+
+	public void getDataForMenu() {
+		mDatas.clear();
+		listView.setAdapter(mAdapter);
+		// Get account owner
+		database = new EmailDatabase(getApplicationContext());
+		database.openDB();
+		
+		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
+				R.drawable.category_menu_accounts));
+
+		listAcc = database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER);
+		Account cur = new Account();
+		;
+		for (int i = 0; i < listAcc.size(); i++) {
+			cur = listAcc.get(0);
+			mDatas.add(new ItemMenuAccount(listAcc.get(i)));
+		}
+
+		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
+				R.drawable.category_menu_categories));
+		// Get folder
+		listFolder = database.getAllFolderWithAcc(cur.id);
+		Log.d("SIZE OF LIST FOLDER", listFolder.size() + "");
+		for (int i = 0; i < listFolder.size(); i++) {
+			mDatas.add(new ItemMenuFolder(imageFolder[i], textFolder[i],
+					listFolder.get(i)));
+		}
+		mAdapter.notifyDataSetChanged();
+		database.closeDB();
+
 	}
 }

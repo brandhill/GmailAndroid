@@ -1,6 +1,9 @@
 package uet.dtui.gmail.components;
 
 import uet.dtui.gmail.R;
+import uet.dtui.gmail.activity.BaseActivityWithMenu;
+import uet.dtui.gmail.database.EmailDatabase;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
@@ -11,16 +14,18 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class AddAccountPopupWindow extends PopupWindow implements
 		OnClickListener {
-	Activity activity;
+	BaseActivityWithMenu activity;
 	View contentView;
 	private Button btnClose;
 	private Button btnSave;
 	private EditText tfPass;
 	private ClearableEditText tfEmail;
+	private EmailDatabase database;
 
-	public AddAccountPopupWindow(Activity activity, View contentView,
+	public AddAccountPopupWindow(BaseActivityWithMenu activity, View contentView,
 			int width, int height) {
 		super(contentView, width, height, true);
 		this.activity = activity;
@@ -31,6 +36,7 @@ public class AddAccountPopupWindow extends PopupWindow implements
 		this.setAnimationStyle(R.style.AnimationPopup);
 //		this.setFocusable(true);
 		this.setOutsideTouchable(true);
+		database = new EmailDatabase(activity.getApplicationContext());
 		this.setBackgroundDrawable(new BitmapDrawable());
 		this.showAtLocation(activity.findViewById(R.id.main), Gravity.CENTER,
 				0, 0);
@@ -60,8 +66,20 @@ public class AddAccountPopupWindow extends PopupWindow implements
 		if (v == btnClose) {
 			this.dismiss();
 		} else if (v == btnSave){
-			Toast.makeText(activity, "Save Account", 0).show();
+			saveAcc(tfEmail.getText().toString(), tfPass.getText().toString());
 			this.dismiss();
+		}
+	}
+	
+	public void saveAcc(String user, String pass) {
+		if (user.equals("") || pass.equals(""))
+			Toast.makeText(activity.getApplicationContext(), "Username or password is invaild", 0).show();
+		else {
+			database.openDB();
+			database.addRowToTableAccount(System.currentTimeMillis(), user, pass, user, Utils.TYPE_ACCOUNT_OWNER);
+			database.closeDB();
+			
+			activity.getDataForMenu();
 		}
 	}
 
