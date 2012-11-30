@@ -15,21 +15,26 @@ import net.simonvt.widget.MenuDrawer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
+import uet.dtui.gmail.apis.MailReaderAsyncTask;
 import uet.dtui.gmail.components.EmailArrayAdapter;
+import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.model.MessageEmail;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
+import uet.dtui.gmail.database.EmailDatabase;
 
 import com.sun.mail.imap.IMAPFolder;
 
@@ -44,22 +49,38 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	private Button btnRefresh;
 	private Button btnDelete;
 
+	private View loadmore;
+	private ProgressBar progressBar;
+	private final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
+	
+	private MailReaderAsyncTask asyncReadEmail;
+	private EmailDatabase database;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
-
-		Intent checkNewEmailService = new Intent(this,
-				CheckNewEmailService.class);
-		startService(checkNewEmailService);
-
+		
+		listview = (ListView) findViewById(R.id.mail_list);
+		
+		LayoutInflater inflater = getLayoutInflater();
+		loadmore = inflater.inflate(R.layout.loadmore_layout, null);
+		listview.addFooterView(loadmore);
+		progressBar = (ProgressBar) loadmore.findViewById(R.id.progressBar);
+		loadmore.setOnClickListener(this);
+		
+		Intent checkNewEmailService = new Intent(this,CheckNewEmailService.class);
+		//startService(checkNewEmailService);
+		
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
-
+		asyncReadEmail = new MailReaderAsyncTask(this, Utils.FOLDER_NAME_INBOX);
+		asyncReadEmail.execute(null);
+		
 		Log.d("Size of data", mail_list.size() + "");
 
 		findViews();
-
+		
 		adapter = new EmailArrayAdapter(this, R.layout.mail_row, mail_list);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new OnItemClickListener() {
@@ -109,11 +130,32 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 				menuDrawer.openMenu();
 			}
 		}
+
+		if (v==loadmore){
+			loadMoreMessages();
+		}
 		if (v == btnSearch) {
 			Intent searchIntent = new Intent(this, SearchActivity.class);
 			startActivity(searchIntent);
 		}
 		super.onClick(v);
 	}
+	
+
+	public void loadMoreMessages(){
+		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
+//		get more messages here
+		
+//		get 20 message from DB to messages[]
+		
+//		add to mail_list
+		
+	}
+
+	public void getDataForList() {
+		
+	}
+
+
 
 }

@@ -154,6 +154,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 	}
 
 	public void saveAccount(String user, String pass) {
+		Utils.setCurrenAcc(user, getApplicationContext());
 		Log.d("LOGIN SUCCESS", "SAVE ACCOUNT");
 		database = new EmailDatabase(getApplicationContext());
 		database.openDB();

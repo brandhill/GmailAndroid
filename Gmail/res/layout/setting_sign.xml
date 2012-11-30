@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Signature " >
+
+            <requestFocus />
+        </TextView>
+
+        <EditText
+            android:id="@+id/setting_sign_value"
+            android:layout_width="282dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="109.25"
+            android:hint="Signature"
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/setting_sign_btnsave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+
+        <Button
+            android:id="@+id/setting_sign_btncancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+    </LinearLayout>
+
+</LinearLayout>

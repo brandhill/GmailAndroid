@@ -29,7 +29,7 @@ public class SplashActivity extends Activity {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if (currentAccount == null) {
+				if (currentAccount.equals("None")) {
 					Thread launch = new Thread(new Runnable() {
 						public void run() {
 							Intent main = new Intent(SplashActivity.this,
