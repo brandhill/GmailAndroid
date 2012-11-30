@@ -45,7 +45,16 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
         android:layout_toRightOf="@+id/imageView3"
-        android:layout_marginBottom="130dp"
+        android:layout_marginBottom="170dp"
         android:background="@drawable/btn_close_popup" />
+
+    <Button
+        android:id="@+id/btnDiscard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnSave"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/btn_discard" />
 
 </RelativeLayout>

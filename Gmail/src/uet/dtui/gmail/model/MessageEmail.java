@@ -11,6 +11,11 @@ public class MessageEmail {
 	public Date date;
 	public String content;
 	public String fileName;
+	public String sourceFile;
+	public String contentHtml;
+	public MessageEmail() {
+		super();
+	}
 	
 	public MessageEmail(long folder, String subject, String from, String to, Date date, String content, String file) {
 		id = System.currentTimeMillis();

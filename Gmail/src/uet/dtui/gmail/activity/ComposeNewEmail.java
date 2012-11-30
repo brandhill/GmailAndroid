@@ -46,16 +46,12 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 
 	@Override
 	public void onBackPressed() {
-		Display display = getWindowManager().getDefaultDisplay();
-		LayoutInflater inflater = (LayoutInflater) this
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		new SaveToDraftPopupWindow(this, inflater.inflate(
-				R.layout.popup_window_savedraft, null, false), display.getWidth(), display.getHeight());
+		showPopupWindow();
 	}
 
 	public void onClick(View v) {
 		if (v == btnBack) {
-			this.finish();
+			showPopupWindow();
 		} else {
 			String subject, body, from, pass, to ,filename;
 			subject = this.subject.getText().toString();
@@ -66,7 +62,14 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 			filename = "";
 			AsyncSendMail sender = new AsyncSendMail(this,subject, body, from, pass, to, filename);
 			sender.execute(null);
-		}
-		
+		}	
+	}
+	
+	public void showPopupWindow() {
+		Display display = getWindowManager().getDefaultDisplay();
+		LayoutInflater inflater = (LayoutInflater) this
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		new SaveToDraftPopupWindow(this, inflater.inflate(
+				R.layout.popup_window_savedraft, null, false), display.getWidth(), display.getHeight());
 	}
 }

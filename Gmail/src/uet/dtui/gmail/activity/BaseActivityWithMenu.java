@@ -8,38 +8,52 @@ import net.simonvt.widget.MenuDrawerManager;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.AddAccountPopupWindow;
 import uet.dtui.gmail.components.MenuAdapter;
+import uet.dtui.gmail.components.Utils;
+import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.FolderEmail;
 import uet.dtui.gmail.model.ItemMenuAccount;
 import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 	public static final String ACCOUNT_CATEGORY = "accounts";
 	public static final String CATEGORIES_CATEGORY = "categoreis";
 	public MenuDrawerManager menuDrawer;
-	public String currentAccount = "kienvtqhi@gmail.com";
+	public String currentAccount = null;
 	public String currentFolder = "InBox";
 	private ListView listView;
-	public int mActivePosition = 1;
+	public int mActivePosition = -1;
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
+	private List<Account> listAcc;
+	private List<FolderEmail> listFolder;
 	private static final String TAG = "Base Activity";
+	public int posArrow = -1;
+	public EmailDatabase database;
+	private int imageFolder[] = { R.drawable.icon_inbox_folder,
+			R.drawable.icon_star_folder, R.drawable.icon_sent_folder,
+			R.drawable.icon_draft_folder, R.drawable.icon_delete_folder };
+	private int textFolder[] = { R.drawable.text_inbox_folder,
+			R.drawable.text_important_folder, R.drawable.text_sent_folder,
+			R.drawable.text_draft_folder, R.drawable.text_delete_folder };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,33 +63,15 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		menuDrawer.setMenuView(R.layout.menu_drawer);
 
 		listView = (ListView) findViewById(R.id.list_menu);
-
-		// TestData
+		
 		mDatas = new ArrayList<Object>();
-		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
-				R.drawable.category_menu_accounts));
-		Account acc = new Account("kienvtqhi@gmail.com", "");
-		mDatas.add(new ItemMenuAccount(acc));
-		Account acc2 = new Account("john@gmail.com", "");
-		FolderEmail folder = new FolderEmail("InBox", 123);
-		mDatas.add(new ItemMenuAccount(acc2));
-		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
-				R.drawable.category_menu_categories));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_inbox_folder,
-				R.drawable.text_inbox_folder, folder));
-		FolderEmail folder2 = new FolderEmail("InBox2", 123);
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_star_folder,
-				R.drawable.text_important_folder, folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_sent_folder,
-				R.drawable.text_sent_folder, folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_draft_folder,
-				R.drawable.text_draft_folder, folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_delete_folder,
-				R.drawable.text_delete_folder, folder2));
-
-		Log.d(TAG, mDatas.size() + "");
+		listAcc = new ArrayList<Account>();
+		listFolder = new ArrayList<FolderEmail>();
 		mAdapter = new MenuAdapter(mDatas, this);
-		listView.setAdapter(mAdapter);
+		
+		currentAccount = Utils.getCurrentAcc(this);
+		getDataForMenu();
+		
 		// Set listener for onScroll
 		listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -112,6 +108,8 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter
 						.getItem(position);
+//				setCurrentAcc(tmp.account.email);
+				Utils.setCurrenAcc(tmp.account.email, getApplicationContext());
 				currentAccount = tmp.account.email;
 			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER) {
 				ItemMenuFolder fold = (ItemMenuFolder) mAdapter
@@ -144,7 +142,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	public void closeMenu() {
 		final int drawerState = menuDrawer.getDrawerState();
 		Log.d("Popup window", "IS NULL");
@@ -154,4 +152,72 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			return;
 		}
 	}
+
+	public void setFirstActiveView() {
+		Log.w("SET FIRST ACTIVE VIEW", "RUNNING");
+		for (int i = 0; i < mDatas.size(); i++)
+			if (mAdapter.getItemViewType(i) == MenuAdapter.ITEM_FOLDER) {
+				Log.w("SET FIRST ACTIVE VIEW", "OK");
+				menuDrawer.setActiveView(listView.getChildAt(i));
+				menuDrawer.getMenuDrawer().invalidate();
+				break;
+			}
+	}
+
+	public void getDataForMenu() {
+		mDatas.clear();
+		listView.setAdapter(mAdapter);
+		// Get account owner
+		database = new EmailDatabase(getApplicationContext());
+		database.openDB();
+		
+		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
+				R.drawable.category_menu_accounts));
+
+		listAcc = database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER);
+		Account cur = new Account();
+		;
+		for (int i = 0; i < listAcc.size(); i++) {
+			cur = listAcc.get(0);
+			mDatas.add(new ItemMenuAccount(listAcc.get(i)));
+		}
+
+		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
+				R.drawable.category_menu_categories));
+		// Get folder
+		listFolder = database.getAllFolderWithAcc(cur.id);
+		Log.d("SIZE OF LIST FOLDER", listFolder.size() + "");
+		for (int i = 0; i < listFolder.size(); i++) {
+			mDatas.add(new ItemMenuFolder(imageFolder[i], textFolder[i],
+					listFolder.get(i)));
+		}
+		mAdapter.notifyDataSetChanged();
+		database.closeDB();
+	}
+	
+/*	public void getCurrentAcc() {
+		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_READABLE);
+		currentAccount = pref.getString(Utils.CURRENT_ACC, null);
+	}
+	
+	public void setCurrentAcc(String cur) {
+		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor myEditor = pref.edit();
+		myEditor.putString(Utils.CURRENT_ACC, cur);
+		myEditor.commit();
+	}*/
+
+	@Override
+	protected void onPause() {
+		if (currentAccount != null)
+			Utils.setCurrenAcc(currentAccount, getApplicationContext());
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+	
+	
 }

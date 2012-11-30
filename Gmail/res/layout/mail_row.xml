@@ -40,7 +40,7 @@
                 android:maxLines="1"
                 android:maxWidth="150dp"
                 android:text="From Mr.Bean lksdjljalfkafjklasjsl"
-                android:textSize="22dp"
+                android:textSize="15dp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -76,15 +76,8 @@
                 android:maxLines="1"
                 android:maxWidth="260dp"
                 android:text="Subject Subject Subject Subject Subject  "
-                android:textSize="15dp"
+                android:textSize="13dp"
                 android:textStyle="bold" />
-            <CheckBox 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:gravity="right"
-                android:layout_gravity="right"
-                android:button="@drawable/checkbox_stared"/>
         </LinearLayout>
 
         <TextView
@@ -95,7 +88,7 @@
             android:maxLines="2"
             android:text="content content content content content content content content content content content content content content content content content content content content content"
             android:textColor="#605d5d"
-            android:textSize="14dp" />
+            android:textSize="13dp" />
     </LinearLayout>
 
 </LinearLayout>

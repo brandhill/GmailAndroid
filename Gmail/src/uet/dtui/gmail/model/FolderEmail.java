@@ -7,6 +7,10 @@ public class FolderEmail {
 	public int numberEmailUnread;
 	public int numberEmail;
 	
+	public FolderEmail() {
+		super();
+	}
+	
 	public FolderEmail(String name, long account, int all, int unread) {
 		id = System.currentTimeMillis();
 		this.name = name;
