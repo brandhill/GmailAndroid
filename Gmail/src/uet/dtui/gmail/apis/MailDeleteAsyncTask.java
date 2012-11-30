@@ -65,3 +65,4 @@ public class MailDeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 	}
 
 }
+

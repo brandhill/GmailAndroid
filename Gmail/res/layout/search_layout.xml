@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="#bb000000">
+    android:background="#bb000000"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,85 +11,82 @@
         android:background="#45495a"
         android:orientation="horizontal" >
 
-            <uet.dtui.gmail.components.ClearableEditText
-                android:id="@+id/search_content"
-                android:layout_width="242dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/area_search_content"
-                android:ems="10"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"
-                android:textSize="18dp"
-                android:drawableLeft="@drawable/icon_search"
-                android:hint="@string/hintSearch"
-                android:imeOptions="actionNext"
-                android:maxLines="1"
-				android:drawablePadding="6dp"
-				android:gravity="left"
-                android:textColor="#413f3f" />
-           
+        <uet.dtui.gmail.components.ClearableEditText
+            android:id="@+id/search_content"
+            android:layout_width="242dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/area_search_content"
+            android:drawableLeft="@drawable/icon_search"
+            android:drawablePadding="6dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="@string/hintSearch"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:paddingTop="2dp"
+            android:textColor="#413f3f"
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginTop="6dp"
             android:background="@drawable/btn_cancel_search" />
-
     </LinearLayout>
-    
-    <TextView 
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#363637"/>
-    
+        android:background="#363637" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#545a6b"
         android:orientation="horizontal" >
-        
+
         <Button
-        android:id="@+id/btn_from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="17dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_from_checked" />
-        
+            android:id="@+id/btn_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/btn_from_checked" />
+
         <Button
-        android:id="@+id/btn_to"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/btn_to_notchecked" />
-        
+            android:id="@+id/btn_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/btn_to_notchecked" />
+
         <Button
-        android:id="@+id/btn_subject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/btn_subject_notchecked" />
-        
+            android:id="@+id/btn_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/btn_subject_notchecked" />
+
         <Button
-        android:id="@+id/btn_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/btn_all_notchecked" />
-        
+            android:id="@+id/btn_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/btn_all_notchecked" />
     </LinearLayout>
-    
-    <ListView 
+
+    <ListView
         android:id="@+id/listSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:cacheColorHint="#00000000">
-        
+        android:cacheColorHint="#00000000" >
     </ListView>
 
 </LinearLayout>

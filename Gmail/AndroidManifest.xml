@@ -29,6 +29,8 @@
             android:name="uet.dtui.gmail.activity.BaseListEmailActivity" 
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <service android:name="uet.dtui.gmail.activity.CheckNewEmailService"></service>
+        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" ></activity>
         <activity
             android:name="uet.dtui.gmail.activity.SettingActivity" 
             android:windowSoftInputMode="adjustResize">

@@ -53,7 +53,7 @@ public class EmailArrayAdapter extends ArrayAdapter {
 		MessageEmail mes_item = datalist.get(pos);
 		
 		from.setText(mes_item.from);
-		date.setText(summarizedDate(mes_item.date));
+		date.setText(mes_item.date);
 		subject.setText(mes_item.subject);
 		content.setText(mes_item.content);
 		return row;

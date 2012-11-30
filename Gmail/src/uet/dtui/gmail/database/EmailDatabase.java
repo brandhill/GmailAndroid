@@ -12,6 +12,7 @@ import android.util.Log;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.FolderEmail;
+import uet.dtui.gmail.model.MessageEmail;
  
 public class EmailDatabase{
 	// the Activity or Application that is creating an object from this class.
@@ -356,6 +357,16 @@ public class EmailDatabase{
 		folder.numberEmail = cursor.getInt(4);
 		return folder;
 	}
+	
+	public long getIdFolderWithCurrentAccount(String nameFolder, long idAcc) {
+		long idFolder = -1;
+		String sql = "SELECT * FROM Folder where name_folder = \"" + nameFolder + "\" and id_account = " + idAcc;
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		idFolder = cursor.getLong(0);
+		return idFolder;
+	}
 
 	/**********************************************************************
 	 * FUNCTIONS FOR TABLE MESSAGE.
@@ -374,15 +385,6 @@ public class EmailDatabase{
 	 * @param sourceFile the value for the row's eighth column
 	 * @param contentHTML the value for the row's ninth column
 	 */
-	public long getIdFolderWithCurrentAccount(String nameFolder, long idAcc) {
-		long idFolder = -1;
-		String sql = "SELECT * FROM Folder where name_folder = \"" + nameFolder + "\" and id_account = " + idAcc;
-		Cursor cursor = db.rawQuery(sql, null);
-		
-		cursor.moveToFirst();
-		idFolder = cursor.getLong(0);
-		return idFolder;
-	}
 	
 	public boolean addRowToTableMessage(long idMessage, long idFolder, String subject, String fromAddress, String toAddress, String context, String date, String fileName, String sourceFile, String contentHTML)
 	{
@@ -499,6 +501,77 @@ public class EmailDatabase{
 			return false;
 		
 		return true;
+	}
+	
+	public List<MessageEmail> getEmailByFrom(String searchContent) {
+		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
+		String sql = "SELECT * FROM MESSAGE WHERE from_address LIKE %" + searchContent + "%";
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 MessageEmail mess = convertCursorToMessageEmail(cursor);
+			 listMess.add(mess);
+			 cursor.moveToNext();
+		 }
+		return listMess;
+	}
+	
+	public List<MessageEmail> getEmailByTo(String searchContent) {
+		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
+		String sql = "SELECT * FROM MESSAGE WHERE to_address  LIKE %" + searchContent + "%";
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 MessageEmail mess = convertCursorToMessageEmail(cursor);
+			 listMess.add(mess);
+			 cursor.moveToNext();
+		 }
+		return listMess;
+	}
+	
+	public List<MessageEmail> getEmailBySubject(String searchContent) {
+		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
+		String sql = "SELECT * FROM MESSAGE WHERE subject LIKE %" + searchContent +"%";
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 MessageEmail mess = convertCursorToMessageEmail(cursor);
+			 listMess.add(mess);
+			 cursor.moveToNext();
+		 }
+		return listMess;
+	}
+	
+	public List<MessageEmail> getEmail(String searchContent) {
+		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
+		String sql = "SELECT * FROM MESSAGE WHERE from_address LIKE %" + searchContent + "% OR to_address LIKE %" + searchContent + "% OR subject LIKE %" + searchContent + "%";
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 MessageEmail mess = convertCursorToMessageEmail(cursor);
+			 listMess.add(mess);
+			 cursor.moveToNext();
+		 }
+		return listMess;
+	}
+ 
+	private MessageEmail convertCursorToMessageEmail(Cursor cursor) {
+		MessageEmail mess = new MessageEmail();
+		mess.id = cursor.getLong(0);
+		mess.idFolder = cursor.getLong(1);
+		mess.subject = cursor.getString(2);
+		mess.from = cursor.getString(3);
+		mess.to = cursor.getString(4);
+		mess.content = cursor.getString(5);
+		mess.date = cursor.getString(6);
+		mess.fileName = cursor.getString(7);
+		mess.sourceFile = cursor.getString(8);
+		mess.contentHtml = cursor.getString(9);
+		return mess;
 	}
 	
 	

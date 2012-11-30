@@ -30,6 +30,7 @@ import uet.dtui.gmail.model.MessageEmail;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
+
 import com.sun.mail.imap.IMAPFolder;
 
 public class BaseListEmailActivity extends BaseActivityWithMenu {
@@ -47,7 +48,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
-
+		
+		Intent checkNewEmailService = new Intent(this,CheckNewEmailService.class);
+		startService(checkNewEmailService);
+		
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 		mail_list
@@ -56,7 +60,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject",
 						"from from from from from from from from from ",
 						"to",
-						new Date(1991, 11, 03),
+						"03/11/1991",
 						"content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content",
 						""));
 		mail_list
@@ -65,7 +69,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject ",
 						"from from from from from from from from from ",
 						"to",
-						new Date(1991, 11, 03),
+						"03/11/1991",
 						"content content content content content content content content content content content content ",
 						""));
 		mail_list
@@ -74,7 +78,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject",
 						"from from from from from from from from from ",
 						"to",
-						new Date(2012, 11, 27),
+						"03/11/1991",
 						"content content content content content content content content content content content content ",
 						""));
 		mail_list
@@ -83,27 +87,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject",
 						"from from from from from from from from from ",
 						"to",
-						new Date(2012, 11, 06),
+						"03/11/1991",
 						"content content content content content content content content content content content content ",
 						""));
-//		mail_list
-//				.add(new MessageEmail(
-//						1,
-//						"subject subject subject subject subject subject subject subject",
-//						"from from from from from from from from from ",
-//						"to",
-//						new Date(1991, 11, 27),
-//						"content content content content content content content content content content content content ",
-//						""));
-//		mail_list
-//				.add(new MessageEmail(
-//						1,
-//						"subject subject subject subject subject subject subject subject",
-//						"from from from from from from from from from ",
-//						"to",
-//						new Date(2012, 11, 03),
-//						"content content content content content content content content content content content content ",
-//						""));
+
 		Log.d("Size of data", mail_list.size() + "");
 
 		findViews();
