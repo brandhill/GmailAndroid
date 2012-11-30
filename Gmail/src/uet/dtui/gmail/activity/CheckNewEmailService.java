@@ -1,5 +1,6 @@
-package uet.dtui.gmail.apis;
+package uet.dtui.gmail.activity;
 
+import uet.dtui.gmail.apis.GetMailTask;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
