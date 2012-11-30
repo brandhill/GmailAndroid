@@ -61,9 +61,11 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		btnAll = (Button) findViewById(R.id.btn_all);
 		listView = getListView();
 		emptyView = (TextView) findViewById(R.id.empty);
-		
-		emptyView.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Bd.ttf"));
-		searchContent.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
+
+		emptyView.setTypeface(AllerFont.get(getApplicationContext(),
+				"fonts/Aller_Bd.ttf"));
+		searchContent.setTypeface(AllerFont.get(getApplicationContext(),
+				"fonts/Aller_Rg.ttf"));
 		// When Cancel button was clicked, finish the activity
 		btnCancel.setOnClickListener(this);
 
@@ -72,28 +74,30 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 		btnTo.setOnClickListener(this);
 		btnSubject.setOnClickListener(this);
 		btnAll.setOnClickListener(this);
-		
-		//Add text change listener for edit text search content 
+
+		// Add text change listener for edit text search content
 		searchContent.addTextChangedListener(new TextWatcher() {
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
-			
+
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
 			}
-			
+
 			public void afterTextChanged(Editable s) {
-				if (searchContent.getText().toString().equals("") && !searchContent.getClearable()) {
-					searchContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+				if (searchContent.getText().toString().equals("")
+						&& !searchContent.getClearable()) {
+					searchContent.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_search, 0,
+							0, 0);
 					searchContent.setClearable(false);
-				}
-				else {
-					searchContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.btn_clear, 0);
+				} else {
+					searchContent.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_search, 0,
+							R.drawable.btn_clear, 0);
 					searchContent.setCompoundDrawablePadding(10);
 					searchContent.setClearable(true);
 				}
 
-				
 			}
 		});
 	}
@@ -130,6 +134,11 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 			typeSearch = 4;
 		}
 		if (v == btnCancel) {
+			db.openDB();
+			String curAcc = Utils.getCurrentAcc(getApplicationContext());
+			long idCurAcc = db.getIDAccountFromEmail(curAcc);
+			List<Long> idFolders = db.getIDFolderByAccount(idCurAcc);
+			db.closeDB();
 			Log.d("Clicked", typeSearch + "");
 			if (searchContent.getText().toString().equals("")) {
 				Toast.makeText(this, "Please enter the content to search!", 1)
@@ -138,21 +147,22 @@ public class SearchActivity extends ListActivity implements OnClickListener {
 				if (typeSearch == 1) {
 					db.openDB();
 					mail_list = db.getEmailByFrom(searchContent.getText()
-							.toString());
+							.toString(), idFolders);
 					db.closeDB();
 				} else if (typeSearch == 2) {
 					db.openDB();
 					mail_list = db.getEmailByTo(searchContent.getText()
-							.toString());
+							.toString(), idFolders);
 					db.closeDB();
 				} else if (typeSearch == 3) {
 					db.openDB();
 					mail_list = db.getEmailBySubject(searchContent.getText()
-							.toString());
+							.toString(), idFolders);
 					db.closeDB();
 				} else if (typeSearch == 4) {
 					db.openDB();
-					mail_list = db.getEmail(searchContent.getText().toString());
+					mail_list = db.getEmail(searchContent.getText().toString(),
+							idFolders);
 					db.closeDB();
 				}
 				adapter = new EmailArrayAdapter(this, R.layout.mail_row,

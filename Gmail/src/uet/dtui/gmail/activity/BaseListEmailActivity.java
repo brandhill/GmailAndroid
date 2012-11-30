@@ -43,15 +43,16 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	private Button btnSetting;
 	private Button btnRefresh;
 	private Button btnDelete;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
-		
-		Intent checkNewEmailService = new Intent(this,CheckNewEmailService.class);
+
+		Intent checkNewEmailService = new Intent(this,
+				CheckNewEmailService.class);
 		startService(checkNewEmailService);
-		
+
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 		mail_list
@@ -115,18 +116,18 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSetting = (Button) findViewById(R.id.btnSettings);
-		
+
 		btnCompose.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
 		btnMenu.setOnClickListener(this);
 		btnRefresh.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
-	    btnSetting.setOnClickListener(this);
+		btnSetting.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v == btnSetting){
+		if (v == btnSetting) {
 			Intent settingIntent = new Intent(this, SettingActivity.class);
 			startActivity(settingIntent);
 		}
@@ -150,7 +151,5 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		}
 		super.onClick(v);
 	}
-	
-	
 
 }
