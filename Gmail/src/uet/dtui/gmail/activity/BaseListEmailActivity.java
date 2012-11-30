@@ -48,7 +48,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	private Button btnDelete;
 	private MailReaderAsyncTask asyncReadEmail;
 	private EmailDatabase database;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -86,18 +86,18 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSetting = (Button) findViewById(R.id.btnSettings);
-		
+
 		btnCompose.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
 		btnMenu.setOnClickListener(this);
 		btnRefresh.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
-	    btnSetting.setOnClickListener(this);
+		btnSetting.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v == btnSetting){
+		if (v == btnSetting) {
 			Intent settingIntent = new Intent(this, SettingActivity.class);
 			startActivity(settingIntent);
 		}
@@ -125,5 +125,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	public void getDataForList() {
 		
 	}
+
 
 }
