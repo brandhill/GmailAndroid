@@ -2,6 +2,8 @@ package uet.dtui.gmail.activity;
 
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.apis.AsyncSendMail;
+import uet.dtui.gmail.components.AllerFont;
+import uet.dtui.gmail.components.ChooseAccountPopupWindow;
 import uet.dtui.gmail.components.SaveToDraftPopupWindow;
 import android.app.Activity;
 import android.content.Context;
@@ -22,6 +24,7 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	private EditText to;
 	private EditText subject;
 	private EditText content;
+	private Button spinner;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +42,13 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 		to = (EditText) findViewById(R.id.tfTo);
 		subject = (EditText) findViewById(R.id.tfSubject);
 		content = (EditText) findViewById(R.id.tfContent);
+		spinner = (Button) findViewById(R.id.spinner);
 		
 		btnBack.setOnClickListener(this);
 		btnSend.setOnClickListener(this);
+		spinner.setOnClickListener(this);
+		
+		spinner.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
 	}
 
 	@Override
@@ -52,7 +59,7 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		if (v == btnBack) {
 			showPopupWindow();
-		} else {
+		} else if (v == btnSend){
 			String subject, body, from, pass, to ,filename;
 			subject = this.subject.getText().toString();
 			body = this.content.getText().toString();
@@ -62,7 +69,10 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 			filename = "";
 			AsyncSendMail sender = new AsyncSendMail(this,subject, body, from, pass, to, filename);
 			sender.execute(null);
-		}	
+		} else if (v == spinner) {
+			Toast.makeText(getApplicationContext(), "OK MEN", 0).show();
+			showPopupWindowChooseAccount();
+		}
 	}
 	
 	public void showPopupWindow() {
@@ -71,5 +81,18 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		new SaveToDraftPopupWindow(this, inflater.inflate(
 				R.layout.popup_window_savedraft, null, false), display.getWidth(), display.getHeight());
+	}
+	
+	public void showPopupWindowChooseAccount() {
+		Display display = getWindowManager().getDefaultDisplay();
+		LayoutInflater inflater = (LayoutInflater) this
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		new ChooseAccountPopupWindow(this, inflater.inflate(
+				R.layout.popup_choose_account, null, false), display.getWidth(), display.getHeight());
+	}
+	
+	public void setFromAccount(String acc) {
+		spinner.setText(acc);
+		
 	}
 }
