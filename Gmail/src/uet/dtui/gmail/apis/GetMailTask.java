@@ -9,7 +9,7 @@ import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
 
 import uet.dtui.gmail.R;
-import uet.dtui.gmail.activity.MailListActivity;
+import uet.dtui.gmail.activity.BaseListEmailActivity;
 
 import com.sun.mail.imap.IMAPFolder;
 import android.app.Notification;
@@ -47,7 +47,7 @@ public class GetMailTask extends AsyncTask<String, Long, Void>{
 		// TODO Auto-generated method stub
 		try {
 			store = session.getStore("imaps");
-			store.connect("imap.gmail.com", "nhatnhucay311@gmail.com", "876576099");
+			store.connect("imap.gmail.com", "kienvtqhi@gmail.com", "kienhien90");
 		    IMAPFolder folder =  (IMAPFolder) store.getFolder("INBOX");
 		    folder.open(Folder.READ_WRITE);
 			
@@ -98,7 +98,7 @@ public class GetMailTask extends AsyncTask<String, Long, Void>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		Intent intent = new Intent(context, MailListActivity.class);
+		Intent intent = new Intent(context, BaseListEmailActivity.class);
 		PendingIntent launchIntent = PendingIntent.getActivity(context,0,intent,0);   
 		
 		String serName = Context.NOTIFICATION_SERVICE;

@@ -30,6 +30,7 @@ import uet.dtui.gmail.model.MessageEmail;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
+
 import com.sun.mail.imap.IMAPFolder;
 
 public class BaseListEmailActivity extends BaseActivityWithMenu {
@@ -47,7 +48,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
-
+		
+		Intent checkNewEmailService = new Intent(this,CheckNewEmailService.class);
+		startService(checkNewEmailService);
+		
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 		mail_list
