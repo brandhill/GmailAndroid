@@ -24,6 +24,7 @@ import android.widget.Toast;
 public class ComposeNewEmail extends Activity implements OnClickListener{
 	private Button btnBack;
 	private Button btnSend;
+	private EditText from;
 	private EditText to;
 	private EditText subject;
 	private EditText content;
@@ -58,9 +59,7 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 		spinner.setOnClickListener(this);
 		
 		spinner.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
-		to.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
-		subject.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Bd.ttf"));
-		content.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller.Rg.ttf"));
+		
 	}
 
 	@Override
