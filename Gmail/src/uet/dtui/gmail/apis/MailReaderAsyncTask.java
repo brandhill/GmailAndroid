@@ -68,12 +68,12 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		}
 		
 		for (int i = 0; i < messages.length; i++) {
-			mail_list.add(new MessageEmail(inbox.getUID(messages[i]), messages[i].getSubject().toString(),
-					InternetAddress.toString(messages[i].getFrom()),
-					InternetAddress.toString(messages[i]
-							.getRecipients(Message.RecipientType.TO)),
-							messages[i].getSentDate(), getContent(messages[i])));
-			Log.v("content", getContent(messages[i]));
+//			mail_list.add(new MessageEmail(inbox.getUID(messages[i]), messages[i].getSubject().toString(),
+//					InternetAddress.toString(messages[i].getFrom()),
+//					InternetAddress.toString(messages[i]
+//							.getRecipients(Message.RecipientType.TO)),
+//							messages[i].getSentDate(), getContent(messages[i])));
+//			Log.v("content", getContent(messages[i]));
 		}
 		
 	}

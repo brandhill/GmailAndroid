@@ -55,42 +55,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject ",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content ",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content ",
-						""));
-		mail_list
-				.add(new MessageEmail(
-						1,
-						"subject subject subject subject subject subject subject subject",
-						"from from from from from from from from from ",
-						"to",
-						"03/11/1991",
-						"content content content content content content content content content content content content ",
-						""));
 
 		Log.d("Size of data", mail_list.size() + "");
 
