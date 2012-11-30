@@ -34,6 +34,10 @@
             android:name="uet.dtui.gmail.activity.SettingActivity" 
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <activity
+            android:name="uet.dtui.gmail.activity.SearchActivity" 
+            android:windowSoftInputMode="adjustResize">
+        </activity>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" 
             android:windowSoftInputMode="adjustPan"></activity>
     </application>

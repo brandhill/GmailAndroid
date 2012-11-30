@@ -516,7 +516,7 @@ public class EmailDatabase{
 	
 	public List<MessageEmail> getEmailByFrom(String searchContent) {
 		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
-		String sql = "SELECT * FROM MESSAGE WHERE from_address LIKE %" + searchContent + "%";
+		String sql = "SELECT * FROM MESSAGE WHERE from_address LIKE \"%" + searchContent + "%\"";
 		Cursor cursor = db.rawQuery(sql, null);
 		
 		cursor.moveToFirst();
@@ -530,7 +530,7 @@ public class EmailDatabase{
 	
 	public List<MessageEmail> getEmailByTo(String searchContent) {
 		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
-		String sql = "SELECT * FROM MESSAGE WHERE to_address  LIKE %" + searchContent + "%";
+		String sql = "SELECT * FROM MESSAGE WHERE to_address  LIKE \"%" + searchContent + "%\"";
 		Cursor cursor = db.rawQuery(sql, null);
 		
 		cursor.moveToFirst();
@@ -544,7 +544,7 @@ public class EmailDatabase{
 	
 	public List<MessageEmail> getEmailBySubject(String searchContent) {
 		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
-		String sql = "SELECT * FROM MESSAGE WHERE subject LIKE %" + searchContent +"%";
+		String sql = "SELECT * FROM MESSAGE WHERE subject LIKE \"%" + searchContent +"%\"";
 		Cursor cursor = db.rawQuery(sql, null);
 		
 		cursor.moveToFirst();
@@ -558,7 +558,7 @@ public class EmailDatabase{
 	
 	public List<MessageEmail> getEmail(String searchContent) {
 		List<MessageEmail> listMess = new ArrayList<MessageEmail>();
-		String sql = "SELECT * FROM MESSAGE WHERE from_address LIKE %" + searchContent + "% OR to_address LIKE %" + searchContent + "% OR subject LIKE %" + searchContent + "%";
+		String sql = "SELECT * FROM MESSAGE WHERE from_address LIKE \"%" + searchContent + "%\" OR to_address LIKE \"%" + searchContent + "%\" OR subject LIKE \"%" + searchContent + "%\"";
 		Cursor cursor = db.rawQuery(sql, null);
 		
 		cursor.moveToFirst();
