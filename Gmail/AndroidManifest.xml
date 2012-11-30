@@ -27,6 +27,7 @@
         <activity
             android:name="uet.dtui.gmail.activity.SettingActivity" >
         </activity>
+        <service android:name="uet.dtui.gmail.activity.CheckNewEmailService"></service>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" ></activity>
     </application>
 
