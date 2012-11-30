@@ -109,7 +109,7 @@ public class MenuAdapter extends BaseAdapter{
 					accountHolder.iconAcc.setImageDrawable(drawbleResource.getDrawable(R.drawable.image_account));
 					accountHolder.displayName.setTextColor(Color.parseColor("#8c8888"));
 				}
-				accountHolder.displayName.setTypeface(AllerFont.get(activity, "fonts/Aller_Rg.TTF"));
+				accountHolder.displayName.setTypeface(AllerFont.get(activity.getApplicationContext(), "fonts/Aller_Rg.TTF"));
 				accountHolder.displayName.setText(itemAccount.account.displayName);
 			//}
 		} else if (item instanceof ItemMenuFolder) {

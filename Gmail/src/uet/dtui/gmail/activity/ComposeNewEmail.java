@@ -5,9 +5,13 @@ import uet.dtui.gmail.apis.AsyncSendMail;
 import uet.dtui.gmail.components.AllerFont;
 import uet.dtui.gmail.components.ChooseAccountPopupWindow;
 import uet.dtui.gmail.components.SaveToDraftPopupWindow;
+import uet.dtui.gmail.components.Utils;
+import uet.dtui.gmail.database.EmailDatabase;
+import uet.dtui.gmail.model.Account;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +29,9 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	private EditText subject;
 	private EditText content;
 	private Button spinner;
+	private EmailDatabase database;
+	String subj, bodyEmail, fromAcc, passAcc, toAcc ,filename;
+	private String currentAcc;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +39,11 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.compose);
 		
+		database = new EmailDatabase(getApplicationContext());
 		findViews();
+		
+		currentAcc = Utils.getCurrentAcc(getApplicationContext());
+		setDefaultFromAccount();
 	}
 
 	private void findViews() {
@@ -49,6 +60,7 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 		spinner.setOnClickListener(this);
 		
 		spinner.setTypeface(AllerFont.get(getApplicationContext(), "fonts/Aller_Rg.ttf"));
+		
 	}
 
 	@Override
@@ -60,14 +72,12 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 		if (v == btnBack) {
 			showPopupWindow();
 		} else if (v == btnSend){
-			String subject, body, from, pass, to ,filename;
-			subject = this.subject.getText().toString();
-			body = this.content.getText().toString();
-			from = this.from.getText().toString();
-			to = this.to.getText().toString();
-			pass = "kienhien90";
+			subj = this.subject.getText().toString();
+			bodyEmail = this.content.getText().toString();
+			toAcc = this.to.getText().toString();
 			filename = "";
-			AsyncSendMail sender = new AsyncSendMail(this,subject, body, from, pass, to, filename);
+			Log.d("SEND EMAIL", subj + bodyEmail + fromAcc + toAcc + passAcc + filename);
+			AsyncSendMail sender = new AsyncSendMail(this,subj, bodyEmail, fromAcc, passAcc, toAcc, filename);
 			sender.execute(null);
 		} else if (v == spinner) {
 			Toast.makeText(getApplicationContext(), "OK MEN", 0).show();
@@ -93,6 +103,16 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	
 	public void setFromAccount(String acc) {
 		spinner.setText(acc);
-		
+		fromAcc = spinner.getText().toString();
+		database.openDB();
+		Account fromAccount = database.getAccountFromEmail(fromAcc);
+		int index = fromAcc.indexOf("@gmail.com");
+		fromAcc = fromAcc.substring(0, index);
+		passAcc = fromAccount.password;
+		database.closeDB();
+	}
+	
+	public void setDefaultFromAccount() {
+		setFromAccount(currentAcc);
 	}
 }

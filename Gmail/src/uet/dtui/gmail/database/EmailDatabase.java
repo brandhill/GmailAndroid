@@ -150,6 +150,17 @@ public class EmailDatabase{
 		 }
 		return listAcc;
 	}
+	
+	public Account getAccountFromEmail(String email) {
+		Account acc = new Account();
+		String sql = "Select * from Account where email_address = \"" + email + "\"";
+		Log.d("SQL", sql);
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		acc = convertCursorToAccount(cursor);
+		return acc;
+	}
  
 	private Account convertCursorToAccount(Cursor cursor) {
 		Account acc = new Account();

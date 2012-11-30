@@ -12,11 +12,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
-public class ChooseAccountPopupWindow extends PopupWindow implements OnClickListener{
+public class ChooseAccountPopupWindow extends PopupWindow implements OnClickListener,OnItemClickListener{
 	ComposeNewEmail activity;
 	View contentView;
 	private Button btnClose;
@@ -35,14 +36,7 @@ public class ChooseAccountPopupWindow extends PopupWindow implements OnClickList
 		findViews();
 		setDataforList();
 		
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				activity.setFromAccount(datas.get(arg2).displayName);
-				
-			}
-		});
+		listView.setOnItemClickListener(this);
 		// show pop-up
 		this.setAnimationStyle(R.style.AnimationPopup);
 		this.setOutsideTouchable(true);
@@ -72,5 +66,10 @@ public class ChooseAccountPopupWindow extends PopupWindow implements OnClickList
 		if (v == btnClose) {
 			this.dismiss();
 		}
+	}
+
+	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		activity.setFromAccount(datas.get(arg2).displayName);
+		this.dismiss();
 	}
 }
