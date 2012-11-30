@@ -105,7 +105,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 			if (tfPassword.getText().toString().equals(""))
 				Toast.makeText(getApplicationContext(), "Password is empty", 0).show();
 			else {
-				if (Utils.checkConnect(tfEmailAddr.getText().toString(), tfPassword.getText().toString())) {
+				if (!Utils.checkConnect(tfEmailAddr.getText().toString(), tfPassword.getText().toString())) {
 					saveAccount(tfEmailAddr.getText().toString(), tfPassword.getText().toString());
 					Intent goToInbox = new Intent(this, BaseListEmailActivity.class);
 					startActivity(goToInbox);
@@ -143,7 +143,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		database.openDB();
 		long idAcc = System.currentTimeMillis();
 		database.addRowToTableAccount(idAcc, user, pass, user, Utils.TYPE_ACCOUNT_OWNER);
-		Log.d("COUNT ACC", database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER).size() + "");
 		database.closeDB();
 	}
 	

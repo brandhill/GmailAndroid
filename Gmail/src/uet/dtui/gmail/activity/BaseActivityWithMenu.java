@@ -8,6 +8,7 @@ import net.simonvt.widget.MenuDrawerManager;
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.AddAccountPopupWindow;
 import uet.dtui.gmail.components.MenuAdapter;
+import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.FolderEmail;
@@ -22,12 +23,11 @@ import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
@@ -40,6 +40,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	public int mActivePosition = -1;
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
+	private List<Account> listAcc;
 	private static final String TAG = "Base Activity";
 	public int posArrow = -1;
 	public EmailDatabase database;
@@ -52,16 +53,21 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		menuDrawer.setMenuView(R.layout.menu_drawer);
 
 		listView = (ListView) findViewById(R.id.list_menu);
-
-		// TestData
 		mDatas = new ArrayList<Object>();
 		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
 				R.drawable.category_menu_accounts));
-		Account acc = new Account("kienvtqhi@gmail.com", "");
-		mDatas.add(new ItemMenuAccount(acc));
-		Account acc2 = new Account("john@gmail.com", "");
+		
+		//Get account owner
+		database = new EmailDatabase(getApplicationContext());
+		database.openDB();
+		listAcc = new ArrayList<Account>();
+		listAcc = database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER);
+		for (int i=0; i<listAcc.size(); i++)
+			mDatas.add(new ItemMenuAccount(listAcc.get(i)));
+		database.closeDB();
+
+/*		// TestData
 		FolderEmail folder = new FolderEmail("InBox", 123);
-		mDatas.add(new ItemMenuAccount(acc2));
 		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
 				R.drawable.category_menu_categories));
 		mDatas.add(new ItemMenuFolder(R.drawable.icon_inbox_folder,
@@ -74,7 +80,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		mDatas.add(new ItemMenuFolder(R.drawable.icon_draft_folder,
 				R.drawable.text_draft_folder, folder2));
 		mDatas.add(new ItemMenuFolder(R.drawable.icon_delete_folder,
-				R.drawable.text_delete_folder, folder2));
+				R.drawable.text_delete_folder, folder2));*/
 
 		Log.d(TAG, mDatas.size() + "");
 		mAdapter = new MenuAdapter(mDatas, this);
@@ -94,7 +100,6 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 		// Set item click listener for listview
 		listView.setOnItemClickListener(mItemClickListener);
-		setFirstActiveView();
 	}
 
 	public void onClick(View v) {

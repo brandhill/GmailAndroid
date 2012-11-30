@@ -15,7 +15,7 @@
         <activity
             android:name="uet.dtui.gmail.activity.LoginActivity"
             android:label="@string/title_activity_main" 
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="stateVisible|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,14 +23,14 @@
         </activity>
         <activity
             android:name="uet.dtui.gmail.activity.BaseListEmailActivity" 
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity
             android:name="uet.dtui.gmail.activity.SettingActivity" 
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" 
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
     </application>
 
 </manifest>

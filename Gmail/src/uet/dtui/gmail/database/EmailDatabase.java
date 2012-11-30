@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.MessageEmail;
  
@@ -103,12 +104,21 @@ public class EmailDatabase{
 				Log.e("DB ERROR", e.toString());
 				e.printStackTrace();
 			}
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_DELETE, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_DRAFT, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_IMPORTANT, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_INBOX, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_SENT, 0, 0);
 		}
 		else 
 			return false;
 		
 		return true;
 	}
+	
+	/*
+	 * GET ACCOUNT
+	 * */
 	
 	public List<Account> getAccountWithOwner(int owner) {
 		List<Account> listAcc = new ArrayList<Account>();
@@ -155,26 +165,15 @@ public class EmailDatabase{
 	 */
 	public boolean deleteRowFromTableAccountByID(long rowID)
 	{
-		// check existing of rowID in the table.
-		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM ACCOUNT WHERE id=" + rowID + ";", null);
-		mCount.moveToFirst();
-		int count= mCount.getInt(0);
-		mCount.close();
-		if (count != 0) {
-			// ask the database manager to delete the row of given id
-			try {
-				db.delete(TABLE_FOLDER_NAME, TABLE_FOLDER_ROW_ONE + "=" + rowID, null);
-				db.delete(TABLE_ACCOUNT_NAME, TABLE_ACCOUNT_ROW_ID + "=" + rowID, null);
-			}
-			catch (Exception e)
-			{
-				Log.e("DB ERROR", e.toString());
-				e.printStackTrace();
-			}
+		try {
+			db.delete(TABLE_FOLDER_NAME, TABLE_FOLDER_ROW_ONE + "=" + rowID, null);
+			db.delete(TABLE_ACCOUNT_NAME, TABLE_ACCOUNT_ROW_ID + "=" + rowID, null);
 		}
-		else
+		catch (Exception e) {
+			Log.e("DB ERROR", e.toString());
+			e.printStackTrace();
 			return false;
-		
+		}	
 		return true;
 	}
  
@@ -346,6 +345,17 @@ public class EmailDatabase{
 	 * @param rowStringDate the value for the row's sixth column 
 	 * @param rowStringAttach the value for the row's seventh column
 	 */
+	public long getIdFolderWithCurrentAccount(String nameFolder, long idAcc) {
+		long idFolder = -1;
+		List<Account> listAcc = new ArrayList<Account>();
+		String sql = "SELECT * FROM Folder where name_folder = \"" + nameFolder + "\" and id_account = " + idAcc;
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		idFolder = cursor.getLong(0);
+		return idFolder;
+	}
+	
 	public boolean addRowToTableMessage(long idMessage, long rowStringIDFolder, String rowStringSubject, String rowStringFromAddress, String rowStringToAddress, String rowStringContext, String rowStringDate, String rowStringAttach)
 	{
 		// check existing of idMessage in the table.
