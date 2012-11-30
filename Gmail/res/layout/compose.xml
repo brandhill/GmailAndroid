@@ -82,15 +82,6 @@
                 android:layout_height="1dp"
                 android:background="#3f3e3e" />
 
-            <EditText
-                android:id="@+id/tfFrom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#cfcdcd"
-                android:drawableLeft="@drawable/label_from"
-                android:drawablePadding="6dp"
-                android:padding="6dp" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -103,6 +94,7 @@
                 android:background="#cfcdcd"
                 android:drawableLeft="@drawable/label_to"
                 android:drawablePadding="6dp"
+                android:textSize="14dp"
                 android:padding="6dp" />
 
             <TextView
@@ -115,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#cfcdcd"
+                android:textSize="14dp"
                 android:drawableLeft="@drawable/label_subject"
                 android:drawablePadding="6dp"
                 android:padding="6dp" />
@@ -130,6 +123,7 @@
                 android:layout_height="match_parent"
                 android:background="#FFFFFF"
                 android:gravity="left|top"
+                android:textSize="14dp"
                 android:hint="Content"
                 android:layout_marginBottom="44dp"
                 android:padding="6dp" />
