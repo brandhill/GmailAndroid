@@ -75,7 +75,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		// read mail and save to a list
 		final List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 		asyncReadEmail = new MailReaderAsyncTask(this, Utils.FOLDER_NAME_INBOX);
-		asyncReadEmail.execute(null);
+//		asyncReadEmail.execute(null);
 		
 		Log.d("Size of data", mail_list.size() + "");
 

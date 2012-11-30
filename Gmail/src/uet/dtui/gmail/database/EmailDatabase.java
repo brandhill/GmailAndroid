@@ -514,7 +514,7 @@ public class EmailDatabase {
 			values.put(TABLE_MESSAGE_SUBJECT, email.subject);
 			values.put(TABLE_MESSAGE_FROM_ADDRESS, email.from);
 			values.put(TABLE_MESSAGE_TO_ADDRESS, email.to);
-			values.put(TABLE_MESSAGE_CONTEXT, email.content);
+			values.put(TABLE_MESSAGE_CONTENT, email.content);
 			values.put(TABLE_MESSAGE_DATE, email.date);
 			values.put(TABLE_MESSAGE_FILE_NAME, email.fileName);
 			values.put(TABLE_MESSAGE_SOURCE_FILE, email.sourceFile);
