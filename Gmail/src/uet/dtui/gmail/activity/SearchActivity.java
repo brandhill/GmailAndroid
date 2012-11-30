@@ -11,7 +11,6 @@ import android.widget.Button;
 
 public class SearchActivity extends Activity{
 	private ClearableEditText searchContent;
-	private Button btnDelete;
 	private Button btnCancel;
 	private Button btnFrom;
 	private Button btnTo;
@@ -29,29 +28,13 @@ public class SearchActivity extends Activity{
 	
 	private void findView() {
 		searchContent =  (ClearableEditText) findViewById(R.id.search_content);
-		btnDelete = (Button) findViewById(R.id.btn_delete);
 		btnCancel = (Button) findViewById(R.id.btn_cancel);
 		btnFrom = (Button) findViewById(R.id.btn_from);
 		btnTo = (Button) findViewById(R.id.btn_to);
 		btnSubject= (Button) findViewById(R.id.btn_subject);
 		btnAll = (Button) findViewById(R.id.btn_all);
 		
-		// When Search Content is empty, the Delete button is disabled
-		if (searchContent.getText().toString().equals(""))
-			btnDelete.setEnabled(false);
-		
 		// Chỗ này xử lý nếu người dùng nhập vào (ClearableEditText thay đổi) thì enable Delete button và xử lý 
-		
-		// When Delete button was clicked, all content in Search Content is deleted
-		btnDelete.setOnClickListener(new OnClickListener()
-		{
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// Xoá nội dung trong ô search content
-			}
-			
-		});
 		
 		// When Cancel button was clicked, finish the activity
 		btnCancel.setOnClickListener(new OnClickListener()

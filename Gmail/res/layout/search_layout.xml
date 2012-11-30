@@ -1,98 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="480dp"
-    android:layout_height="123dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@drawable/bg_search_layout">
+    android:background="#bb000000">
 
     <LinearLayout
-        android:layout_width="480dp"
-        android:layout_height="63dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#45495a"
         android:orientation="horizontal" >
-
-        <FrameLayout
-            android:layout_width="375dp"
-            android:layout_height="wrap_content" >
 
             <uet.dtui.gmail.components.ClearableEditText
                 android:id="@+id/search_content"
-                android:layout_width="355dp"
-                android:layout_height="37dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="242dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/area_search_content"
                 android:ems="10"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="8dp"
+                android:layout_gravity="center_vertical"
                 android:textSize="18dp"
+                android:drawableLeft="@drawable/icon_search"
                 android:hint="@string/hintSearch"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
-                android:paddingLeft="35dp"
-                android:paddingTop="3dp"
+				android:drawablePadding="6dp"
+				android:gravity="left"
                 android:textColor="#413f3f" />
-
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="27dp"
-                android:layout_height="28dp"
-                android:layout_marginLeft="342dp"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/btn_delete_search" />
-            
-            <ImageView 
-                android:id="@+id/icon_search"
-        		android:layout_width="20dp"
-        		android:layout_height="23dp"
-        		android:layout_marginLeft="25dp"
-                android:layout_marginTop="20dp"
-        		android:src="@drawable/icon_search" > 
-        	</ImageView>
-        </FrameLayout>
+           
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="82dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="11dp"
-            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="8dp"
             android:background="@drawable/btn_cancel_search" />
 
     </LinearLayout>
     
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#363637"/>
+    
     <LinearLayout
-        android:layout_width="480dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#545a6b"
         android:orientation="horizontal" >
         
         <Button
         android:id="@+id/btn_from"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
-        android:layout_marginLeft="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17dp"
         android:layout_marginTop="6dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/btn_from_checked" />
         
         <Button
         android:id="@+id/btn_to"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/btn_to_notchecked" />
         
         <Button
         android:id="@+id/btn_subject"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/btn_subject_notchecked" />
         
         <Button
         android:id="@+id/btn_all"
-        android:layout_width="106dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:background="@drawable/btn_all_notchecked" />
         
     </LinearLayout>
+    
+    <ListView 
+        android:id="@+id/listSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="#00000000">
+        
+    </ListView>
 
 </LinearLayout>

@@ -350,9 +350,9 @@ public class EmailDatabase{
 		FolderEmail folder= new FolderEmail();
 		folder.id = cursor.getLong(0);
 		folder.idAccount = cursor.getLong(1);
-		folder.name = cursor.getString(3);
-		folder.numberEmailUnread = cursor.getInt(4);
-		folder.numberEmail = cursor.getInt(5);
+		folder.name = cursor.getString(2);
+		folder.numberEmailUnread = cursor.getInt(3);
+		folder.numberEmail = cursor.getInt(4);
 		return folder;
 	}
 
