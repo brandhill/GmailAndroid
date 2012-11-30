@@ -34,6 +34,12 @@ public class Utils {
 	public static final String MAX_UID_EMAIL = "uid_max";
 	public static final String LAST_UPDATED = "updated";
 	
+	//Name of folder gmal
+	public static final String FOLDER_NAME_INBOX = "Inbox";
+	public static final String FOLDER_NAME_IMPORTANT = "[Gmail]/Starred";
+	public static final String FOLDER_NAME_DELETE = "[Gmail]/Trash";
+	public static final String FOLDER_NAME_SENT = "[Gmail]/Sent mail";
+	
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);
 		tv.setText(text);
@@ -79,13 +85,27 @@ public class Utils {
 	@SuppressLint("WorldReadableFiles")
 	public static String getCurrentAcc(Context activity) {
 		SharedPreferences pref = activity.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, activity.MODE_WORLD_READABLE);
-		return pref.getString(Utils.CURRENT_ACC, null);
+		return pref.getString(Utils.CURRENT_ACC, "None");
 	}
 	
 	public static void setCurrenAcc(String acc, Context activity) {
 		SharedPreferences pref = activity.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, activity.MODE_WORLD_WRITEABLE);
 		SharedPreferences.Editor myEditor = pref.edit();
 		myEditor.putString(Utils.CURRENT_ACC, acc);
+		myEditor.commit();
+	}
+	
+	public static long getMaxUid(Context context) {
+		long uId = -1;
+		SharedPreferences pref = context.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, context.MODE_WORLD_READABLE);
+		uId = pref.getLong(Utils.MAX_UID_EMAIL, -1);
+		return uId;
+	}
+	
+	public static void setMaxUid(Context context, long max) {
+		SharedPreferences pref = context.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, context.MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor myEditor = pref.edit();
+		myEditor.putLong(Utils.CURRENT_ACC, max);
 		myEditor.commit();
 	}
 }

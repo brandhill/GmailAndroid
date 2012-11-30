@@ -14,6 +14,11 @@ public class MessageEmail {
 
 	public MessageEmail() {
 		super();
+		subject = "";
+		from = "" ;to = ""; date = "";
+		content = ""; fileName = ""; sourceFile = "";
+		contentHtml = "";
+		id = idFolder = -1;
 	}
 
 	public MessageEmail(long id, long folder, String subject, String from, String to,

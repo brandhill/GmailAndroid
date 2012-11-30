@@ -433,6 +433,38 @@ public class EmailDatabase{
 		
 		return true;
 	}
+	
+	public boolean addMessage(MessageEmail email) {
+		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM MESSAGE WHERE id_message=" + email.id + ";", null);
+		mCount.moveToFirst();
+		int count= mCount.getInt(0);
+		mCount.close();
+		if (count == 0) {
+			ContentValues values = new ContentValues();
+			values.put(TABLE_MESSAGE_ROW_ID, email.id);
+			values.put(TABLE_MESSAGE_ID_FOLDER, email.idFolder);
+			values.put(TABLE_MESSAGE_SUBJECT, email.subject);
+			values.put(TABLE_MESSAGE_FROM_ADDRESS, email.from);
+			values.put(TABLE_MESSAGE_TO_ADDRESS, email.to);
+			values.put(TABLE_MESSAGE_CONTEXT, email.content);
+			values.put(TABLE_MESSAGE_DATE, email.date);
+			values.put(TABLE_MESSAGE_FILE_NAME, email.fileName);
+			values.put(TABLE_MESSAGE_SOURCE_FILE, email.sourceFile);
+			values.put(TABLE_MESSAGE_CONTENT_HTML, email.contentHtml);
+	   
+			// ask the database object to insert the new data 
+			try{
+				db.insert(TABLE_MESSAGE_NAME, null, values);
+			}
+			catch(Exception e)
+			{
+				Log.e("DB ERROR", e.toString());
+				e.printStackTrace();
+			}
+		} else
+			return false;
+		return true;
+	}
  
  
  

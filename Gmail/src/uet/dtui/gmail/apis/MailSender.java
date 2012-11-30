@@ -49,7 +49,7 @@ public class MailSender extends javax.mail.Authenticator {
 				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
 
-		session = Session.getDefaultInstance(props, this);
+		session = Session.getInstance(props, this);
 	}
 
 	protected PasswordAuthentication getPasswordAuthentication() {

@@ -14,7 +14,13 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.internet.InternetAddress;
 
+import uet.dtui.gmail.activity.BaseListEmailActivity;
+import uet.dtui.gmail.components.Utils;
+import uet.dtui.gmail.database.EmailDatabase;
+import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.MessageEmail;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -22,20 +28,27 @@ import com.sun.mail.imap.IMAPFolder;
 
 public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 	private Message[] messages;
+	private Message firstMessage;
 	private String username;
 	private String password;
 	private long UID;
 	private long[] arrayUID;
+	private Context context;
+	private String nameFolder;
+	private EmailDatabase database;
+	private BaseListEmailActivity activity;
 
-	public MailReaderAsyncTask(String user, String pass, long UID) {
-		this.username = user;
-		this.password = pass;
-		this.UID = UID;
+	public MailReaderAsyncTask(BaseListEmailActivity activity, String nameFolder) {
+		this.activity = activity;
+		this.context = activity.getApplicationContext();
+		this.UID = Utils.getMaxUid(context);
+		this.nameFolder = nameFolder;
+		database = new EmailDatabase(context);
 	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		// TODO Auto-generated method stub
+		getUserAndPassWord();
 		try {
 			getMessage();
 			publishProgress();
@@ -57,22 +70,37 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		Session session = Session.getDefaultInstance(props, null);
 		Store store = session.getStore("imaps");
 		store.connect("imap.gmail.com", username, password);
-		IMAPFolder inbox = (IMAPFolder) store.getFolder("Inbox");
-		inbox.open(inbox.READ_WRITE);
+		IMAPFolder folderImap = (IMAPFolder) store.getFolder(nameFolder);
+		folderImap.open(folderImap.READ_WRITE);
 		//arrayUID = get20UID(UID, inbox);
 		try{
-			messages = inbox.getMessagesByUID(UID,UID+20);
+			int countMail = folderImap.getMessageCount();
+			firstMessage = folderImap.getMessage(countMail - 1);
+			if (UID == -1) {
+				UID = folderImap.getUID(firstMessage);
+			}
+			messages = folderImap.getMessagesByUID(UID-20,UID);
+			Utils.setMaxUid(context, UID-21);
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 		}
 		
 		for (int i = 0; i < messages.length; i++) {
-			mail_list.add(new MessageEmail(inbox.getUID(messages[i]), messages[i].getSubject().toString(),
-					InternetAddress.toString(messages[i].getFrom()),
-					InternetAddress.toString(messages[i]
-							.getRecipients(Message.RecipientType.TO)),
-							messages[i].getSentDate(), getContent(messages[i])));
+			MessageEmail mess = new MessageEmail();
+			mess.id = folderImap.getUID(messages[i]);
+			mess.idFolder = 1;
+			mess.subject = messages[i].getSubject().toString();
+			mess.from = InternetAddress.toString(messages[i].getFrom());
+			mess.to = InternetAddress.toString(messages[i]
+					.getRecipients(Message.RecipientType.TO));
+			mess.date = messages[i].getSentDate().toString();
+			mess.content = getContent(messages[i]);
+			mess.fileName = "";
+			mess.sourceFile = "";
+			mess.contentHtml = "";
+			saveMessageEmail(mess);
+			
 			Log.v("content", getContent(messages[i]));
 		}
 		
@@ -155,5 +183,20 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 			}
 		}
 		return UID;
+	}
+	
+	public void saveMessageEmail(MessageEmail mess) {
+		database.openDB();
+		database.addMessage(mess);
+		database.closeDB();
+	}
+	
+	public void getUserAndPassWord() {
+		this.username = Utils.getCurrentAcc(context);
+		database.openDB();
+		Account acc = database.getAccountFromEmail(username);
+		this.password = acc.password;
+		database.closeDB();
+		Log.d("GET USER NAME AND PASS","====>" + username + "  " + password );
 	}
 }
