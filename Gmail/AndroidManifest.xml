@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:theme="@style/SampleTheme" >
         <activity
-            android:name="uet.dtui.gmail.activity.LoginActivity"
+            android:name="uet.dtui.gmail.activity.SplashActivity"
             android:label="@string/title_activity_main" 
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -22,9 +22,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="uet.dtui.gmail.activity.LoginActivity" 
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
             android:name="uet.dtui.gmail.activity.BaseListEmailActivity" 
             android:windowSoftInputMode="adjustResize">
         </activity>
+        <service android:name="uet.dtui.gmail.activity.CheckNewEmailService"></service>
+        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" ></activity>
         <activity
             android:name="uet.dtui.gmail.activity.SettingActivity" 
             android:windowSoftInputMode="adjustResize">
