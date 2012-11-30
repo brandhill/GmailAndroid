@@ -9,5 +9,6 @@
     <string name="hintPassword">Password</string>
     <string name="textBtnLogin">Login</string>
     <string name="textCreateAccount">Create an Account</string>
+    <string name="hintSearch">Enter to search</string>
 
 </resources>
