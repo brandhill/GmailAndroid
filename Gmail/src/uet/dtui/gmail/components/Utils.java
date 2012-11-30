@@ -7,7 +7,10 @@ import javax.mail.Session;
 import javax.mail.Store;
 
 import uet.dtui.gmail.R;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -29,6 +32,7 @@ public class Utils {
 	public static final String FILE_SHARE_PREFERENCES = "UET";
 	public static final String CURRENT_ACC = "current";
 	public static final String MAX_UID_EMAIL = "uid_max";
+	public static final String LAST_UPDATED = "updated";
 	
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);
@@ -70,6 +74,18 @@ public class Utils {
 		} catch (MessagingException e) {
 			return false;
 		}
-
+	}
+	
+	@SuppressLint("WorldReadableFiles")
+	public static String getCurrentAcc(Context activity) {
+		SharedPreferences pref = activity.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, activity.MODE_WORLD_READABLE);
+		return pref.getString(Utils.CURRENT_ACC, null);
+	}
+	
+	public static void setCurrenAcc(String acc, Context activity) {
+		SharedPreferences pref = activity.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, activity.MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor myEditor = pref.edit();
+		myEditor.putString(Utils.CURRENT_ACC, acc);
+		myEditor.commit();
 	}
 }

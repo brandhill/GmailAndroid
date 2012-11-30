@@ -69,7 +69,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		listFolder = new ArrayList<FolderEmail>();
 		mAdapter = new MenuAdapter(mDatas, this);
 		
-		getCurrentAcc();
+		currentAccount = Utils.getCurrentAcc(this);
 		getDataForMenu();
 		
 		// Set listener for onScroll
@@ -108,7 +108,8 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter
 						.getItem(position);
-				setCurrentAcc(tmp.account.email);
+//				setCurrentAcc(tmp.account.email);
+				Utils.setCurrenAcc(tmp.account.email, getApplicationContext());
 				currentAccount = tmp.account.email;
 			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER) {
 				ItemMenuFolder fold = (ItemMenuFolder) mAdapter
@@ -194,7 +195,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		database.closeDB();
 	}
 	
-	public void getCurrentAcc() {
+/*	public void getCurrentAcc() {
 		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_READABLE);
 		currentAccount = pref.getString(Utils.CURRENT_ACC, null);
 	}
@@ -204,12 +205,12 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		SharedPreferences.Editor myEditor = pref.edit();
 		myEditor.putString(Utils.CURRENT_ACC, cur);
 		myEditor.commit();
-	}
+	}*/
 
 	@Override
 	protected void onPause() {
 		if (currentAccount != null)
-			setCurrentAcc(currentAccount);
+			Utils.setCurrenAcc(currentAccount, getApplicationContext());
 		super.onPause();
 	}
 
