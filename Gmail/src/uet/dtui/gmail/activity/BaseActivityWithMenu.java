@@ -109,6 +109,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter
 						.getItem(position);
 				setCurrentAcc(tmp.account.email);
+				currentAccount = tmp.account.email;
 			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER) {
 				ItemMenuFolder fold = (ItemMenuFolder) mAdapter
 						.getItem(position);
@@ -204,4 +205,18 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		myEditor.putString(Utils.CURRENT_ACC, cur);
 		myEditor.commit();
 	}
+
+	@Override
+	protected void onPause() {
+		if (currentAccount != null)
+			setCurrentAcc(currentAccount);
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+	
+	
 }
