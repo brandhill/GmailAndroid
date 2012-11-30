@@ -1,14 +1,12 @@
 package uet.dtui.gmail.model;
 
-import java.util.Date;
-
 public class MessageEmail {
 	public long id;
 	public long idFolder;
 	public String subject;
 	public String from;
 	public String to;
-	public Date date;
+	public String date;
 	public String content;
 	public String fileName;
 	public String sourceFile;
@@ -17,7 +15,7 @@ public class MessageEmail {
 		super();
 	}
 	
-	public MessageEmail(long folder, String subject, String from, String to, Date date, String content, String file) {
+	public MessageEmail(long folder, String subject, String from, String to, String date, String content, String file) {
 		id = System.currentTimeMillis();
 		this.idFolder = folder;
 		this.subject = subject;

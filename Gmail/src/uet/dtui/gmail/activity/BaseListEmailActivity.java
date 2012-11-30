@@ -56,7 +56,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject",
 						"from from from from from from from from from ",
 						"to",
-						new Date(1991, 11, 03),
+						"03/11/1991",
 						"content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content content",
 						""));
 		mail_list
@@ -65,7 +65,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject subject ",
 						"from from from from from from from from from ",
 						"to",
-						new Date(1991, 11, 03),
+						"03/11/1991",
 						"content content content content content content content content content content content content ",
 						""));
 		mail_list
@@ -74,7 +74,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject",
 						"from from from from from from from from from ",
 						"to",
-						new Date(2012, 11, 27),
+						"03/11/1991",
 						"content content content content content content content content content content content content ",
 						""));
 		mail_list
@@ -83,27 +83,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 						"subject subject subject subject subject subject subject subject",
 						"from from from from from from from from from ",
 						"to",
-						new Date(2012, 11, 06),
+						"03/11/1991",
 						"content content content content content content content content content content content content ",
 						""));
-//		mail_list
-//				.add(new MessageEmail(
-//						1,
-//						"subject subject subject subject subject subject subject subject",
-//						"from from from from from from from from from ",
-//						"to",
-//						new Date(1991, 11, 27),
-//						"content content content content content content content content content content content content ",
-//						""));
-//		mail_list
-//				.add(new MessageEmail(
-//						1,
-//						"subject subject subject subject subject subject subject subject",
-//						"from from from from from from from from from ",
-//						"to",
-//						new Date(2012, 11, 03),
-//						"content content content content content content content content content content content content ",
-//						""));
+
 		Log.d("Size of data", mail_list.size() + "");
 
 		findViews();
