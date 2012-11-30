@@ -30,9 +30,12 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <service android:name="uet.dtui.gmail.activity.CheckNewEmailService"></service>
-        <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" ></activity>
         <activity
             android:name="uet.dtui.gmail.activity.SettingActivity" 
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name="uet.dtui.gmail.activity.SearchActivity" 
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" 

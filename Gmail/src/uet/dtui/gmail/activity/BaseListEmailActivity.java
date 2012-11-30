@@ -144,6 +144,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 				menuDrawer.openMenu();
 			}
 		}
+		if (v == btnSearch) {
+			Intent searchIntent = new Intent(this, SearchActivity.class);
+			startActivity(searchIntent);
+		}
 		super.onClick(v);
 	}
 	
