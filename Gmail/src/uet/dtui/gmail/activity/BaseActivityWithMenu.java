@@ -18,6 +18,7 @@ import uet.dtui.gmail.model.ItemMenuFolder;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -36,7 +37,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	public static final String ACCOUNT_CATEGORY = "accounts";
 	public static final String CATEGORIES_CATEGORY = "categoreis";
 	public MenuDrawerManager menuDrawer;
-	public String currentAccount = "kienvtqhi@gmail.com";
+	public String currentAccount = null;
 	public String currentFolder = "InBox";
 	private ListView listView;
 	public int mActivePosition = -1;
@@ -67,7 +68,8 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		listAcc = new ArrayList<Account>();
 		listFolder = new ArrayList<FolderEmail>();
 		mAdapter = new MenuAdapter(mDatas, this);
-
+		
+		getCurrentAcc();
 		getDataForMenu();
 		
 		// Set listener for onScroll
@@ -106,7 +108,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter
 						.getItem(position);
-				currentAccount = tmp.account.email;
+				setCurrentAcc(tmp.account.email);
 			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER) {
 				ItemMenuFolder fold = (ItemMenuFolder) mAdapter
 						.getItem(position);
@@ -189,6 +191,17 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		}
 		mAdapter.notifyDataSetChanged();
 		database.closeDB();
-
+	}
+	
+	public void getCurrentAcc() {
+		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_READABLE);
+		currentAccount = pref.getString(Utils.CURRENT_ACC, null);
+	}
+	
+	public void setCurrentAcc(String cur) {
+		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor myEditor = pref.edit();
+		myEditor.putString(Utils.CURRENT_ACC, cur);
+		myEditor.commit();
 	}
 }
