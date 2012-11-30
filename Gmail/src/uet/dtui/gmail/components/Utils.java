@@ -28,6 +28,7 @@ public class Utils {
 	public static final String FOLDER_DELETE = "delete";
 	public static final String FILE_SHARE_PREFERENCES = "UET";
 	public static final String CURRENT_ACC = "current";
+	public static final String MAX_UID_EMAIL = "uid_max";
 	
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);

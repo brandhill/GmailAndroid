@@ -11,8 +11,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF" >
+            android:layout_height="40dp"
+            android:background="#4984b6" >
 
             <Button
                 android:id="@+id/btnMenu"
@@ -40,6 +40,8 @@
                 android:background="@drawable/oval_unread"
                 android:gravity="center"
                 android:text="4"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:textColor="#FFFFFF"
                 android:textSize="14dp" />
         </RelativeLayout>
