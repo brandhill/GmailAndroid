@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.model.Account;
+import uet.dtui.gmail.model.FolderEmail;
 import uet.dtui.gmail.model.MessageEmail;
  
 public class EmailDatabase{
@@ -104,11 +105,11 @@ public class EmailDatabase{
 				Log.e("DB ERROR", e.toString());
 				e.printStackTrace();
 			}
-			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_DELETE, 0, 0);
-			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_DRAFT, 0, 0);
-			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_IMPORTANT, 0, 0);
 			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_INBOX, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_IMPORTANT, 0, 0);
 			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_SENT, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_DRAFT, 0, 0);
+			this.addRowToTableFolder(System.currentTimeMillis(), id, Utils.FOLDER_DELETE, 0, 0);
 		}
 		else 
 			return false;
@@ -329,7 +330,32 @@ public class EmailDatabase{
 		
 		return true;
 	}
+	
+	public List<FolderEmail> getAllFolderWithAcc(long idAcc) {
+		List<FolderEmail> listFolder = new ArrayList<FolderEmail>();
+		String sql = "SELECT * FROM Folder where id_account = " +idAcc;
+		Log.d("SQL", sql);
+		Cursor cursor = db.rawQuery(sql, null);
+		
+		cursor.moveToFirst();
+		 while (!cursor.isAfterLast()) {
+			 FolderEmail folder = convertCursorToFolder(cursor);
+			 listFolder.add(folder);
+			 cursor.moveToNext();
+		 }
+		return listFolder;
+	}
  
+	private FolderEmail convertCursorToFolder(Cursor cursor) {
+		FolderEmail folder= new FolderEmail();
+		folder.id = cursor.getLong(0);
+		folder.idAccount = cursor.getLong(1);
+		folder.name = cursor.getString(3);
+		folder.numberEmailUnread = cursor.getInt(4);
+		folder.numberEmail = cursor.getInt(5);
+		return folder;
+	}
+
 	/**********************************************************************
 	 * FUNCTIONS FOR TABLE MESSAGE.
 	 *********************************************************************/

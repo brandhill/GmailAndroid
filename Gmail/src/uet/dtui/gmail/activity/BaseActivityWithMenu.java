@@ -41,9 +41,14 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	private MenuAdapter mAdapter;
 	private List<Object> mDatas;
 	private List<Account> listAcc;
+	private List<FolderEmail> listFolder;
 	private static final String TAG = "Base Activity";
 	public int posArrow = -1;
 	public EmailDatabase database;
+	private int imageFolder[] = {R.drawable.icon_inbox_folder, R.drawable.icon_star_folder
+			,R.drawable.icon_sent_folder, R.drawable.icon_draft_folder, R.drawable.icon_delete_folder};
+	private int textFolder [] = {R.drawable.text_inbox_folder, R.drawable.text_important_folder
+			,R.drawable.text_sent_folder, R.drawable.text_draft_folder, R.drawable.text_delete_folder};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,33 +59,32 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 		listView = (ListView) findViewById(R.id.list_menu);
 		mDatas = new ArrayList<Object>();
+		listAcc = new ArrayList<Account>();
+		listFolder = new ArrayList<FolderEmail>();
+		
 		mDatas.add(new ItemMenuCategory(ACCOUNT_CATEGORY,
 				R.drawable.category_menu_accounts));
 		
 		//Get account owner
 		database = new EmailDatabase(getApplicationContext());
 		database.openDB();
-		listAcc = new ArrayList<Account>();
+		
 		listAcc = database.getAccountWithOwner(Utils.TYPE_ACCOUNT_OWNER);
-		for (int i=0; i<listAcc.size(); i++)
+		Account cur = new Account();;
+		for (int i=0; i<listAcc.size(); i++) {
+			cur = listAcc.get(0);
 			mDatas.add(new ItemMenuAccount(listAcc.get(i)));
-		database.closeDB();
-
-/*		// TestData
-		FolderEmail folder = new FolderEmail("InBox", 123);
+		}
+		
 		mDatas.add(new ItemMenuCategory(CATEGORIES_CATEGORY,
 				R.drawable.category_menu_categories));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_inbox_folder,
-				R.drawable.text_inbox_folder, folder));
-		FolderEmail folder2 = new FolderEmail("InBox2", 123);
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_star_folder,
-				R.drawable.text_important_folder, folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_sent_folder,
-				R.drawable.text_sent_folder, folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_draft_folder,
-				R.drawable.text_draft_folder, folder2));
-		mDatas.add(new ItemMenuFolder(R.drawable.icon_delete_folder,
-				R.drawable.text_delete_folder, folder2));*/
+		//Get folder
+		listFolder = database.getAllFolderWithAcc(cur.id);
+		Log.d("SIZE OF LIST FOLDER", listFolder.size() + "");
+		for (int i=0; i<listFolder.size(); i++) {
+			mDatas.add(new ItemMenuFolder(imageFolder[i], textFolder[i],listFolder.get(i)));
+		}
+		database.closeDB();
 
 		Log.d(TAG, mDatas.size() + "");
 		mAdapter = new MenuAdapter(mDatas, this);
