@@ -11,18 +11,23 @@ public class MessageEmail {
 	public String fileName;
 	public String sourceFile;
 	public String contentHtml;
+
 	public MessageEmail() {
 		super();
 	}
-	
-	public MessageEmail(long folder, String subject, String from, String to, String date, String content, String file) {
-		id = System.currentTimeMillis();
+
+	public MessageEmail(long id, long folder, String subject, String from, String to,
+			String date, String content, String nameFile, String contentHtml,
+			String srcFile) {
+		this.id = id;
 		this.idFolder = folder;
 		this.subject = subject;
 		this.from = from;
 		this.to = to;
-		this.date= date;
+		this.date = date;
 		this.content = content;
-		this.fileName = file;
+		this.fileName = nameFile;
+		this.contentHtml = contentHtml;
+		this.sourceFile = srcFile;
 	}
 }

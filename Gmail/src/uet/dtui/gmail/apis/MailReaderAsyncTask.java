@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.mail.BodyPart;
-import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -17,64 +16,66 @@ import javax.mail.internet.InternetAddress;
 
 import uet.dtui.gmail.model.MessageEmail;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.sun.mail.imap.IMAPFolder;
 
 public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 	private Message[] messages;
-	private String user;
-	private String pass;
+	private String username;
+	private String password;
+	private long UID;
+	private long[] arrayUID;
 
-	public MailReaderAsyncTask(String user, String pass) {
-		this.user = user;
-		this.pass = pass;
+	public MailReaderAsyncTask(String user, String pass, long UID) {
+		this.username = user;
+		this.password = pass;
+		this.UID = UID;
 	}
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		setMessagesEmail();
-		publishProgress();
+		// TODO Auto-generated method stub
+		try {
+			getMessage();
+			publishProgress();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return null;
 	}
 
-	private void setMessagesEmail() {
+	private void getMessage() throws MessagingException, IOException {
 		List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 		Properties props = System.getProperties();
+		props.setProperty("mail.store.protocol", "imaps");
 		Session session = Session.getDefaultInstance(props, null);
-		Store store;
-		try {
-			store = session.getStore("imaps");
-			store.connect("imap.gmail.com", "kienvtqhi@gmail.com", "kienhien90");
-			// IMAPFolder inbox = (IMAPFolder) store.getFolder("INBOX");
-
-			Folder inbox = store.getFolder("Inbox");
-			inbox.open(Folder.READ_ONLY);
-
-			int maxPos = inbox.getMessageCount();
-			if (maxPos > 20) {
-				int start = maxPos - 20;
-				int end = maxPos;
-				maxPos = maxPos - 21;
-				messages = inbox.getMessages(start, end);
-			} else {
-				int start = 1;
-				int end = maxPos;
-				maxPos = 0;
-				messages = inbox.getMessages(start, end);
-			}
-
-			// for (int i = messages.length - 1; i > messages.length - 10; i--)
-			// {
-			// mail_list.add(new MessageEmail(messages[i].getMessageNumber(),
-			// messages[i].getSubject(), InternetAddress
-			// .toString(messages[i].getFrom()),
-			// InternetAddress.toString(messages[i]
-			// .getRecipients(Message.RecipientType.TO)),
-			// messages[i].getSentDate(), getContent(messages[i])));
-			// }
-			inbox.close(false);
-			store.close();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		Store store = session.getStore("imaps");
+		store.connect("imap.gmail.com", username, password);
+		IMAPFolder inbox = (IMAPFolder) store.getFolder("Inbox");
+		inbox.open(inbox.READ_WRITE);
+		//arrayUID = get20UID(UID, inbox);
+		try{
+			messages = inbox.getMessagesByUID(UID,UID+20);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
+		
+		for (int i = 0; i < messages.length; i++) {
+			mail_list.add(new MessageEmail(inbox.getUID(messages[i]), messages[i].getSubject().toString(),
+					InternetAddress.toString(messages[i].getFrom()),
+					InternetAddress.toString(messages[i]
+							.getRecipients(Message.RecipientType.TO)),
+							messages[i].getSentDate(), getContent(messages[i])));
+			Log.v("content", getContent(messages[i]));
+		}
+		
 	}
 
 	// ham lay text trong body
@@ -82,8 +83,9 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 			IOException {
 		if (p.isMimeType("text/*")) {
 			String s = (String) p.getContent();
-			p.isMimeType("text/html");
-			return s;
+			if (s != null && p.isMimeType("text/html"))
+				return s;
+			return "";
 		}
 
 		if (p.isMimeType("multipart/alternative")) {
@@ -120,16 +122,38 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 	private String getContent(Message message) throws IOException,
 			MessagingException {
 		String result = "";
+
 		Multipart multipart = (Multipart) message.getContent();
+		// message.setFlag(Flags.Flag.DELETED, )
 		for (int x = 0; x < multipart.getCount(); x++) {
+
 			BodyPart bodyPart = multipart.getBodyPart(x);
+
 			String disposition = bodyPart.getDisposition();
+
 			if ((disposition != null) && (disposition.equals("ATTACHMENT"))) {
+
 				// saveAttachmentToFile(bodyPart);
 			} else {
+
 				result += getText(bodyPart) + "\n";
 			}
 		}
 		return result;
+	}
+
+	// ham lay UID 20 email mot lan
+	private long[] get20UID(long UIDStart, IMAPFolder folder) {
+		long UID[] = new long[5];
+		int count = 0;
+		while (count < 5) {
+			try {
+				UID[count++] = folder.getUIDNext();				
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return UID;
 	}
 }
