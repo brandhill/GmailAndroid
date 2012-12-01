@@ -5,9 +5,11 @@ import java.util.List;
 
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.AddAccountPopupWindow;
+import uet.dtui.gmail.components.CheckFreqAdapter;
 import uet.dtui.gmail.components.NameSettingPopupWindow;
 import uet.dtui.gmail.components.SettingAdapter;
 import uet.dtui.gmail.model.PairSaving;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -22,6 +24,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -105,6 +109,7 @@ public class SettingActivity extends Activity implements OnItemClickListener{
 		Button cancel = (Button) alertDialog.findViewById(R.id.setting_name_btncancel);
 		
         save.setOnClickListener(new Button.OnClickListener() {	
+			@SuppressLint("WorldReadableFiles")
 			public void onClick(View v) {
 				
 				final EditText name = (EditText) alertDialog.findViewById(R.id.setting_name_value);
@@ -113,7 +118,7 @@ public class SettingActivity extends Activity implements OnItemClickListener{
                 SharedPreferences.Editor myEditor = pref.edit();
                 myEditor.putString("name", name.getText().toString());
                 myEditor.commit();
-                ((ArrayAdapter) listview.getAdapter()).notifyDataSetChanged();
+                ((ArrayAdapter<?>) listview.getAdapter()).notifyDataSetChanged();
                 alertDialog.dismiss();
 			}
 		});  
@@ -132,7 +137,26 @@ public class SettingActivity extends Activity implements OnItemClickListener{
 	//--------------------------------------------------------------------------//
 	private void settingCheckFrequency() {
 		// TODO Auto-generated method stub
-		Toast.makeText(this, "Mail check frequency setting", 1).show();
+		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+		alertDialog.show();
+		alertDialog.setContentView(R.layout.setting_freq);	
+		
+		Button save = (Button) alertDialog.findViewById(R.id.setting_sign_btnsave);
+		Button cancel = (Button) alertDialog.findViewById(R.id.setting_sign_btncancel);
+		
+		ExpandableListView time_listview = (ExpandableListView) alertDialog.findViewById(R.id.setting_freq_list);
+		
+		ArrayList<PairSaving> item_list = new ArrayList<PairSaving>();
+		item_list.add(new PairSaving("1", "1 minute"));
+		item_list.add(new PairSaving("2", "2 minute"));
+		item_list.add(new PairSaving("3", "5 minute"));
+		item_list.add(new PairSaving("4", "10 minute"));
+		item_list.add(new PairSaving("5", "15 minute"));
+		
+		CheckFreqAdapter checkFreqAdapter = new CheckFreqAdapter(this, R.layout.setting_freq_row, item_list);
+		time_listview.setAdapter((ListAdapter) checkFreqAdapter);
+		time_listview.setOnItemClickListener(this);
+		
 	}
 	//--------------------------------------------------------------------------//
 	private void settingSignature() {

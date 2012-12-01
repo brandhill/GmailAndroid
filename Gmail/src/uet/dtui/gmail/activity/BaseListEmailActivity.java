@@ -158,6 +158,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements OnRef
 
 	public void loadMoreMessages(){
 		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
+//		get more messages here
+		asyncReadEmail.execute(null);
+//		get 20 message from DB to messages[]
+		
 		
 	}
 
