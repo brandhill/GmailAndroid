@@ -115,7 +115,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 				Toast.makeText(getApplicationContext(), "Password is empty", 0)
 						.show();
 			else {
-				if (Utils.checkConnect(tfEmailAddr.getText().toString(),
+				if (!Utils.checkConnect(tfEmailAddr.getText().toString(),
 						tfPassword.getText().toString())) {
 					saveAccount(tfEmailAddr.getText().toString(), tfPassword
 							.getText().toString());
