@@ -225,18 +225,6 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener,On
 		mAdapter.notifyDataSetChanged();
 		database.closeDB();
 	}
-	
-/*	public void getCurrentAcc() {
-		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_READABLE);
-		currentAccount = pref.getString(Utils.CURRENT_ACC, null);
-	}
-	
-	public void setCurrentAcc(String cur) {
-		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_WRITEABLE);
-		SharedPreferences.Editor myEditor = pref.edit();
-		myEditor.putString(Utils.CURRENT_ACC, cur);
-		myEditor.commit();
-	}*/
 
 	@Override
 	protected void onPause() {
