@@ -33,7 +33,7 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	private EditText content;
 	private Button spinner;
 	private EmailDatabase database;
-	String subj, bodyEmail, fromAcc, passAcc, toAcc ,filename;
+	public String subj, bodyEmail, fromAcc, passAcc, toAcc ,filename;
 	private String currentAcc;
 	private Intent recvIntent;
 	private MessageEmail recvEmail;
@@ -131,6 +131,11 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	}
 	
 	public void showPopupWindowChooseAccount() {
+		subj = this.subject.getText().toString();
+		bodyEmail = this.content.getText().toString();
+		toAcc = this.to.getText().toString();
+		filename = "";
+		setDefaultFromAccount();
 		Display display = getWindowManager().getDefaultDisplay();
 		LayoutInflater inflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

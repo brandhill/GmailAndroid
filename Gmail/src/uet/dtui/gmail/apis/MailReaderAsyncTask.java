@@ -53,16 +53,12 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		database = new EmailDatabase(context);
 		UID = this.getUIDMax(nameFolder) - 1;
 	}
-	
-	
 
 	@Override
 	protected void onPreExecute() {
 		activity.progressBar.setVisibility(View.VISIBLE);
 		super.onPreExecute();
 	}
-
-
 
 	@Override
 	protected Void doInBackground(Void... params) {
@@ -80,8 +76,6 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 
 		return null;
 	}
-	
-	
 
 	@Override
 	protected void onProgressUpdate(Void... values) {
@@ -89,8 +83,6 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		activity.adapter.notifyDataSetChanged();
 		super.onProgressUpdate(values);
 	}
-	
-	
 
 	@Override
 	protected void onPostExecute(Void result) {
@@ -98,10 +90,8 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		super.onPostExecute(result);
 	}
 
-
-
 	private void getMessage() throws MessagingException, IOException {
-		
+
 		if (!activity.loading) {
 			Log.d("DO IN BACK", UID + "Running.......");
 			activity.loading = true;
@@ -120,7 +110,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 				Log.d("UID MÃ", UID + "");
 				if (UID == -1 || UID == 0) {
 					UID = folderImap.getUID(firstMessage);
-				} 
+				}
 				if (UID > 20) {
 					messages = folderImap.getMessagesByUID(UID - 20, UID);
 				}
@@ -158,12 +148,11 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 			}
 			activity.loading = false;
 		} else {
-			
+
 		}
-		
 
 	}
-	
+
 	public long getIdFolder(String nameFolder) {
 		database = new EmailDatabase(context);
 		database.openDB();
@@ -176,39 +165,41 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 			name = Utils.FOLDER_DELETE;
 		else if (nameFolder.equals(Utils.FOLDER_NAME_SENT))
 			name = Utils.FOLDER_SENT;
-		long idAcc = database.getIDAccountFromEmail(Utils.getCurrentAcc(context));
+		long idAcc = database.getIDAccountFromEmail(Utils
+				.getCurrentAcc(context));
 		long idFolder = database.getIdFolderWithNameAndAcc(idAcc, name);
 		database.closeDB();
 		return idFolder;
 	}
 
-	private String getText(Part p) throws MessagingException, IOException {
+	private static String getText(Part p) throws MessagingException,
+			IOException {
 		if (p.isMimeType("text/*")) {
 			String s = (String) p.getContent();
-			return s;
+			if (s != null && p.isMimeType("text/html"))
+				return s;
+			return "";
 		}
 
 		if (p.isMimeType("multipart/alternative")) {
-			// prefer html text over plain text
 			Multipart mp = (Multipart) p.getContent();
 			String text = null;
 			for (int i = 0; i < mp.getCount(); i++) {
 				Part bp = mp.getBodyPart(i);
 				if (bp.isMimeType("text/plain")) {
-					if (text == null){
+					if (text == null)
 						text = getText(bp);
-					}
 					continue;
 				} else if (bp.isMimeType("text/html")) {
 					String s = getText(bp);
-					if (s != null){
+					if (s != null)
 						return s;
-					}
 				} else {
 					return getText(bp);
 				}
 			}
 			return text;
+
 		} else if (p.isMimeType("multipart/*")) {
 			Multipart mp = (Multipart) p.getContent();
 			for (int i = 0; i < mp.getCount(); i++) {
@@ -220,16 +211,16 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 
 		return null;
 	}
-	
+
 	private String getContentMess(Message message) throws IOException,
 			MessagingException {
 		String result = "";
 		int index = message.getContent().toString().indexOf('.');
 		if (index > 0) {
 			String checkMessageContent = message.getContent().toString()
-					.substring(0,index);
+					.substring(0, index);
 			if (checkMessageContent.equals("javax")) {
-				
+
 				Multipart multipart = (Multipart) message.getContent();
 				// message.setFlag(Flags.Flag.DELETED, )
 				for (int x = 0; x < multipart.getCount(); x++) {
@@ -242,12 +233,12 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 							&& (disposition.equals("ATTACHMENT"))) {
 						DataHandler handler = bodyPart.getDataHandler();
 						fileName = handler.getName();
-						
-					} else {						
+
+					} else {
 						result += getText(bodyPart) + "";
 					}
 				}
-			} else {				
+			} else {
 				result += message.getContent().toString();
 				textHTML = result;
 			}
@@ -283,7 +274,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		this.password = acc.password;
 		database.closeDB();
 	}
-	
+
 	public long getUIDMax(String nameFoder) {
 		String name = null;
 		if (nameFolder.equals(Utils.FOLDER_NAME_INBOX))
@@ -294,7 +285,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 			name = Utils.FOLDER_DELETE;
 		else if (nameFolder.equals(Utils.FOLDER_NAME_SENT))
 			name = Utils.FOLDER_SENT;
-		
+
 		database = new EmailDatabase(context);
 		database.openDB();
 		long uid = database.getIDMax(Utils.getCurrentAcc(context), name);
@@ -314,18 +305,18 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		int start = fromEmail.indexOf('<');
 		int end = fromEmail.indexOf('>');
 		if (start > 0 && end > 0)
-			emailName = fromEmail.substring(start+1, end);
+			emailName = fromEmail.substring(start + 1, end);
 		return emailName;
 	}
 
-	private String formatterDate(String _date){
+	private String formatterDate(String _date) {
 		String _dateFormat;
 
-		String day = _date.substring(8,10);
-		String month = _date.substring(4,7);
-		String Hr = _date.substring(11,13);
-		String Min = _date.substring(14,16);
-		_dateFormat = Hr + ":" + Min + " " + month + " " + day; 
+		String day = _date.substring(8, 10);
+		String month = _date.substring(4, 7);
+		String Hr = _date.substring(11, 13);
+		String Min = _date.substring(14, 16);
+		_dateFormat = Hr + ":" + Min + " " + month + " " + day;
 		return _dateFormat;
 	}
 

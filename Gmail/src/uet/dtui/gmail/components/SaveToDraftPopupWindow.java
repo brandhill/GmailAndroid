@@ -2,8 +2,12 @@ package uet.dtui.gmail.components;
 
 import uet.dtui.gmail.R;
 import uet.dtui.gmail.activity.ComposeNewEmail;
+import uet.dtui.gmail.database.EmailDatabase;
+import uet.dtui.gmail.model.MessageEmail;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
+import android.provider.ContactsContract.CommonDataKinds.Email;
+import android.test.UiThreadTest;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +21,7 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 	private Button btnClose;
 	private Button btnSave;
 	private Button btnDiscard;
+	private EmailDatabase database;
 	
 	public SaveToDraftPopupWindow(ComposeNewEmail activity, View contentView,
 			int width, int height) {
@@ -47,6 +52,7 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 		} else if (v == btnSave){
 			Toast.makeText(activity, "Save Account", 0).show();
 			this.dismiss();
+			saveMessageToDraft();
 			activity.finish();
 		} else if (v == btnDiscard) {
 			this.dismiss();
@@ -54,5 +60,20 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 		}
 		
 	}
-
+	private void saveMessageToDraft() {
+		database = new EmailDatabase(activity.getApplicationContext());
+		database.openDB();
+		MessageEmail mess = new MessageEmail();
+		mess.id = System.currentTimeMillis();
+		long idAcc = database.getIDAccountFromEmail(Utils.getCurrentAcc(activity.getApplicationContext()));
+		mess.idFolder = database.getIdFolderWithNameAndAcc(idAcc, Utils.FOLDER_DRAFT);
+		mess.from = activity.fromAcc;
+		mess.to = activity.toAcc;
+		mess.content = activity.bodyEmail;
+		mess.contentHtml = "";
+		mess.date = "";
+		mess.subject = activity.subj;
+		database.addMessage(mess);
+		database.closeDB();
+	}
 }

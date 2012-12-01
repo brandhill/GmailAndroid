@@ -47,6 +47,14 @@ public class Utils {
 	//Bundle
 	public static final String REPLY = "reply";
 	public static final String FORWARD = "forward";
+	public static final String TITLE = "title";
+	
+	//postion of view in menu
+	public static final String VIEW_INBOX = "inbox view";
+	public static final String VIEW_IMPORTANT = "important view";
+	public static final String VIEW_DELETE = "delete view";
+	public static final String VIEW_DRAFT = "draft view";
+	public static final String VIEW_SENT = "sent view";
 	
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);

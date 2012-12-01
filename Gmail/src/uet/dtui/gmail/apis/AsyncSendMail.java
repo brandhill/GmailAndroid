@@ -1,6 +1,9 @@
 package uet.dtui.gmail.apis;
 
 import uet.dtui.gmail.activity.ComposeNewEmail;
+import uet.dtui.gmail.components.Utils;
+import uet.dtui.gmail.database.EmailDatabase;
+import uet.dtui.gmail.model.MessageEmail;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,6 +20,7 @@ public class AsyncSendMail extends AsyncTask<Void, Void, Void> {
 	private String toUser;
 	private ComposeNewEmail context;
 	private ProgressDialog dialog;
+	private EmailDatabase database;
 
 	public AsyncSendMail(ComposeNewEmail cont, String subject, String body,
 			String from, String pass, String to, String filname) {
@@ -38,6 +42,20 @@ public class AsyncSendMail extends AsyncTask<Void, Void, Void> {
 	@Override
 	protected Void doInBackground(Void... params) {
 		send();
+		database = new EmailDatabase(context);
+		database.openDB();
+		MessageEmail email = new MessageEmail();
+		email.id = System.currentTimeMillis();
+		long idAcc = database.getIDAccountFromEmail(Utils.getCurrentAcc(context));
+		email.idFolder = database.getIdFolderWithNameAndAcc(idAcc, Utils.FOLDER_SENT);
+		email.fileName = fileName;
+		email.content = mailBody;
+		email.contentHtml = "";
+		email.from = fromUser;
+		email.to = toUser;
+		email.subject = subject;
+		database.addMessage(email);
+		database.closeDB();
 		publishProgress();
 		return null;
 	}

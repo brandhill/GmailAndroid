@@ -47,7 +47,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	public String currentFolder = "InBox";
 	private ListView listView;
 	public int mActivePosition = -1;
-	private MenuAdapter mAdapter;
+	public MenuAdapter mAdapter;
 	private List<Object> mDatas;
 	private List<Account> listAcc;
 	private List<FolderEmail> listFolder;
@@ -64,6 +64,8 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	
 	private QuickAction quickAction;
 	private final int ID_DELETE = 11;
+	
+	public String titleActionBar = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -176,37 +178,36 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 				}
 			}
 			mAdapter.notifyDataSetInvalidated();
-			menuDrawer.closeMenu();
 		}
 
 		private void launchSent() {
 			Intent sentFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
-			sentFolder.putExtra(Utils.FOLDER_SENT, Utils.FOLDER_SENT);
+			sentFolder.putExtra(Utils.TITLE, Utils.FOLDER_SENT);
 			startActivity(sentFolder);
 		}
 
 		private void launchDraft() {
 			Intent draftFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
-			draftFolder.putExtra(Utils.FOLDER_DRAFT, Utils.FOLDER_DRAFT);
+			draftFolder.putExtra(Utils.TITLE, Utils.FOLDER_DRAFT);
 			startActivity(draftFolder);
 			
 		}
 
 		private void launchImportant() {
 			Intent importantFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
-			importantFolder.putExtra(Utils.FOLDER_IMPORTANT, Utils.FOLDER_IMPORTANT);
+			importantFolder.putExtra(Utils.TITLE, Utils.FOLDER_IMPORTANT);
 			startActivity(importantFolder);
 		}
 
 		private void launchDelete() {
 			Intent deleteFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
-			deleteFolder.putExtra(Utils.FOLDER_DELETE, Utils.FOLDER_DELETE);
+			deleteFolder.putExtra(Utils.TITLE, Utils.FOLDER_DELETE);
 			startActivity(deleteFolder);
 		}
 
 		private void launchInbox() {
 			Intent inboxFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
-			inboxFolder.putExtra(Utils.FOLDER_INBOX, Utils.FOLDER_INBOX);
+			inboxFolder.putExtra(Utils.TITLE, Utils.FOLDER_INBOX);
 			startActivity(inboxFolder);
 		}
 	};
@@ -282,6 +283,19 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		}
 		mAdapter.notifyDataSetChanged();
 		database.closeDB();
+		
+		savePosViewOfMenu();
+	}
+
+	private void savePosViewOfMenu() {
+		SharedPreferences pref = getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor myEditor = pref.edit();
+		myEditor.putInt(Utils.VIEW_DELETE, mDatas.size()-1);
+		myEditor.putInt(Utils.VIEW_DRAFT, mDatas.size()-2);
+		myEditor.putInt(Utils.VIEW_SENT, mDatas.size()-3);
+		myEditor.putInt(Utils.VIEW_IMPORTANT, mDatas.size()-4);
+		myEditor.putInt(Utils.VIEW_INBOX, mDatas.size()-5);
+		myEditor.commit();
 	}
 
 	@Override

@@ -1,47 +1,34 @@
 package uet.dtui.gmail.activity;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 
-import javax.mail.Folder;
-import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Store;
 
 import net.simonvt.widget.MenuDrawer;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-
+import uet.dtui.gmail.R;
 import uet.dtui.gmail.apis.MailDeleteAsyncTask;
 import uet.dtui.gmail.apis.MailReaderAsyncTask;
 import uet.dtui.gmail.components.EmailArrayAdapter;
-import uet.dtui.gmail.components.MessageSerializable;
 import uet.dtui.gmail.components.Utils;
-import uet.dtui.gmail.model.MessageEmail;
-import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
 import uet.dtui.gmail.components.quickaction.QuickAction.OnActionItemClickListener;
 import uet.dtui.gmail.database.EmailDatabase;
-
-import com.sun.mail.imap.IMAPFolder;
-
+import uet.dtui.gmail.model.MessageEmail;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
@@ -49,7 +36,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		OnRefreshListener, OnActionItemClickListener {
 
 	private PullToRefreshListView listview;
-	private String titleActionBar;
 	public EmailArrayAdapter adapter;
 	private Button btnMenu;
 	private Button btnCompose;
@@ -57,6 +43,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	private Button btnSetting;
 	private Button btnRefresh;
 	private Button btnDelete;
+	private ImageView title;
 
 	private View loadmore;
 	private Button btnLoadMore;
@@ -73,13 +60,16 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	private static final int ID_FORWARD = 3;
 	public boolean loading = false;
 	private int postionLongClicked = -1;
+	private Intent recvIntent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
 
+
 		findViews();
+		setActiveViewMenu();
 		createQuickAction();
 
 		database = new EmailDatabase(getApplicationContext());
@@ -87,15 +77,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		Intent checkNewEmailService = new Intent(this,
 				CheckNewEmailService.class);
 		// startService(checkNewEmailService);
-
-		// read mail and save to a list
-		asyncReadEmail = new MailReaderAsyncTask(this, Utils.FOLDER_NAME_INBOX);
-		asyncReadEmail.execute(null);
-
-		Log.d("Size of data", mail_list.size() + "");
-		adapter = new EmailArrayAdapter(this, R.layout.mail_row, mail_list);
-		listview.setAdapter(adapter);
-
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> av, View v, int position,
 					long id) {
@@ -116,6 +97,38 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		});
 	}
 
+	private void setActiveViewMenu() {
+		recvIntent = getIntent();
+		String titleActionBar = recvIntent.getStringExtra(Utils.TITLE);
+		if (titleActionBar != null) {
+			if (titleActionBar.equals(Utils.FOLDER_INBOX)) {
+				getDataForList();
+				listview.addFooterView(loadmore);
+				title.setImageResource(R.drawable.title_inbox);
+				this.currentFolder = Utils.FOLDER_INBOX;
+				this.mAdapter.notifyDataSetChanged();
+			} else if (titleActionBar.equals(Utils.FOLDER_DELETE)) {
+				title.setImageResource(R.drawable.title_delete);
+				this.currentFolder = Utils.FOLDER_DELETE;
+				this.mAdapter.notifyDataSetChanged();
+			} else if (titleActionBar.equals(Utils.FOLDER_DRAFT)) {
+				title.setImageResource(R.drawable.title_draft);
+				this.currentFolder = Utils.FOLDER_DRAFT;
+				this.mAdapter.notifyDataSetChanged();
+			} else if (titleActionBar.equals(Utils.FOLDER_IMPORTANT)) {
+				title.setImageResource(R.drawable.title_important);
+				this.currentFolder = Utils.FOLDER_IMPORTANT;
+				this.mAdapter.notifyDataSetChanged();
+			}else if (titleActionBar.equals(Utils.FOLDER_SENT)) {
+				title.setImageResource(R.drawable.title_sent);
+				this.currentFolder = Utils.FOLDER_SENT;
+				this.mAdapter.notifyDataSetChanged();
+			}
+		}
+		
+			
+	}
+
 	private void findViews() {
 		listview = (PullToRefreshListView) findViewById(R.id.mail_list);
 		btnCompose = (Button) findViewById(R.id.btnCompose);
@@ -124,10 +137,11 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSetting = (Button) findViewById(R.id.btnSettings);
+		title = (ImageView) findViewById(R.id.imageView1);
 		
 		LayoutInflater inflater = getLayoutInflater();
 		loadmore = inflater.inflate(R.layout.loadmore_layout, null);
-		listview.addFooterView(loadmore);
+
 		progressBar = (ProgressBar) loadmore.findViewById(R.id.progressBar);
 		loadmore.setOnClickListener(this);
 		btnLoadMore = (Button) loadmore.findViewById(R.id.btn_load_more);
@@ -182,10 +196,12 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	public void getDataForList() {
 		Log.d("GET DATA FOR LIST", "RUNNING");
 		database = new EmailDatabase(getApplicationContext());
-		database.openDB();
-		mail_list = database.getEmaiWithAccountandFolder("inbox",
-				Utils.getCurrentAcc(getApplicationContext()));
-		database.closeDB();
+		
+			database.openDB();
+			mail_list.clear();
+			mail_list = database.getEmaiWithAccountandFolder(Utils.FOLDER_INBOX,
+					Utils.getCurrentAcc(getApplicationContext()));
+			database.closeDB();
 		adapter = new EmailArrayAdapter(this, R.layout.mail_row, mail_list);
 		listview.setAdapter(adapter);
 	}
