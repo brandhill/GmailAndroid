@@ -58,6 +58,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	private Button btnDelete;
 
 	private View loadmore;
+	private Button btnLoadMore;
 	public ProgressBar progressBar;
 	private List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 
@@ -80,11 +81,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		findViews();
 		createQuickAction();
 
-		LayoutInflater inflater = getLayoutInflater();
-		loadmore = inflater.inflate(R.layout.loadmore_layout, null);
-		listview.addFooterView(loadmore);
-		progressBar = (ProgressBar) loadmore.findViewById(R.id.progressBar);
-		loadmore.setOnClickListener(this);
 		database = new EmailDatabase(getApplicationContext());
 
 		Intent checkNewEmailService = new Intent(this,
@@ -127,6 +123,14 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		btnRefresh = (Button) findViewById(R.id.btnRefresh);
 		btnSearch = (Button) findViewById(R.id.btnSearch);
 		btnSetting = (Button) findViewById(R.id.btnSettings);
+		
+		LayoutInflater inflater = getLayoutInflater();
+		loadmore = inflater.inflate(R.layout.loadmore_layout, null);
+		listview.addFooterView(loadmore);
+		progressBar = (ProgressBar) loadmore.findViewById(R.id.progressBar);
+		loadmore.setOnClickListener(this);
+		btnLoadMore = (Button) loadmore.findViewById(R.id.btn_load_more);
+		btnLoadMore.setOnClickListener(this);
 
 		btnCompose.setOnClickListener(this);
 		btnDelete.setOnClickListener(this);
@@ -158,7 +162,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 			}
 		}
 
-		if (v == loadmore) {
+		if (v == btnLoadMore) {
 			loadMoreMessages();
 		}
 		if (v == btnSearch) {
@@ -170,6 +174,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 
 	public void loadMoreMessages() {
 		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
+		MailReaderAsyncTask asyncReadEmail = new MailReaderAsyncTask(this, Utils.FOLDER_NAME_INBOX);
 		asyncReadEmail.execute(null);
 	}
 

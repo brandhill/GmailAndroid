@@ -40,6 +40,10 @@ public class Utils {
 	public static final String FOLDER_NAME_DELETE = "[Gmail]/Trash";
 	public static final String FOLDER_NAME_SENT = "[Gmail]/Sent mail";
 	
+	//Status of message
+	public static final String UNREAD_EMAIL = "unread";
+	public static final String READ_EMAIL = "read";
+	
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);
 		tv.setText(text);

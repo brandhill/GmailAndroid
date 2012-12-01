@@ -33,31 +33,38 @@
 
             <TextView
                 android:id="@+id/mail_item_from"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="0.4"
                 android:ellipsize="end"
                 android:gravity="left"
                 android:maxLines="1"
                 android:text="From Mr.Bean lksdjljalfkafjklasjsl"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+            <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.6"
+	            android:orientation="horizontal" >
 
-            <ImageView
-                android:id="@+id/mail_item_attachment"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/attached_file" />
-
-            <TextView
-                android:id="@+id/mail_item_date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
-                android:maxLines="1"
-                android:text="Nov 11,2012"
-                android:textColor="#0f55bd"
-                android:textSize="15dp" />
+	            <ImageView
+	                android:id="@+id/mail_item_attachment"
+	                android:layout_width="wrap_content"
+	                android:layout_height="match_parent"
+	                android:layout_marginLeft="10dp"
+	                android:src="@drawable/attached_file" />
+	
+	            <TextView
+	                android:id="@+id/mail_item_date"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:gravity="right|center_vertical"
+	                android:maxLines="1"
+	                android:text="Nov 11,2012"
+	                android:textColor="#0f55bd"
+	                android:textSize="15dp" />
+            </LinearLayout>
         </LinearLayout>
 
         <!-- second line shows subject and -->
