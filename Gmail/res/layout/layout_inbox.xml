@@ -50,15 +50,20 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#3f3e3e" />
-        <ListView 
+        <eu.erikw.PullToRefreshListView
             android:id="@+id/mail_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:cacheColorHint="@android:color/transparent"
             android:divider="#353535"
             android:listSelector="@drawable/list_selector"
             android:layout_marginBottom="60dp"
-            android:dividerHeight="1dp"></ListView>
+            android:dividerHeight="1dp" 
+            android:fadingEdge="none"
+	        android:fastScrollEnabled="false"
+	        android:footerDividersEnabled="false"
+	        android:headerDividersEnabled="false"
+	        android:smoothScrollbar="true"/>
         
     </LinearLayout>
 

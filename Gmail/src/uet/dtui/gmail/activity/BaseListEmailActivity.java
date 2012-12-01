@@ -38,9 +38,12 @@ import uet.dtui.gmail.database.EmailDatabase;
 
 import com.sun.mail.imap.IMAPFolder;
 
-public class BaseListEmailActivity extends BaseActivityWithMenu {
+import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
-	private ListView listview;
+public class BaseListEmailActivity extends BaseActivityWithMenu implements OnRefreshListener{
+
+	private PullToRefreshListView listview;
 	private EmailArrayAdapter adapter;
 	private Button btnMenu;
 	private Button btnCompose;
@@ -61,7 +64,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		super.onCreate(savedInstanceState);
 		menuDrawer.setContentView(R.layout.layout_inbox);
 		
-		listview = (ListView) findViewById(R.id.mail_list);
+		findViews();
 		
 		LayoutInflater inflater = getLayoutInflater();
 		loadmore = inflater.inflate(R.layout.loadmore_layout, null);
@@ -79,7 +82,17 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		
 		Log.d("Size of data", mail_list.size() + "");
 
-		findViews();
+		
+		MessageEmail mess = new MessageEmail();
+		mess.from = "ádfas";
+		mess.to = "ádfas";
+		mess.content = "ádfas";
+		mess.subject = "ádfas";
+		
+		mail_list.add(mess);
+		mail_list.add(mess);
+		mail_list.add(mess);
+		mail_list.add(mess);
 		
 		adapter = new EmailArrayAdapter(this, R.layout.mail_row, mail_list);
 		listview.setAdapter(adapter);
@@ -94,7 +107,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 	}
 
 	private void findViews() {
-		listview = (ListView) findViewById(R.id.mail_list);
+		listview = (PullToRefreshListView) findViewById(R.id.mail_list);
 		btnCompose = (Button) findViewById(R.id.btnCompose);
 		btnDelete = (Button) findViewById(R.id.btnDelete);
 		btnMenu = (Button) findViewById(R.id.btnMenu);
@@ -108,6 +121,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		btnRefresh.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
 		btnSetting.setOnClickListener(this);
+		listview.setOnRefreshListener(this);
 	}
 
 	@Override
@@ -144,11 +158,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 
 	public void loadMoreMessages(){
 		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
-//		get more messages here
-		
-//		get 20 message from DB to messages[]
-		
-//		add to mail_list
 		
 	}
 
@@ -156,6 +165,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu {
 		
 	}
 
-
-
+	public void onRefresh() {
+		Toast.makeText(getApplicationContext(), "Give me some", 1).show();	
+	}
 }

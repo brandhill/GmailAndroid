@@ -501,11 +501,13 @@ public class EmailDatabase {
 
 		return true;
 	}
-	
+
 	public boolean addMessage(MessageEmail email) {
-		Cursor mCount = db.rawQuery("SELECT COUNT(*) FROM MESSAGE WHERE id_message=" + email.id + ";", null);
+		Cursor mCount = db.rawQuery(
+				"SELECT COUNT(*) FROM MESSAGE WHERE id_message=" + email.id
+						+ ";", null);
 		mCount.moveToFirst();
-		int count= mCount.getInt(0);
+		int count = mCount.getInt(0);
 		mCount.close();
 		if (count == 0) {
 			ContentValues values = new ContentValues();
@@ -519,13 +521,11 @@ public class EmailDatabase {
 			values.put(TABLE_MESSAGE_FILE_NAME, email.fileName);
 			values.put(TABLE_MESSAGE_SOURCE_FILE, email.sourceFile);
 			values.put(TABLE_MESSAGE_CONTENT_HTML, email.contentHtml);
-	   
-			// ask the database object to insert the new data 
-			try{
+
+			// ask the database object to insert the new data
+			try {
 				db.insert(TABLE_MESSAGE_NAME, null, values);
-			}
-			catch(Exception e)
-			{
+			} catch (Exception e) {
 				Log.e("DB ERROR", e.toString());
 				e.printStackTrace();
 			}
@@ -533,8 +533,7 @@ public class EmailDatabase {
 			return false;
 		return true;
 	}
- 
- 
+
 	/**********************************************************************
 	 * DELETING A ROW FROM THE DATABASE TABLE MESSAGE
 	 * 
@@ -703,6 +702,38 @@ public class EmailDatabase {
 		return listMess;
 	}
 
+	public long getIDMax(String userEmail, String folderName) {
+		long idAcc;
+		String sql = "SELECT id FROM Account WHERE email_address = \""
+				+ userEmail + "\"";
+		Cursor cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+		idAcc = cursor.getLong(0);
+		long idFolder;
+		sql = "SELECT id_folder FROM Folder WHERE id_account = " + idAcc
+				+ " AND name_folder = " + folderName;
+		cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+		idFolder = cursor.getLong(0);
+		long idMax;
+		sql = "SELECT MAX(id_message) FROM Message WHERE id_folder = "
+				+ idFolder;
+		cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+		idMax = cursor.getLong(0);
+
+		return idMax;
+	}
+
+	public void deleteMessageEmail(List<Long> idMess){
+		String sql;
+		Cursor cursor;
+		for(int i=1;i<idMess.size();i++){
+			sql = "DELETE FROM Message WHERE id_message = " + idMess.get(i);
+			cursor = db.rawQuery(sql, null);
+			cursor.moveToFirst();
+		}
+	}
 	private MessageEmail convertCursorToMessageEmail(Cursor cursor) {
 		MessageEmail mess = new MessageEmail();
 		mess.id = cursor.getLong(0);

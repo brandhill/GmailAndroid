@@ -81,8 +81,7 @@ public class Utils {
 			return false;
 		}
 	}
-	
-	@SuppressLint("WorldReadableFiles")
+
 	public static String getCurrentAcc(Context activity) {
 		SharedPreferences pref = activity.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, activity.MODE_WORLD_READABLE);
 		return pref.getString(Utils.CURRENT_ACC, "None");
