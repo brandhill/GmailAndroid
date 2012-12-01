@@ -145,7 +145,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 				mess.from = extractEmailname(fromEmailName);
 				mess.to = InternetAddress.toString(messages[i]
 						.getRecipients(Message.RecipientType.TO));
-				mess.date = messages[i].getSentDate().toString();
+				mess.date = formatterDate(messages[i].getSentDate().toString());
 				if (cont.equals("<br>"))
 					mess.content = "<This is email no body content>";
 				else
@@ -318,6 +318,15 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		return emailName;
 	}
 
-	
+	private String formatterDate(String _date){
+		String _dateFormat;
+
+		String day = _date.substring(8,10);
+		String month = _date.substring(4,7);
+		String Hr = _date.substring(11,13);
+		String Min = _date.substring(14,16);
+		_dateFormat = Hr + ":" + Min + " " + month + " " + day; 
+		return _dateFormat;
+	}
 
 }

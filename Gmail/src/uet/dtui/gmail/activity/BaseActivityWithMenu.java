@@ -22,6 +22,7 @@ import android.R.bool;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,7 +38,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class BaseActivityWithMenu extends Activity implements OnClickListener,OnActionItemClickListener {
+public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 	public static final String ACCOUNT_CATEGORY = "accounts";
 	public static final String CATEGORIES_CATEGORY = "categoreis";
@@ -62,7 +63,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener,On
 			R.drawable.text_draft_folder, R.drawable.text_delete_folder };
 	
 	private QuickAction quickAction;
-	private final int ID_DELETE = 1;
+	private final int ID_DELETE = 11;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,10 +113,25 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener,On
 
 	private void createQuickAction() {
 		ActionItem deleteItem = new ActionItem(ID_DELETE, "Delete",
-				getResources().getDrawable(R.drawable.icon_delete_normal_large));
+				getResources().getDrawable(R.drawable.delete_button));
 		quickAction = new QuickAction(this,QuickAction.HORIZONTAL);
 		quickAction.addActionItem(deleteItem);
-		quickAction.setOnActionItemClickListener(this);
+		quickAction.setOnActionItemClickListener(new OnActionItemClickListener() {
+			
+			public void onItemClick(QuickAction source, int pos, int actionId) {
+				ActionItem actionItem = quickAction.getActionItem(pos);
+				switch (actionId) {
+					case ID_DELETE:
+						database = new EmailDatabase(getApplicationContext());
+						Account acc = (Account) mDatas.get(posLongClicked);
+						database.openDB();
+						database.closeDB();
+						Toast.makeText(getApplicationContext(), "Delete account " + acc.displayName, 0).show();
+						break;
+				}
+				
+			}
+		});
 		
 	}
 
@@ -147,9 +163,51 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener,On
 				currentFolder = fold.folder.name;
 				mActivePosition = position;
 				menuDrawer.setActiveView(view, position);
+				if (currentFolder.equals(Utils.FOLDER_INBOX)) {
+					launchInbox();
+				} else if (currentFolder.equals(Utils.FOLDER_DELETE)) {
+					launchDelete();
+				} else if (currentFolder.equals(Utils.FOLDER_DRAFT)) {
+					launchDraft();
+				} else if (currentFolder.equals(Utils.FOLDER_IMPORTANT)) {
+					launchImportant();
+				} else if (currentFolder.equals(Utils.FOLDER_SENT)) {
+					launchSent();
+				}
 			}
 			mAdapter.notifyDataSetInvalidated();
 			menuDrawer.closeMenu();
+		}
+
+		private void launchSent() {
+			Intent sentFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			sentFolder.putExtra(Utils.FOLDER_SENT, Utils.FOLDER_SENT);
+			startActivity(sentFolder);
+		}
+
+		private void launchDraft() {
+			Intent draftFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			draftFolder.putExtra(Utils.FOLDER_DRAFT, Utils.FOLDER_DRAFT);
+			startActivity(draftFolder);
+			
+		}
+
+		private void launchImportant() {
+			Intent importantFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			importantFolder.putExtra(Utils.FOLDER_IMPORTANT, Utils.FOLDER_IMPORTANT);
+			startActivity(importantFolder);
+		}
+
+		private void launchDelete() {
+			Intent deleteFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			deleteFolder.putExtra(Utils.FOLDER_DELETE, Utils.FOLDER_DELETE);
+			startActivity(deleteFolder);
+		}
+
+		private void launchInbox() {
+			Intent inboxFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			inboxFolder.putExtra(Utils.FOLDER_INBOX, Utils.FOLDER_INBOX);
+			startActivity(inboxFolder);
 		}
 	};
 
@@ -239,12 +297,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener,On
 	}
 
 	public void onItemClick(QuickAction source, int pos, int actionId) {
-		ActionItem actionItem = quickAction.getActionItem(pos);
-		switch (actionId) {
-			case ID_DELETE:
-				Toast.makeText(getApplicationContext(), "Delete Message", 0).show();
-				break;
-		}
+		
 		
 	}
 	
