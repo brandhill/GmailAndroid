@@ -314,7 +314,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		int start = fromEmail.indexOf('<');
 		int end = fromEmail.indexOf('>');
 		if (start > 0 && end > 0)
-			emailName = fromEmail.substring(start-1, end);
+			emailName = fromEmail.substring(start+1, end);
 		return emailName;
 	}
 

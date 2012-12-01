@@ -1,6 +1,8 @@
 package uet.dtui.gmail.model;
 
-public class MessageEmail {
+import java.io.Serializable;
+
+public class MessageEmail implements Serializable{
 	public long id;
 	public long idFolder;
 	public String subject;

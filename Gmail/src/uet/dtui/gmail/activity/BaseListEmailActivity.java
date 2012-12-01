@@ -31,6 +31,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import uet.dtui.gmail.apis.MailDeleteAsyncTask;
 import uet.dtui.gmail.apis.MailReaderAsyncTask;
 import uet.dtui.gmail.components.EmailArrayAdapter;
+import uet.dtui.gmail.components.MessageSerializable;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.model.MessageEmail;
 import uet.dtui.gmail.R;
@@ -210,9 +211,9 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 
 	public void onItemClick(QuickAction source, int pos, int actionId) {
 		ActionItem actionItem = quickAction.getActionItem(pos);
+		MessageEmail email = mail_list.get(postionLongClicked);
 		switch (actionId) {
 		case ID_DELETE:
-			MessageEmail email = mail_list.get(postionLongClicked);
 			long id[] = { email.id };
 
 			try {
@@ -238,12 +239,26 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 					"Delete Message " + email.content, 0).show();
 			break;
 		case ID_FORWARD:
+			launchComposeToForward(email);
 			Toast.makeText(getApplicationContext(), "Forward Message", 0)
 					.show();
 			break;
 		case ID_REPLY:
+			launchCompose(email);
 			Toast.makeText(getApplicationContext(), "Reply Message", 0).show();
 			break;
 		}
+	}
+
+	private void launchComposeToForward(MessageEmail email) {
+		Intent compose = new Intent(getApplicationContext(), ComposeNewEmail.class);
+		compose.putExtra(Utils.FORWARD, email);
+		startActivity(compose);
+	}
+
+	private void launchCompose(MessageEmail se) {
+		Intent compose = new Intent(getApplicationContext(), ComposeNewEmail.class);
+		compose.putExtra(Utils.REPLY, se);
+		startActivity(compose);
 	}
 }

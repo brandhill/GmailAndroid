@@ -44,6 +44,10 @@ public class Utils {
 	public static final String UNREAD_EMAIL = "unread";
 	public static final String READ_EMAIL = "read";
 	
+	//Bundle
+	public static final String REPLY = "reply";
+	public static final String FORWARD = "forward";
+	
 	public static TextView createTextView(Context context, String text) {
 		TextView tv = new TextView(context);
 		tv.setText(text);

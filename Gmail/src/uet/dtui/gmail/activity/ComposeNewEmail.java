@@ -4,12 +4,15 @@ import uet.dtui.gmail.R;
 import uet.dtui.gmail.apis.AsyncSendMail;
 import uet.dtui.gmail.components.AllerFont;
 import uet.dtui.gmail.components.ChooseAccountPopupWindow;
+import uet.dtui.gmail.components.MessageSerializable;
 import uet.dtui.gmail.components.SaveToDraftPopupWindow;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
+import uet.dtui.gmail.model.MessageEmail;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -32,6 +35,8 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	private EmailDatabase database;
 	String subj, bodyEmail, fromAcc, passAcc, toAcc ,filename;
 	private String currentAcc;
+	private Intent recvIntent;
+	private MessageEmail recvEmail;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +47,41 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 		database = new EmailDatabase(getApplicationContext());
 		findViews();
 		
+		if (!checkReplyOrCompose()) {
+			checkForward();
+		}
+		
 		currentAcc = Utils.getCurrentAcc(getApplicationContext());
 		setDefaultFromAccount();
+	}
+
+	private void checkForward() {
+		recvIntent = getIntent();
+		recvEmail = (MessageEmail) recvIntent.getSerializableExtra(Utils.FORWARD);
+		if (recvEmail != null) {
+			subject.setText("Fwd:" + recvEmail.subject);
+			String forwardStr = "\n\n ---------- Forwarded message ---------- \n";
+			forwardStr = forwardStr + "From: " + recvEmail.from + "\nDate: " + recvEmail.date 
+					+ "\nSubject: " + recvEmail.subject + "\nTo: " + recvEmail.to;
+			forwardStr += "\nOn " + recvEmail.date + " ," + recvEmail.from + " wrote :\n" + recvEmail.content;
+			content.setText(forwardStr);
+			content.requestFocus();
+			content.setSelection(0);
+		}
+	}
+
+	private boolean checkReplyOrCompose() {
+		recvIntent = getIntent();
+		recvEmail = (MessageEmail) recvIntent.getSerializableExtra(Utils.REPLY);
+		if (recvEmail != null) {
+			subject.setText("Re:" + recvEmail.subject);
+			to.setText(recvEmail.from);
+			content.setText("\n\n On " + recvEmail.date + " ," + recvEmail.from + " wrote :\n" + recvEmail.content  );
+			content.requestFocus();
+			content.setSelection(0);
+			return true;
+		}
+		return false;
 	}
 
 	private void findViews() {
