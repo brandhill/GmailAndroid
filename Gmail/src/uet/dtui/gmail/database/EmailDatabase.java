@@ -48,7 +48,7 @@ public class EmailDatabase {
 	private final String TABLE_MESSAGE_SUBJECT = "subject";
 	private final String TABLE_MESSAGE_FROM_ADDRESS = "from_address";
 	private final String TABLE_MESSAGE_TO_ADDRESS = "to_address";
-	private final String TABLE_MESSAGE_CONTEXT = "context";
+	private final String TABLE_MESSAGE_CONTENT = "content";
 	private final String TABLE_MESSAGE_DATE = "date";
 	private final String TABLE_MESSAGE_FILE_NAME = "file_name";
 	private final String TABLE_MESSAGE_SOURCE_FILE = "source_file";
@@ -451,7 +451,7 @@ public class EmailDatabase {
 	 *            the value for the row's third column
 	 * @param toAddress
 	 *            the value for the row's forth column
-	 * @param context
+	 * @param content
 	 *            the value for the row's firth column
 	 * @param date
 	 *            the value for the row's sixth column
@@ -465,7 +465,7 @@ public class EmailDatabase {
 
 	public boolean addRowToTableMessage(long idMessage, long idFolder,
 			String subject, String fromAddress, String toAddress,
-			String context, String date, String fileName, String sourceFile,
+			String content, String date, String fileName, String sourceFile,
 			String contentHTML) {
 		// check existing of idMessage in the table.
 		Cursor mCount = db.rawQuery(
@@ -483,7 +483,7 @@ public class EmailDatabase {
 			values.put(TABLE_MESSAGE_SUBJECT, subject);
 			values.put(TABLE_MESSAGE_FROM_ADDRESS, fromAddress);
 			values.put(TABLE_MESSAGE_TO_ADDRESS, toAddress);
-			values.put(TABLE_MESSAGE_CONTEXT, context);
+			values.put(TABLE_MESSAGE_CONTENT, content);
 			values.put(TABLE_MESSAGE_DATE, date);
 			values.put(TABLE_MESSAGE_FILE_NAME, fileName);
 			values.put(TABLE_MESSAGE_SOURCE_FILE, sourceFile);
@@ -514,7 +514,7 @@ public class EmailDatabase {
 			values.put(TABLE_MESSAGE_SUBJECT, email.subject);
 			values.put(TABLE_MESSAGE_FROM_ADDRESS, email.from);
 			values.put(TABLE_MESSAGE_TO_ADDRESS, email.to);
-			values.put(TABLE_MESSAGE_CONTEXT, email.content);
+			values.put(TABLE_MESSAGE_CONTENT, email.content);
 			values.put(TABLE_MESSAGE_DATE, email.date);
 			values.put(TABLE_MESSAGE_FILE_NAME, email.fileName);
 			values.put(TABLE_MESSAGE_SOURCE_FILE, email.sourceFile);
@@ -578,7 +578,7 @@ public class EmailDatabase {
 	 *            the value for the row's third column
 	 * @param toAddress
 	 *            the value for the row's forth column
-	 * @param context
+	 * @param content
 	 *            the value for the row's firth column
 	 * @param date
 	 *            the value for the row's sixth column
@@ -591,7 +591,7 @@ public class EmailDatabase {
 	 */
 	public boolean updateRowToTableMessage(long rowID, long idFolder,
 			String subject, String fromAddress, String toAddress,
-			String context, String date, String fileName, String sourceFile,
+			String content, String date, String fileName, String sourceFile,
 			String contentHTML) {
 		// check existing of rowID in the table.
 		Cursor mCount = db.rawQuery(
@@ -608,7 +608,7 @@ public class EmailDatabase {
 			values.put(TABLE_MESSAGE_SUBJECT, subject);
 			values.put(TABLE_MESSAGE_FROM_ADDRESS, fromAddress);
 			values.put(TABLE_MESSAGE_TO_ADDRESS, toAddress);
-			values.put(TABLE_MESSAGE_CONTEXT, context);
+			values.put(TABLE_MESSAGE_CONTENT, content);
 			values.put(TABLE_MESSAGE_DATE, date);
 			values.put(TABLE_MESSAGE_FILE_NAME, fileName);
 			values.put(TABLE_MESSAGE_SOURCE_FILE, sourceFile);
@@ -749,7 +749,7 @@ public class EmailDatabase {
 					+ " LONG NOT NULL," + TABLE_MESSAGE_SUBJECT
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_FROM_ADDRESS
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_TO_ADDRESS
-					+ " TEXT NOT NULL," + TABLE_MESSAGE_CONTEXT
+					+ " TEXT NOT NULL," + TABLE_MESSAGE_CONTENT
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_DATE
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_FILE_NAME
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_SOURCE_FILE
