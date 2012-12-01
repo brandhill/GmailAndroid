@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ScrollView;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import uet.dtui.gmail.R;
+import uet.dtui.gmail.components.AllerFont;
+
 
 /**
  * QuickAction dialog, shows action list as icon and text like the one in Gallery3D app. Currently supports vertical 
@@ -38,7 +41,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	private ImageView mArrowDown;
 	private LayoutInflater mInflater;
 	private ViewGroup mTrack;
-	private ScrollView mScroller;
+	private HorizontalScrollView mScroller;
 	private OnActionItemClickListener mItemClickListener;
 	private OnDismissListener mDismissListener;
 	
@@ -116,7 +119,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		mArrowDown 	= (ImageView) mRootView.findViewById(R.id.arrow_down);
 		mArrowUp 	= (ImageView) mRootView.findViewById(R.id.arrow_up);
 
-		mScroller	= (ScrollView) mRootView.findViewById(R.id.scroller);
+		mScroller	= (HorizontalScrollView) mRootView.findViewById(R.id.scroller);
 		
 		//This was previously defined on show() method, moved here to prevent force close that occured
 		//when tapping fastly on a view to show quickaction dialog.
@@ -174,6 +177,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		
 		if (title != null) {
 			text.setText(title);
+			text.setTypeface(AllerFont.get(mContext, "fonts/Aller_Rg.ttf"));
 		} else {
 			text.setVisibility(View.GONE);
 		}
@@ -201,7 +205,7 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		if (mOrientation == HORIZONTAL && mChildPos != 0) {
             View separator = mInflater.inflate(R.layout.horiz_separator, null);
             
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.FILL_PARENT);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             
             separator.setLayoutParams(params);
             separator.setPadding(5, 0, 5, 0);

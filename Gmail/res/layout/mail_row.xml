@@ -38,7 +38,6 @@
                 android:ellipsize="end"
                 android:gravity="left"
                 android:maxLines="1"
-                android:maxWidth="150dp"
                 android:text="From Mr.Bean lksdjljalfkafjklasjsl"
                 android:textSize="15dp"
                 android:textStyle="bold" />

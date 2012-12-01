@@ -93,18 +93,4 @@ public class Utils {
 		myEditor.putString(Utils.CURRENT_ACC, acc);
 		myEditor.commit();
 	}
-	
-	public static long getMaxUid(Context context) {
-		long uId = -1;
-		SharedPreferences pref = context.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, context.MODE_WORLD_READABLE);
-		uId = pref.getLong(Utils.MAX_UID_EMAIL, -1);
-		return uId;
-	}
-	
-	public static void setMaxUid(Context context, long max) {
-		SharedPreferences pref = context.getSharedPreferences(Utils.FILE_SHARE_PREFERENCES, context.MODE_WORLD_WRITEABLE);
-		SharedPreferences.Editor myEditor = pref.edit();
-		myEditor.putLong(Utils.CURRENT_ACC, max);
-		myEditor.commit();
-	}
 }

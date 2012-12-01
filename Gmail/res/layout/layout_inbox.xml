@@ -78,14 +78,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/btn_search_normal" />
+            android:background="@drawable/btn_search" />
         
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/btn_delete_normal" />
+            android:background="@drawable/btn_delete_actionbar" />
         <Button
             android:id="@+id/btnCompose"
             android:layout_width="wrap_content"
@@ -96,13 +96,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/btn_setting_normal" />
+            android:background="@drawable/btn_setting" />
         <Button
             android:id="@+id/btnRefresh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@drawable/btn_refresh_normal" />
+            android:background="@drawable/btn_refresh" />
 
     </LinearLayout>
 

@@ -175,7 +175,6 @@ public class EmailDatabase {
 		Account acc = new Account();
 		String sql = "Select * from Account where email_address = \"" + email
 				+ "\"";
-		Log.d("SQL", sql);
 		Cursor cursor = db.rawQuery(sql, null);
 
 		cursor.moveToFirst();
@@ -413,6 +412,15 @@ public class EmailDatabase {
 		}
 		return folders;
 	}
+	
+	public long getIdFolderWithNameAndAcc(long idAcc, String nameFolder) {
+		String sql = "SELECT * FROM Folder WHERE id_account = "
+				+ idAcc + " and name_folder = \""  + nameFolder + "\"";
+		Cursor cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+		long idFolder = cursor.getLong(0);
+		return idFolder;
+	}
 
 	private FolderEmail convertCursorToFolder(Cursor cursor) {
 		FolderEmail folder = new FolderEmail();
@@ -594,7 +602,7 @@ public class EmailDatabase {
 			String contentHTML) {
 		// check existing of rowID in the table.
 		Cursor mCount = db.rawQuery(
-				"SELECT COUNT(*) FROM MESSAFE WHERE id_message=" + rowID + ";",
+				"SELECT COUNT(*) FROM MESSAGE WHERE id_message=" + rowID + ";",
 				null);
 		mCount.moveToFirst();
 		int count = mCount.getInt(0);
@@ -680,6 +688,25 @@ public class EmailDatabase {
 		}
 		return listMess;
 	}
+	
+	public List<MessageEmail> getEmaiWithAccountandFolder(String nameFolder, String acc) {
+		List<MessageEmail> list = new ArrayList<MessageEmail>();
+		long idFolder, idAcc;
+		idAcc = this.getIDAccountFromEmail(acc);
+		idFolder = this.getIdFolderWithNameAndAcc(idAcc, nameFolder);
+		String sql = "Select * from Message where id_folder = " + idFolder;
+		Log.d("SQL GET MESSAGE IN FODLR", sql);
+		Cursor cursor = db.rawQuery(sql, null);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			MessageEmail mess = convertCursorToMessageEmail(cursor);
+			list.add(mess);
+			cursor.moveToNext();
+		}
+		Log.d("SIZE OF LIST", list.size() + "");
+		return list;
+	}
 
 	public List<MessageEmail> getEmail(String searchContent,
 			List<Long> idFolders) {
@@ -711,29 +738,24 @@ public class EmailDatabase {
 		idAcc = cursor.getLong(0);
 		long idFolder;
 		sql = "SELECT id_folder FROM Folder WHERE id_account = " + idAcc
-				+ " AND name_folder = " + folderName;
+				+ " AND name_folder = \"" + folderName + "\"";
 		cursor = db.rawQuery(sql, null);
 		cursor.moveToFirst();
 		idFolder = cursor.getLong(0);
 		long idMax;
-		sql = "SELECT MAX(id_message) FROM Message WHERE id_folder = "
+		sql = "SELECT MIN(id_message) FROM Message WHERE id_folder = "
 				+ idFolder;
 		cursor = db.rawQuery(sql, null);
-		cursor.moveToFirst();
-		idMax = cursor.getLong(0);
-
+		if (cursor.getCount() < 1)
+			idMax = -1;
+		else {
+			cursor.moveToFirst();
+			idMax = cursor.getLong(0);
+		}
+		
 		return idMax;
 	}
 
-	public void deleteMessageEmail(List<Long> idMess){
-		String sql;
-		Cursor cursor;
-		for(int i=1;i<idMess.size();i++){
-			sql = "DELETE FROM Message WHERE id_message = " + idMess.get(i);
-			cursor = db.rawQuery(sql, null);
-			cursor.moveToFirst();
-		}
-	}
 	private MessageEmail convertCursorToMessageEmail(Cursor cursor) {
 		MessageEmail mess = new MessageEmail();
 		mess.id = cursor.getLong(0);
@@ -786,7 +808,6 @@ public class EmailDatabase {
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_SOURCE_FILE
 					+ " TEXT NOT NULL," + TABLE_MESSAGE_CONTENT_HTML
 					+ " TEXT NOT NULL" + ");";
-			Log.d("EMAIL DATABSE", "CREATE TABLE");
 			// execute the query strings to the database.
 			db.execSQL(newTableAccountQueryString);
 			db.execSQL(newTableFolderQueryString);
@@ -795,8 +816,6 @@ public class EmailDatabase {
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-			Log.i("DataHelper",
-					"Upgrading database, which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS" + TABLE_ACCOUNT_NAME + ";");
 			db.execSQL("DROP TABLE IF EXISTS" + TABLE_FOLDER_NAME + ";");
 			db.execSQL("DROP TABLE IF EXISTS" + TABLE_MESSAGE_NAME + ";");

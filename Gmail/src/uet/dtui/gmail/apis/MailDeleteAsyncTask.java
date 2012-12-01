@@ -3,6 +3,7 @@ package uet.dtui.gmail.apis;
 import java.util.Properties;
 
 import javax.mail.Flags;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -15,33 +16,42 @@ import uet.dtui.gmail.activity.BaseListEmailActivity;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 public class MailDeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 	private Message[] messages;
-	private int[] idMessages;
-	public Folder folder; 
-	private String nameFolder;
-	private BaseListEmailActivity baseListActivity;
-	private Context context;
-	private EmailDatabase database;
+	private long[] idMessages;
+	public IMAPFolder folder;
+	private String folderName;
+	private BaseListEmailActivity activity; 
 	private String username;
 	private String password;
+	private Context context;
+	private EmailDatabase database;
 	
-	public MailDeleteAsyncTask(BaseListEmailActivity activity, String nameFolder, int[] idMessages){
+	public MailDeleteAsyncTask(BaseListEmailActivity activity, String folderName, long[] idMessages) throws MessagingException{
 		this.idMessages = idMessages;
-		this.nameFolder = nameFolder;
-		this.baseListActivity = activity;
+		this.folderName = folderName;
+		this.activity = activity;
 		this.context = activity.getApplicationContext();
 		database = new EmailDatabase(context);
+		
+		getUserAndPassWord();
 	}
 	
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
-			getUserAndPassWord();
+			Properties props = System.getProperties();
+			props.setProperty("mail.store.protocol", "imaps");
+			Session session = Session.getDefaultInstance(props, null);
+			Store store = session.getStore("imaps");
+			store.connect("imap.gmail.com", username, password);
+			folder = (IMAPFolder) store.getFolder(folderName);
+			folder.open(folder.READ_WRITE);
 			arrayGmailDelete();
 			//DataEmailDelete(arrayDataMailDelete());
 			publishProgress(null);
@@ -54,24 +64,14 @@ public class MailDeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 	
 	private void arrayGmailDelete() throws MessagingException{
 		Log.v("folder",folder.getName());
-		Properties props = System.getProperties();
-		props.setProperty("mail.store.protocol", "imaps");
-		Session session = Session.getDefaultInstance(props, null);
-		Store store = session.getStore("imaps");
-		store.connect("imap.gmail.com", username, password);
-		IMAPFolder folderImap = (IMAPFolder) store.getFolder(nameFolder);
-		folderImap.open(folderImap.READ_WRITE);
-		messages = folder.getMessages(idMessages);
+		messages = folder.getMessagesByUID(idMessages);
 		
-		for (int i = 0; i < messages.length ; i++)
-					messages[i].setFlag(Flags.Flag.DELETED, true);
-	}
-	
-	
-	private void GmailDelete(Message[] messages) throws MessagingException{
-		for(int i = 0; i < messages.length; i++)
+		for (int i = 0; i < messages.length ; i++) {
+			Log.d("UID and subject", folder.getUID(messages[i]) + "  " 
+					+ messages[i].getSubject());
 			messages[i].setFlag(Flags.Flag.DELETED, true);
-	}	
+		}
+	}
 	
 	public void getUserAndPassWord() {
 		this.username = Utils.getCurrentAcc(context);
@@ -79,6 +79,7 @@ public class MailDeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 		Account acc = database.getAccountFromEmail(username);
 		this.password = acc.password;
 		database.closeDB();
-		Log.d("GET USER NAME AND PASS","====>" + username + "  " + password );
+		Log.d("GET USER NAME AND PASS", "====>" + username + "  " + password);
 	}
+
 }

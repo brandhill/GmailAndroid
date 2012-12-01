@@ -9,6 +9,9 @@ import uet.dtui.gmail.R;
 import uet.dtui.gmail.components.AddAccountPopupWindow;
 import uet.dtui.gmail.components.MenuAdapter;
 import uet.dtui.gmail.components.Utils;
+import uet.dtui.gmail.components.quickaction.ActionItem;
+import uet.dtui.gmail.components.quickaction.QuickAction;
+import uet.dtui.gmail.components.quickaction.QuickAction.OnActionItemClickListener;
 import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.FolderEmail;
@@ -31,9 +34,10 @@ import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class BaseActivityWithMenu extends Activity implements OnClickListener {
+public class BaseActivityWithMenu extends Activity implements OnClickListener,OnActionItemClickListener {
 
 	public static final String ACCOUNT_CATEGORY = "accounts";
 	public static final String CATEGORIES_CATEGORY = "categoreis";
@@ -48,6 +52,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	private List<FolderEmail> listFolder;
 	private static final String TAG = "Base Activity";
 	public int posArrow = -1;
+	private int posLongClicked = 1;
 	public EmailDatabase database;
 	private int imageFolder[] = { R.drawable.icon_inbox_folder,
 			R.drawable.icon_star_folder, R.drawable.icon_sent_folder,
@@ -55,6 +60,9 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	private int textFolder[] = { R.drawable.text_inbox_folder,
 			R.drawable.text_important_folder, R.drawable.text_sent_folder,
 			R.drawable.text_draft_folder, R.drawable.text_delete_folder };
+	
+	private QuickAction quickAction;
+	private final int ID_DELETE = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,7 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		menuDrawer.setMenuView(R.layout.menu_drawer);
 
 		listView = (ListView) findViewById(R.id.list_menu);
+		createQuickAction();
 		
 		mDatas = new ArrayList<Object>();
 		listAcc = new ArrayList<Account>();
@@ -88,6 +97,26 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 
 		// Set item click listener for listview
 		listView.setOnItemClickListener(mItemClickListener);
+		listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
+					quickAction.show(arg1);
+					posLongClicked = position;
+				}
+				return false;
+			}
+		});
+	}
+
+	private void createQuickAction() {
+		ActionItem deleteItem = new ActionItem(ID_DELETE, "Delete",
+				getResources().getDrawable(R.drawable.icon_delete_normal_large));
+		quickAction = new QuickAction(this,QuickAction.HORIZONTAL);
+		quickAction.addActionItem(deleteItem);
+		quickAction.setOnActionItemClickListener(this);
+		
 	}
 
 	public void onClick(View v) {
@@ -219,6 +248,16 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+	}
+
+	public void onItemClick(QuickAction source, int pos, int actionId) {
+		ActionItem actionItem = quickAction.getActionItem(pos);
+		switch (actionId) {
+			case ID_DELETE:
+				Toast.makeText(getApplicationContext(), "Delete Message", 0).show();
+				break;
+		}
+		
 	}
 	
 	

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     >
 	    
-	<ScrollView 
+	<HorizontalScrollView 
 		android:id="@+id/scroller"
 		android:layout_marginTop="16dip"
     	android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
 	        android:layout_weight="1"
 	        android:padding="10dip"/>
        
-	</ScrollView >
+	</HorizontalScrollView >
  	
  	<ImageView
         android:id="@+id/arrow_up"
