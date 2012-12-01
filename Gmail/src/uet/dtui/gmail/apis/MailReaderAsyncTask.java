@@ -101,7 +101,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 			mess.contentHtml = "";
 			saveMessageEmail(mess);
 			
-			Log.v("content", getContent(messages[i]));
+//			Log.v("content", getContent(messages[i]));
 		}
 		
 	}
