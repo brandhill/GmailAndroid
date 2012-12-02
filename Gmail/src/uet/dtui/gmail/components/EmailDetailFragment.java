@@ -44,6 +44,12 @@ public class EmailDetailFragment extends Fragment{
 			imageAtt.setVisibility(View.VISIBLE);
 		} else
 			imageAtt.setVisibility(View.GONE);
+		
+		subject.setTypeface(AllerFont.get(getActivity().getApplicationContext(), "fonts/Aller_Bd.ttf"));
+		sender.setTypeface(AllerFont.get(getActivity().getApplicationContext(), "fonts/Aller_Bd.ttf"));
+		date.setTypeface(AllerFont.get(getActivity().getApplicationContext(), "fonts/Aller_Rg.ttf"));
+		content.setTypeface(AllerFont.get(getActivity().getApplicationContext(), "fonts/Aller_Rg.ttf"));
+		
 		attach.setText(message.fileName);
 		html.loadData(message.contentHtml, "text/html", "utf-8");
 		return row;

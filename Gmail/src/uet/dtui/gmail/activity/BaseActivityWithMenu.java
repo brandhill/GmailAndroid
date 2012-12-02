@@ -156,9 +156,10 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 			if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_ACCOUNT) {
 				ItemMenuAccount tmp = (ItemMenuAccount) mAdapter
 						.getItem(position);
-//				setCurrentAcc(tmp.account.email);
 				Utils.setCurrenAcc(tmp.account.email, getApplicationContext());
 				currentAccount = tmp.account.email;
+				mAdapter.notifyDataSetInvalidated();
+				menuDrawer.closeMenu();
 			} else if (mAdapter.getItemViewType(position) == MenuAdapter.ITEM_FOLDER) {
 				ItemMenuFolder fold = (ItemMenuFolder) mAdapter
 						.getItem(position);
@@ -176,8 +177,9 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 				} else if (currentFolder.equals(Utils.FOLDER_SENT)) {
 					launchSent();
 				}
+				mAdapter.notifyDataSetInvalidated();
 			}
-			mAdapter.notifyDataSetInvalidated();
+			
 		}
 
 		private void launchSent() {

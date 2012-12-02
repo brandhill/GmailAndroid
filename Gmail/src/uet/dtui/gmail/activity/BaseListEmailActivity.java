@@ -86,6 +86,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 						mail_list.get(position).content, 1).show();
 				Intent readMailIntent = new Intent(getApplicationContext(),ReadMailActivity.class);
 				Bundle bundle = new Bundle();
+				bundle.putInt("currentpos", position);
 				bundle.putSerializable("maillist", new ListSerializable(mail_list));
 				readMailIntent.putExtras(bundle);
 				startActivity(readMailIntent);
