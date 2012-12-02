@@ -755,6 +755,34 @@ public class EmailDatabase {
 		
 		return idMax;
 	}
+	
+	public long getUIDMaxCurrent(String userEmail, String folderName) {
+		long idAcc;
+		String sql = "SELECT id FROM Account WHERE email_address = \""
+				+ userEmail + "\"";
+		Cursor cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+		idAcc = cursor.getLong(0);
+		long idFolder;
+		sql = "SELECT id_folder FROM Folder WHERE id_account = " + idAcc
+				+ " AND name_folder = \"" + folderName + "\"";
+		cursor = db.rawQuery(sql, null);
+		cursor.moveToFirst();
+		idFolder = cursor.getLong(0);
+		long idMax;
+		sql = "SELECT MAX(id_message) FROM Message WHERE id_folder = "
+				+ idFolder;
+		cursor = db.rawQuery(sql, null);
+		if (cursor.getCount() < 1)
+			idMax = -1;
+		else {
+			cursor.moveToFirst();
+			idMax = cursor.getLong(0);
+		}
+		
+		return idMax;
+	}
+
 
 	private MessageEmail convertCursorToMessageEmail(Cursor cursor) {
 		MessageEmail mess = new MessageEmail();

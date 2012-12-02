@@ -32,6 +32,7 @@ public class EmailDetailFragment extends Fragment{
 		TextView content = (TextView) row.findViewById(R.id.mail_content);
 		ImageView icon_attach = (ImageView) row.findViewById(R.id.icon_attach);
 		TextView attach = (TextView) row.findViewById(R.id.mail_attach);
+		ImageView imageAtt = (ImageView) row.findViewById(R.id.imageAttachFile);
 		WebView html = (WebView) row.findViewById(R.id.web_view);
 		
 		subject.setText(message.subject);
@@ -40,8 +41,10 @@ public class EmailDetailFragment extends Fragment{
 		content.setText(message.content);
 		if (!message.fileName.equals("")) {
 			icon_attach.setVisibility(View.VISIBLE);
-			attach.setText(message.fileName);
-		}
+			imageAtt.setVisibility(View.VISIBLE);
+		} else
+			imageAtt.setVisibility(View.GONE);
+		attach.setText(message.fileName);
 		html.loadData(message.contentHtml, "text/html", "utf-8");
 		return row;
 	}
