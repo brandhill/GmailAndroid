@@ -10,6 +10,7 @@ import uet.dtui.gmail.R;
 import uet.dtui.gmail.apis.MailDeleteAsyncTask;
 import uet.dtui.gmail.apis.MailReaderAsyncTask;
 import uet.dtui.gmail.components.EmailArrayAdapter;
+import uet.dtui.gmail.components.ListSerializable;
 import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
@@ -83,6 +84,11 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 				Log.d("Clicked", mail_list.get(position).content);
 				Toast.makeText(getApplicationContext(),
 						mail_list.get(position).content, 1).show();
+				Intent readMailIntent = new Intent(getApplicationContext(),ReadMailActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("maillist", new ListSerializable(mail_list));
+				readMailIntent.putExtras(bundle);
+				startActivity(readMailIntent);
 			}
 		});
 

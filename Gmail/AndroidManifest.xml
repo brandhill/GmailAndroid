@@ -40,6 +40,8 @@
         </activity>
         <activity android:name="uet.dtui.gmail.activity.ComposeNewEmail" 
             android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="uet.dtui.gmail.activity.ReadMailActivity" 
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
