@@ -131,6 +131,12 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 				this.currentFolder = Utils.FOLDER_SENT;
 				this.mAdapter.notifyDataSetChanged();
 			}
+		} else {
+			getDataForList();
+			listview.addFooterView(loadmore);
+			title.setImageResource(R.drawable.title_inbox);
+			this.currentFolder = Utils.FOLDER_INBOX;
+			this.mAdapter.notifyDataSetChanged();
 		}
 		
 			

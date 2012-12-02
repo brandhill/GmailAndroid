@@ -17,6 +17,7 @@ import uet.dtui.gmail.components.Utils;
 import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.Account;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -26,13 +27,13 @@ public class MailDeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 	private long[] idMessages;
 	public IMAPFolder folder;
 	private String folderName;
-	private BaseListEmailActivity activity; 
+	private Activity activity; 
 	private String username;
 	private String password;
 	private Context context;
 	private EmailDatabase database;
 	
-	public MailDeleteAsyncTask(BaseListEmailActivity activity, String folderName, long[] idMessages) throws MessagingException{
+	public MailDeleteAsyncTask(Activity activity, String folderName, long[] idMessages) throws MessagingException{
 		this.idMessages = idMessages;
 		this.folderName = folderName;
 		this.activity = activity;
