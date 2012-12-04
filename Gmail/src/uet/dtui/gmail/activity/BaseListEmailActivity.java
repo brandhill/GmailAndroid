@@ -54,13 +54,13 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	private MailReaderAsyncTask asyncReadEmail;
 	public EmailDatabase database;
 
-	private QuickAction quickAction;
+	public QuickAction quickAction;
 
 	private static final int ID_DELETE = 1;
 	private static final int ID_REPLY = 2;
 	private static final int ID_FORWARD = 3;
 	public boolean loading = false;
-	private int postionLongClicked = -1;
+	public int postionLongClicked = -1;
 	private Intent recvIntent;
 
 	@Override
