@@ -46,7 +46,7 @@
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="uet.dtui.gmail.activity.ImportantFolderActivity" 
             android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name="uet.dtui.gmail.activity.SentFoderActivity" 
+        <activity android:name="uet.dtui.gmail.activity.SentFolderActivity" 
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="uet.dtui.gmail.activity.DeleteFolderActivity" 
             android:windowSoftInputMode="adjustPan"></activity>

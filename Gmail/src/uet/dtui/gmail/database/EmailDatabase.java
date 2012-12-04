@@ -694,7 +694,7 @@ public class EmailDatabase {
 		long idFolder, idAcc;
 		idAcc = this.getIDAccountFromEmail(acc);
 		idFolder = this.getIdFolderWithNameAndAcc(idAcc, nameFolder);
-		String sql = "Select * from Message where id_folder = " + idFolder;
+		String sql = "Select * from Message where id_folder = " + idFolder + " order by id_message desc";
 		Log.d("SQL GET MESSAGE IN " + nameFolder, sql + "IDACC = " + idAcc + " " + idFolder);
 		Cursor cursor = db.rawQuery(sql, null);
 
