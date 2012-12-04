@@ -51,7 +51,7 @@
             android:layout_height="1dp"
             android:background="#3f3e3e" />
         <eu.erikw.PullToRefreshListView
-            android:id="@+id/mail_list"
+            android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:cacheColorHint="@android:color/transparent"

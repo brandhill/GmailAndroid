@@ -120,7 +120,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 					saveAccount(tfEmailAddr.getText().toString(), tfPassword
 							.getText().toString());
 					Intent goToInbox = new Intent(this,
-							BaseListEmailActivity.class);
+							InboxActivity.class);
 					startActivity(goToInbox);
 					this.finish();
 				} else {

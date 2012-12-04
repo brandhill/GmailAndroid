@@ -18,9 +18,8 @@ import uet.dtui.gmail.model.FolderEmail;
 import uet.dtui.gmail.model.ItemMenuAccount;
 import uet.dtui.gmail.model.ItemMenuCategory;
 import uet.dtui.gmail.model.ItemMenuFolder;
-import android.R.bool;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,7 +37,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 @SuppressLint("NewApi")
-public class BaseActivityWithMenu extends Activity implements OnClickListener {
+public class BaseActivityWithMenu extends ListActivity implements OnClickListener {
 
 	public static final String ACCOUNT_CATEGORY = "accounts";
 	public static final String CATEGORIES_CATEGORY = "categoreis";
@@ -51,7 +50,6 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 	private List<Object> mDatas;
 	private List<Account> listAcc;
 	private List<FolderEmail> listFolder;
-	private static final String TAG = "Base Activity";
 	public int posArrow = -1;
 	private int posLongClicked = 1;
 	public EmailDatabase database;
@@ -183,32 +181,32 @@ public class BaseActivityWithMenu extends Activity implements OnClickListener {
 		}
 
 		private void launchSent() {
-			Intent sentFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			Intent sentFolder = new Intent(getApplicationContext(), SentFolderActivity.class);
 			sentFolder.putExtra(Utils.TITLE, Utils.FOLDER_SENT);
 			startActivity(sentFolder);
 		}
 
 		private void launchDraft() {
-			Intent draftFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			Intent draftFolder = new Intent(getApplicationContext(), DraftFolderActivity.class);
 			draftFolder.putExtra(Utils.TITLE, Utils.FOLDER_DRAFT);
 			startActivity(draftFolder);
 			
 		}
 
 		private void launchImportant() {
-			Intent importantFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			Intent importantFolder = new Intent(getApplicationContext(), ImportantFolderActivity.class);
 			importantFolder.putExtra(Utils.TITLE, Utils.FOLDER_IMPORTANT);
 			startActivity(importantFolder);
 		}
 
 		private void launchDelete() {
-			Intent deleteFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			Intent deleteFolder = new Intent(getApplicationContext(), DeleteFolderActivity.class);
 			deleteFolder.putExtra(Utils.TITLE, Utils.FOLDER_DELETE);
 			startActivity(deleteFolder);
 		}
 
 		private void launchInbox() {
-			Intent inboxFolder = new Intent(getApplicationContext(), BaseListEmailActivity.class);
+			Intent inboxFolder = new Intent(getApplicationContext(), InboxActivity.class);
 			inboxFolder.putExtra(Utils.TITLE, Utils.FOLDER_INBOX);
 			startActivity(inboxFolder);
 		}

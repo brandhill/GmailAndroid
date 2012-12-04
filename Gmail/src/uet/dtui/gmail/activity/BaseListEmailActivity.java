@@ -36,7 +36,7 @@ import eu.erikw.PullToRefreshListView.OnRefreshListener;
 public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		OnRefreshListener, OnActionItemClickListener {
 
-	private PullToRefreshListView listview;
+	public PullToRefreshListView listview;
 	public EmailArrayAdapter adapter;
 	private Button btnMenu;
 	private Button btnCompose;
@@ -49,10 +49,10 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	private View loadmore;
 	private Button btnLoadMore;
 	public ProgressBar progressBar;
-	private List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
+	public List<MessageEmail> mail_list = new ArrayList<MessageEmail>();
 
 	private MailReaderAsyncTask asyncReadEmail;
-	private EmailDatabase database;
+	public EmailDatabase database;
 
 	private QuickAction quickAction;
 
@@ -70,7 +70,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 
 
 		findViews();
-		setActiveViewMenu();
 		createQuickAction();
 
 		database = new EmailDatabase(getApplicationContext());
@@ -109,7 +108,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		String titleActionBar = recvIntent.getStringExtra(Utils.TITLE);
 		if (titleActionBar != null) {
 			if (titleActionBar.equals(Utils.FOLDER_INBOX)) {
-				getDataForList();
 				listview.addFooterView(loadmore);
 				title.setImageResource(R.drawable.title_inbox);
 				this.currentFolder = Utils.FOLDER_INBOX;
@@ -132,7 +130,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 				this.mAdapter.notifyDataSetChanged();
 			}
 		} else {
-			getDataForList();
 			listview.addFooterView(loadmore);
 			title.setImageResource(R.drawable.title_inbox);
 			this.currentFolder = Utils.FOLDER_INBOX;
@@ -143,7 +140,7 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	}
 
 	private void findViews() {
-		listview = (PullToRefreshListView) findViewById(R.id.mail_list);
+		listview = (PullToRefreshListView) getListView();
 		btnCompose = (Button) findViewById(R.id.btnCompose);
 		btnDelete = (Button) findViewById(R.id.btnDelete);
 		btnMenu = (Button) findViewById(R.id.btnMenu);
@@ -207,20 +204,6 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 	}
 
 	public void getDataForList() {
-		Log.d("GET DATA FOR LIST", "RUNNING");
-		database = new EmailDatabase(getApplicationContext());
-		
-			database.openDB();
-			mail_list.clear();
-			mail_list = database.getEmaiWithAccountandFolder(Utils.FOLDER_INBOX,
-					Utils.getCurrentAcc(getApplicationContext()));
-			database.closeDB();
-		adapter = new EmailArrayAdapter(this, R.layout.mail_row, mail_list);
-		listview.setAdapter(adapter);
-	}
-
-	public void onRefresh() {
-		Toast.makeText(getApplicationContext(), "Give me some", 1).show();
 	}
 
 	public void createQuickAction() {
@@ -290,4 +273,17 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		compose.putExtra(Utils.REPLY, se);
 		startActivity(compose);
 	}
+
+	public void onRefresh() {
+		
+	}
+
+	@Override
+	protected void onResume() {
+		setActiveViewMenu();
+		getDataForList();
+		super.onResume();
+	}	
+	
+	
 }

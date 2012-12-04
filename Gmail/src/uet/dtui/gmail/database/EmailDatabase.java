@@ -695,7 +695,7 @@ public class EmailDatabase {
 		idAcc = this.getIDAccountFromEmail(acc);
 		idFolder = this.getIdFolderWithNameAndAcc(idAcc, nameFolder);
 		String sql = "Select * from Message where id_folder = " + idFolder;
-		Log.d("SQL GET MESSAGE IN FODLR", sql);
+		Log.d("SQL GET MESSAGE IN " + nameFolder, sql + "IDACC = " + idAcc + " " + idFolder);
 		Cursor cursor = db.rawQuery(sql, null);
 
 		cursor.moveToFirst();

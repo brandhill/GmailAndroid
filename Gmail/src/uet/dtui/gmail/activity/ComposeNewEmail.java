@@ -123,6 +123,10 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	}
 	
 	public void showPopupWindow() {
+		subj = this.subject.getText().toString();
+		bodyEmail = this.content.getText().toString();
+		toAcc = this.to.getText().toString();
+		filename = "";
 		Display display = getWindowManager().getDefaultDisplay();
 		LayoutInflater inflater = (LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -131,10 +135,7 @@ public class ComposeNewEmail extends Activity implements OnClickListener{
 	}
 	
 	public void showPopupWindowChooseAccount() {
-		subj = this.subject.getText().toString();
-		bodyEmail = this.content.getText().toString();
-		toAcc = this.to.getText().toString();
-		filename = "";
+		Log.d("MESSAGE CONTENT", subj + "  " + bodyEmail + "  " + toAcc + "  " + filename);
 		setDefaultFromAccount();
 		Display display = getWindowManager().getDefaultDisplay();
 		LayoutInflater inflater = (LayoutInflater) this

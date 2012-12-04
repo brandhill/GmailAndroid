@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.provider.ContactsContract.CommonDataKinds.Email;
 import android.test.UiThreadTest;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -50,7 +51,7 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 		if (v == btnClose) {
 			this.dismiss();
 		} else if (v == btnSave){
-			Toast.makeText(activity, "Save Account", 0).show();
+			Toast.makeText(activity, "Save Message to Draft Folder", 0).show();
 			this.dismiss();
 			saveMessageToDraft();
 			activity.finish();
@@ -67,6 +68,7 @@ public class SaveToDraftPopupWindow extends PopupWindow implements OnClickListen
 		mess.id = System.currentTimeMillis();
 		long idAcc = database.getIDAccountFromEmail(Utils.getCurrentAcc(activity.getApplicationContext()));
 		mess.idFolder = database.getIdFolderWithNameAndAcc(idAcc, Utils.FOLDER_DRAFT);
+		Log.d("ID FOLDER", mess.idFolder + "");
 		mess.from = activity.fromAcc;
 		mess.to = activity.toAcc;
 		mess.content = activity.bodyEmail;

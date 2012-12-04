@@ -63,6 +63,11 @@ public class EmailArrayAdapter extends ArrayAdapter {
 			attach.setVisibility(View.INVISIBLE);
 		else
 			attach.setVisibility(View.VISIBLE);
+		
+		if (pos % 2 == 0) {
+			row.setBackgroundResource(R.drawable.my_btn_ics_transfrent);
+		} else 
+			row.setBackgroundResource(R.drawable.my_ics_button_white);
 		return row;
 	}
 }

@@ -42,6 +42,16 @@
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name="uet.dtui.gmail.activity.ReadMailActivity" 
             android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="uet.dtui.gmail.activity.InboxActivity" 
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="uet.dtui.gmail.activity.ImportantFolderActivity" 
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="uet.dtui.gmail.activity.SentFoderActivity" 
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="uet.dtui.gmail.activity.DeleteFolderActivity" 
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="uet.dtui.gmail.activity.DraftFolderActivity" 
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>
