@@ -1,5 +1,6 @@
 package uet.dtui.gmail.activity;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
 
 import uet.dtui.gmail.R;
@@ -10,7 +11,11 @@ import uet.dtui.gmail.components.quickaction.ActionItem;
 import uet.dtui.gmail.components.quickaction.QuickAction;
 import uet.dtui.gmail.database.EmailDatabase;
 import uet.dtui.gmail.model.MessageEmail;
+import android.app.LauncherActivity;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 public class DraftFolderActivity extends BaseListEmailActivity {
@@ -60,5 +65,13 @@ public class DraftFolderActivity extends BaseListEmailActivity {
 			Toast.makeText(getApplicationContext(),
 					"Delete Message " + email.content, 0).show();
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			long arg3) {
+		Intent compose = new Intent(getApplicationContext(), ComposeNewEmail.class);
+		compose.putExtra(Utils.REPLY, mail_list.get(position));
+		startActivity(compose);
 	}
 }

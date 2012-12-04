@@ -34,7 +34,7 @@ import eu.erikw.PullToRefreshListView;
 import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class BaseListEmailActivity extends BaseActivityWithMenu implements
-		OnRefreshListener, OnActionItemClickListener {
+		OnRefreshListener, OnActionItemClickListener, OnItemClickListener, OnItemLongClickListener {
 
 	public PullToRefreshListView listview;
 	public EmailArrayAdapter adapter;
@@ -77,30 +77,9 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		Intent checkNewEmailService = new Intent(this,
 				CheckNewEmailService.class);
 		// startService(checkNewEmailService);
-		listview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> av, View v, int position,
-					long id) {
-				Log.d("Clicked", mail_list.get(position).content);
-				Toast.makeText(getApplicationContext(),
-						mail_list.get(position).content, 1).show();
-				Intent readMailIntent = new Intent(getApplicationContext(),ReadMailActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putInt("currentpos", position);
-				bundle.putSerializable("maillist", new ListSerializable(mail_list));
-				readMailIntent.putExtras(bundle);
-				startActivity(readMailIntent);
-			}
-		});
+		listview.setOnItemClickListener(this);
 
-		listview.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				quickAction.show(arg1);
-				postionLongClicked = arg2;
-				return false;
-			}
-		});
+		listview.setOnItemLongClickListener(this);
 	}
 
 	private void setActiveViewMenu() {
@@ -283,6 +262,24 @@ public class BaseListEmailActivity extends BaseActivityWithMenu implements
 		setActiveViewMenu();
 		getDataForList();
 		super.onResume();
+	}
+
+	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
+			long arg3) {
+		quickAction.show(arg1);
+		postionLongClicked = arg2;
+		return true;
+	}
+
+	public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+		Log.d("Clicked", mail_list.get(position).content);
+		Intent readMailIntent = new Intent(getApplicationContext(),ReadMailActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putInt("currentpos", position);
+		bundle.putSerializable("maillist", new ListSerializable(mail_list));
+		readMailIntent.putExtras(bundle);
+		startActivity(readMailIntent);
+		
 	}	
 	
 	
