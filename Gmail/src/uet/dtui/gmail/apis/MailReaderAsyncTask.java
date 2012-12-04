@@ -7,13 +7,13 @@ import java.util.Properties;
 
 import javax.activation.DataHandler;
 import javax.mail.BodyPart;
+import javax.mail.Flags.Flag;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
-import javax.mail.Flags.Flag;
 import javax.mail.internet.InternetAddress;
 
 import uet.dtui.gmail.activity.BaseListEmailActivity;
@@ -23,7 +23,6 @@ import uet.dtui.gmail.model.Account;
 import uet.dtui.gmail.model.MessageEmail;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.provider.Contacts.Intents.UI;
 import android.util.Log;
 import android.view.View;
 
@@ -38,7 +37,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 	private long[] arrayUID;
 	private Context context;
 	private String nameFolder;
-	private EmailDatabase database;
+	public EmailDatabase database;
 	private BaseListEmailActivity activity;
 	private String fromEmailName;
 	private boolean checkHTML = false;
@@ -52,6 +51,11 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		this.nameFolder = nameFolder;
 		database = new EmailDatabase(context);
 		UID = this.getUIDMax(nameFolder) - 1;
+	}
+
+	public MailReaderAsyncTask(Context cont) {
+		this.context = cont;
+		database = new EmailDatabase(context);
 	}
 
 	@Override
@@ -90,7 +94,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		super.onPostExecute(result);
 	}
 
-	private void getMessage() throws MessagingException, IOException {
+	public void getMessage() throws MessagingException, IOException {
 
 		if (!activity.loading) {
 			Log.d("DO IN BACK", UID + "Running.......");
@@ -172,7 +176,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		return idFolder;
 	}
 
-	private static String getText(Part p) throws MessagingException,
+	public static String getText(Part p) throws MessagingException,
 			IOException {
 		if (p.isMimeType("text/*")) {
 			String s = (String) p.getContent();
@@ -212,7 +216,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		return null;
 	}
 
-	private String getContentMess(Message message) throws IOException,
+	public String getContentMess(Message message) throws IOException,
 			MessagingException {
 		String result = "";
 		int index = message.getContent().toString().indexOf('.');
@@ -247,7 +251,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 	}
 
 	// ham lay UID 20 email mot lan
-	private long[] get20UID(long UIDStart, IMAPFolder folder) {
+	public long[] get20UID(long UIDStart, IMAPFolder folder) {
 		long UID[] = new long[5];
 		int count = 0;
 		while (count < 5) {
@@ -293,14 +297,14 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		return uid;
 	}
 
-	private String extractDisplayname(String fromEmail) {
+	public String extractDisplayname(String fromEmail) {
 		String displayName = "";
 		int index = fromEmail.indexOf('<');
 		displayName = fromEmail.substring(0, index);
 		return displayName;
 	}
 
-	private String extractEmailname(String fromEmail) {
+	public String extractEmailname(String fromEmail) {
 		String emailName = "";
 		int start = fromEmail.indexOf('<');
 		int end = fromEmail.indexOf('>');
@@ -309,7 +313,7 @@ public class MailReaderAsyncTask extends AsyncTask<Void, Void, Void> {
 		return emailName;
 	}
 
-	private String formatterDate(String _date) {
+	public String formatterDate(String _date) {
 		String _dateFormat;
 
 		String day = _date.substring(8, 10);
